@@ -1,0 +1,1072 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		130CEFCA264DBB9900BECFDF /* DeviceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130CEFC9264DBB9900BECFDF /* DeviceCollectionViewCell.swift */; };
+		130CEFCC264DCA9300BECFDF /* BrightnessSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130CEFCB264DCA9300BECFDF /* BrightnessSlider.swift */; };
+		13209477264C9F1F007049D7 /* DevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13209476264C9F1F007049D7 /* DevicesViewController.swift */; };
+		132853B726530C9E006F3692 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132853B626530C9E006F3692 /* SettingsViewController.swift */; };
+		135704B12656282D00B74344 /* ErrorErrorErrorUIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 135704AF2656282D00B74344 /* ErrorErrorErrorUIKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		135704B42656282D00B74344 /* ErrorErrorErrorUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 135704AD2656282D00B74344 /* ErrorErrorErrorUIKit.framework */; };
+		135704B52656282D00B74344 /* ErrorErrorErrorUIKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 135704AD2656282D00B74344 /* ErrorErrorErrorUIKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		135704BC26562A6600B74344 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135704BB26562A6600B74344 /* ViewModelType.swift */; };
+		1357CD192653A85F009731D6 /* UIColor+Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1357CD182653A85F009731D6 /* UIColor+Int.swift */; };
+		135CFDDE26563CC300D05757 /* WLEDKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 135CFDDC26563CC300D05757 /* WLEDKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		135CFDE126563CC300D05757 /* WLEDKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 135CFDDA26563CC300D05757 /* WLEDKit.framework */; };
+		135CFDE226563CC300D05757 /* WLEDKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 135CFDDA26563CC300D05757 /* WLEDKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		135CFDE726563DBF00D05757 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134DF8CB2654595A005B7DFE /* CoreDataStack.swift */; };
+		135CFDE826563DD300D05757 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 135CFDBD2656396600D05757 /* Model.xcdatamodeld */; };
+		135CFDEA26563DDE00D05757 /* CDDevice+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134DF8D326545BB1005B7DFE /* CDDevice+Ext.swift */; };
+		135CFDEB26563DDE00D05757 /* CDDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132853AF2652EDFF006F3692 /* CDDevice.swift */; };
+		135CFDEC26563DDE00D05757 /* CDDevice+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132853B02652EDFF006F3692 /* CDDevice+CoreDataProperties.swift */; };
+		135CFDED26563E1200D05757 /* Info.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130CEFC2264D1D5900BECFDF /* Info.swift */; };
+		135CFDEE26563E1200D05757 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134DF8D526545C24005B7DFE /* Device.swift */; };
+		135CFDEF26563E1200D05757 /* Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1380FFC32654A83F00FC692E /* Segment.swift */; };
+		135CFDF026563E1200D05757 /* Preset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13209478264CA3FA007049D7 /* Preset.swift */; };
+		135CFDF126563E1200D05757 /* Nightlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1380FFC12654A82200FC692E /* Nightlight.swift */; };
+		135CFDF226563E1200D05757 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13209481264D1534007049D7 /* State.swift */; };
+		135CFDF326563E1800D05757 /* DevicesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134DF8D82654609C005B7DFE /* DevicesUseCase.swift */; };
+		135CFDF426563E1800D05757 /* UseCaseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134DF8DA265460BE005B7DFE /* UseCaseProvider.swift */; };
+		135CFDF526563E3100D05757 /* InfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13912EAE2651BC5200BD5095 /* InfoService.swift */; };
+		135CFDF626563E3100D05757 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132853BA265329A2006F3692 /* APIClient.swift */; };
+		135CFDF726563E3100D05757 /* DeviceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134DF8C826544B17005B7DFE /* DeviceService.swift */; };
+		135CFDF826563E3100D05757 /* StateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13912EAC2651BC4500BD5095 /* StateService.swift */; };
+		135CFDF926563F4100D05757 /* CardModalTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139F9FC1265083810056FC57 /* CardModalTransitioningDelegate.swift */; };
+		135CFDFA26563F4100D05757 /* CardModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139F9FC4265084520056FC57 /* CardModalPresentationController.swift */; };
+		135CFDFC2656411B00D05757 /* JSON+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1380FFC52654AAEA00FC692E /* JSON+Utils.swift */; };
+		135EE151264731A00027909B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135EE150264731A00027909B /* AppDelegate.swift */; };
+		135EE153264731A00027909B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135EE152264731A00027909B /* SceneDelegate.swift */; };
+		135EE155264731A00027909B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135EE154264731A00027909B /* MainViewController.swift */; };
+		135EE15D264731A10027909B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 135EE15C264731A10027909B /* Assets.xcassets */; };
+		135EE160264731A10027909B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 135EE15E264731A10027909B /* LaunchScreen.storyboard */; };
+		138FF65A264C706900216D47 /* DeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138FF659264C706900216D47 /* DeviceViewController.swift */; };
+		13912EA52651A3D400BD5095 /* ManuallyAddDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13912EA42651A3D400BD5095 /* ManuallyAddDeviceViewController.swift */; };
+		13912EB62651D6F200BD5095 /* AddDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13912EB52651D6F200BD5095 /* AddDeviceViewController.swift */; };
+		139F9FBF26507F050056FC57 /* DiscoverDevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139F9FBE26507F050056FC57 /* DiscoverDevicesViewController.swift */; };
+		139F9FC92650C09D0056FC57 /* DeviceInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139F9FC82650C09D0056FC57 /* DeviceInfoCollectionViewCell.swift */; };
+		139F9FCC2650C59B0056FC57 /* UIScreen+cornerRadiusDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139F9FCB2650C59B0056FC57 /* UIScreen+cornerRadiusDevice.swift */; };
+		8A4024B9399AD71BDC0562A3 /* Pods_WLEDKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BDBB47A2A6CB0C3385B4D6A /* Pods_WLEDKit.framework */; };
+		8D41C98BF239D95E823452C9 /* Pods_WLED_Remote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EB4E333E80206DF476A2100 /* Pods_WLED_Remote.framework */; };
+		9B6418AAC2C3C6672B9A9CBF /* Pods_ErrorErrorErrorUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D55626E9B4BB38966FE5563 /* Pods_ErrorErrorErrorUIKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		135704B22656282D00B74344 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 135EE145264731A00027909B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 135704AC2656282D00B74344;
+			remoteInfo = ErrorErrorErrorUIKit;
+		};
+		135CFDDF26563CC300D05757 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 135EE145264731A00027909B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 135CFDD926563CC300D05757;
+			remoteInfo = WLEDKit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1357047E2655EF5E00B74344 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				135704B52656282D00B74344 /* ErrorErrorErrorUIKit.framework in Embed Frameworks */,
+				135CFDE226563CC300D05757 /* WLEDKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0D55626E9B4BB38966FE5563 /* Pods_ErrorErrorErrorUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ErrorErrorErrorUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		130CEFC2264D1D5900BECFDF /* Info.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Info.swift; sourceTree = "<group>"; };
+		130CEFC9264DBB9900BECFDF /* DeviceCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCollectionViewCell.swift; sourceTree = "<group>"; };
+		130CEFCB264DCA9300BECFDF /* BrightnessSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrightnessSlider.swift; sourceTree = "<group>"; };
+		13209476264C9F1F007049D7 /* DevicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesViewController.swift; sourceTree = "<group>"; };
+		13209478264CA3FA007049D7 /* Preset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preset.swift; sourceTree = "<group>"; };
+		13209481264D1534007049D7 /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
+		132853AF2652EDFF006F3692 /* CDDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDDevice.swift; sourceTree = "<group>"; };
+		132853B02652EDFF006F3692 /* CDDevice+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDDevice+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		132853B626530C9E006F3692 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		132853BA265329A2006F3692 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		134DF8C826544B17005B7DFE /* DeviceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceService.swift; sourceTree = "<group>"; };
+		134DF8CB2654595A005B7DFE /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		134DF8D326545BB1005B7DFE /* CDDevice+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDDevice+Ext.swift"; sourceTree = "<group>"; };
+		134DF8D526545C24005B7DFE /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
+		134DF8D82654609C005B7DFE /* DevicesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesUseCase.swift; sourceTree = "<group>"; };
+		134DF8DA265460BE005B7DFE /* UseCaseProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCaseProvider.swift; sourceTree = "<group>"; };
+		135704AD2656282D00B74344 /* ErrorErrorErrorUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ErrorErrorErrorUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		135704AF2656282D00B74344 /* ErrorErrorErrorUIKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ErrorErrorErrorUIKit.h; sourceTree = "<group>"; };
+		135704B02656282D00B74344 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		135704BB26562A6600B74344 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		1357CD182653A85F009731D6 /* UIColor+Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Int.swift"; sourceTree = "<group>"; };
+		135CFDBE2656396600D05757 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		135CFDDA26563CC300D05757 /* WLEDKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WLEDKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		135CFDDC26563CC300D05757 /* WLEDKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WLEDKit.h; sourceTree = "<group>"; };
+		135CFDDD26563CC300D05757 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		135EE14D264731A00027909B /* WLED Remote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WLED Remote.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		135EE150264731A00027909B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		135EE152264731A00027909B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		135EE154264731A00027909B /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		135EE15C264731A10027909B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		135EE15F264731A10027909B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		135EE161264731A10027909B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1380FFC12654A82200FC692E /* Nightlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nightlight.swift; sourceTree = "<group>"; };
+		1380FFC32654A83F00FC692E /* Segment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Segment.swift; sourceTree = "<group>"; };
+		1380FFC52654AAEA00FC692E /* JSON+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSON+Utils.swift"; sourceTree = "<group>"; };
+		138FF659264C706900216D47 /* DeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceViewController.swift; sourceTree = "<group>"; };
+		13912EA42651A3D400BD5095 /* ManuallyAddDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManuallyAddDeviceViewController.swift; sourceTree = "<group>"; };
+		13912EAC2651BC4500BD5095 /* StateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateService.swift; sourceTree = "<group>"; };
+		13912EAE2651BC5200BD5095 /* InfoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoService.swift; sourceTree = "<group>"; };
+		13912EB52651D6F200BD5095 /* AddDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDeviceViewController.swift; sourceTree = "<group>"; };
+		139F9FBE26507F050056FC57 /* DiscoverDevicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverDevicesViewController.swift; sourceTree = "<group>"; };
+		139F9FC1265083810056FC57 /* CardModalTransitioningDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardModalTransitioningDelegate.swift; sourceTree = "<group>"; };
+		139F9FC4265084520056FC57 /* CardModalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardModalPresentationController.swift; sourceTree = "<group>"; };
+		139F9FC82650C09D0056FC57 /* DeviceInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfoCollectionViewCell.swift; sourceTree = "<group>"; };
+		139F9FCB2650C59B0056FC57 /* UIScreen+cornerRadiusDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+cornerRadiusDevice.swift"; sourceTree = "<group>"; };
+		4B4616C391026848545E3CB6 /* Pods-WLED Remote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WLED Remote.release.xcconfig"; path = "Target Support Files/Pods-WLED Remote/Pods-WLED Remote.release.xcconfig"; sourceTree = "<group>"; };
+		4DB6FE4EE0193D0177D19A71 /* Pods-ErrorErrorErrorUIKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ErrorErrorErrorUIKit.debug.xcconfig"; path = "Target Support Files/Pods-ErrorErrorErrorUIKit/Pods-ErrorErrorErrorUIKit.debug.xcconfig"; sourceTree = "<group>"; };
+		547F9126CAD67604AAF15EEC /* Pods-WLED Remote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WLED Remote.debug.xcconfig"; path = "Target Support Files/Pods-WLED Remote/Pods-WLED Remote.debug.xcconfig"; sourceTree = "<group>"; };
+		6EB4E333E80206DF476A2100 /* Pods_WLED_Remote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WLED_Remote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8411C7EE1F6D383D10CC4CF5 /* Pods-WLEDKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WLEDKit.debug.xcconfig"; path = "Target Support Files/Pods-WLEDKit/Pods-WLEDKit.debug.xcconfig"; sourceTree = "<group>"; };
+		8BDBB47A2A6CB0C3385B4D6A /* Pods_WLEDKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WLEDKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE55A6A9B93BEB1C5673B8C6 /* Pods-WLEDKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WLEDKit.release.xcconfig"; path = "Target Support Files/Pods-WLEDKit/Pods-WLEDKit.release.xcconfig"; sourceTree = "<group>"; };
+		FEA6B6837944483B052AA0F6 /* Pods-ErrorErrorErrorUIKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ErrorErrorErrorUIKit.release.xcconfig"; path = "Target Support Files/Pods-ErrorErrorErrorUIKit/Pods-ErrorErrorErrorUIKit.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		135704AA2656282D00B74344 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9B6418AAC2C3C6672B9A9CBF /* Pods_ErrorErrorErrorUIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		135CFDD726563CC300D05757 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A4024B9399AD71BDC0562A3 /* Pods_WLEDKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		135EE14A264731A00027909B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				135704B42656282D00B74344 /* ErrorErrorErrorUIKit.framework in Frameworks */,
+				135CFDE126563CC300D05757 /* WLEDKit.framework in Frameworks */,
+				8D41C98BF239D95E823452C9 /* Pods_WLED_Remote.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		134DF8CA2654594D005B7DFE /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				135CFDBD2656396600D05757 /* Model.xcdatamodeld */,
+				132853AF2652EDFF006F3692 /* CDDevice.swift */,
+				132853B02652EDFF006F3692 /* CDDevice+CoreDataProperties.swift */,
+				134DF8D326545BB1005B7DFE /* CDDevice+Ext.swift */,
+				134DF8D026545A47005B7DFE /* UseCases */,
+				134DF8CB2654595A005B7DFE /* CoreDataStack.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		134DF8D026545A47005B7DFE /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		1357046C2654FA5600B74344 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				135EE154264731A00027909B /* MainViewController.swift */,
+				135704A62656275800B74344 /* AllSettings */,
+				135704A52656270500B74344 /* EditDevice */,
+				135704A4265626E800B74344 /* AddDevice */,
+				1357046D2654FA5B00B74344 /* AllDevices */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		1357046D2654FA5B00B74344 /* AllDevices */ = {
+			isa = PBXGroup;
+			children = (
+				139F9FC82650C09D0056FC57 /* DeviceInfoCollectionViewCell.swift */,
+				130CEFC9264DBB9900BECFDF /* DeviceCollectionViewCell.swift */,
+				13209476264C9F1F007049D7 /* DevicesViewController.swift */,
+			);
+			path = AllDevices;
+			sourceTree = "<group>";
+		};
+		135704A4265626E800B74344 /* AddDevice */ = {
+			isa = PBXGroup;
+			children = (
+				13912EB52651D6F200BD5095 /* AddDeviceViewController.swift */,
+				139F9FBE26507F050056FC57 /* DiscoverDevicesViewController.swift */,
+				13912EA42651A3D400BD5095 /* ManuallyAddDeviceViewController.swift */,
+			);
+			path = AddDevice;
+			sourceTree = "<group>";
+		};
+		135704A52656270500B74344 /* EditDevice */ = {
+			isa = PBXGroup;
+			children = (
+				138FF659264C706900216D47 /* DeviceViewController.swift */,
+			);
+			path = EditDevice;
+			sourceTree = "<group>";
+		};
+		135704A62656275800B74344 /* AllSettings */ = {
+			isa = PBXGroup;
+			children = (
+				132853B626530C9E006F3692 /* SettingsViewController.swift */,
+			);
+			path = AllSettings;
+			sourceTree = "<group>";
+		};
+		135704A72656276B00B74344 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				130CEFCB264DCA9300BECFDF /* BrightnessSlider.swift */,
+				135704BB26562A6600B74344 /* ViewModelType.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		135704AE2656282D00B74344 /* ErrorErrorErrorUIKit */ = {
+			isa = PBXGroup;
+			children = (
+				135704B92656283800B74344 /* CardModal */,
+				135704AF2656282D00B74344 /* ErrorErrorErrorUIKit.h */,
+				135704B02656282D00B74344 /* Info.plist */,
+			);
+			path = ErrorErrorErrorUIKit;
+			sourceTree = "<group>";
+		};
+		135704B92656283800B74344 /* CardModal */ = {
+			isa = PBXGroup;
+			children = (
+				139F9FC1265083810056FC57 /* CardModalTransitioningDelegate.swift */,
+				139F9FC4265084520056FC57 /* CardModalPresentationController.swift */,
+			);
+			path = CardModal;
+			sourceTree = "<group>";
+		};
+		135704BA2656298D00B74344 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		135704C626562D1B00B74344 /* WLEDKit */ = {
+			isa = PBXGroup;
+			children = (
+				135CFDFB2656410700D05757 /* Utilities */,
+				135CFDDC26563CC300D05757 /* WLEDKit.h */,
+				135CFDDD26563CC300D05757 /* Info.plist */,
+				138FF658264C6E0400216D47 /* Network */,
+				134DF8CA2654594D005B7DFE /* CoreData */,
+				135704D226562F6400B74344 /* Repository */,
+				135704D126562DBB00B74344 /* Model */,
+			);
+			path = WLEDKit;
+			sourceTree = "<group>";
+		};
+		135704D126562DBB00B74344 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				135704D326562F8800B74344 /* UseCases */,
+				13209478264CA3FA007049D7 /* Preset.swift */,
+				13209481264D1534007049D7 /* State.swift */,
+				130CEFC2264D1D5900BECFDF /* Info.swift */,
+				134DF8D526545C24005B7DFE /* Device.swift */,
+				1380FFC12654A82200FC692E /* Nightlight.swift */,
+				1380FFC32654A83F00FC692E /* Segment.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		135704D226562F6400B74344 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		135704D326562F8800B74344 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				134DF8D82654609C005B7DFE /* DevicesUseCase.swift */,
+				134DF8DA265460BE005B7DFE /* UseCaseProvider.swift */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		135CFDFB2656410700D05757 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				1380FFC52654AAEA00FC692E /* JSON+Utils.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		135EE144264731A00027909B = {
+			isa = PBXGroup;
+			children = (
+				135EE14F264731A00027909B /* WLED Remote */,
+				135704AE2656282D00B74344 /* ErrorErrorErrorUIKit */,
+				135704C626562D1B00B74344 /* WLEDKit */,
+				135EE14E264731A00027909B /* Products */,
+				DF1ACE9D95E33863870EF693 /* Pods */,
+				89C8DE4967D0B33B586E7866 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		135EE14E264731A00027909B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				135EE14D264731A00027909B /* WLED Remote.app */,
+				135704AD2656282D00B74344 /* ErrorErrorErrorUIKit.framework */,
+				135CFDDA26563CC300D05757 /* WLEDKit.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		135EE14F264731A00027909B /* WLED Remote */ = {
+			isa = PBXGroup;
+			children = (
+				135704BA2656298D00B74344 /* Application */,
+				135704A72656276B00B74344 /* Common */,
+				1357046C2654FA5600B74344 /* Scenes */,
+				139F9FCA2650C5890056FC57 /* Utility */,
+				135EE150264731A00027909B /* AppDelegate.swift */,
+				135EE152264731A00027909B /* SceneDelegate.swift */,
+				135EE15C264731A10027909B /* Assets.xcassets */,
+				135EE15E264731A10027909B /* LaunchScreen.storyboard */,
+				135EE161264731A10027909B /* Info.plist */,
+			);
+			path = "WLED Remote";
+			sourceTree = "<group>";
+		};
+		138FF658264C6E0400216D47 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				13912EAA2651BC2200BD5095 /* service */,
+				132853BA265329A2006F3692 /* APIClient.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		13912EAA2651BC2200BD5095 /* service */ = {
+			isa = PBXGroup;
+			children = (
+				134DF8C826544B17005B7DFE /* DeviceService.swift */,
+				13912EAC2651BC4500BD5095 /* StateService.swift */,
+				13912EAE2651BC5200BD5095 /* InfoService.swift */,
+			);
+			path = service;
+			sourceTree = "<group>";
+		};
+		139F9FCA2650C5890056FC57 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				139F9FCB2650C59B0056FC57 /* UIScreen+cornerRadiusDevice.swift */,
+				1357CD182653A85F009731D6 /* UIColor+Int.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		89C8DE4967D0B33B586E7866 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6EB4E333E80206DF476A2100 /* Pods_WLED_Remote.framework */,
+				0D55626E9B4BB38966FE5563 /* Pods_ErrorErrorErrorUIKit.framework */,
+				8BDBB47A2A6CB0C3385B4D6A /* Pods_WLEDKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DF1ACE9D95E33863870EF693 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				547F9126CAD67604AAF15EEC /* Pods-WLED Remote.debug.xcconfig */,
+				4B4616C391026848545E3CB6 /* Pods-WLED Remote.release.xcconfig */,
+				4DB6FE4EE0193D0177D19A71 /* Pods-ErrorErrorErrorUIKit.debug.xcconfig */,
+				FEA6B6837944483B052AA0F6 /* Pods-ErrorErrorErrorUIKit.release.xcconfig */,
+				8411C7EE1F6D383D10CC4CF5 /* Pods-WLEDKit.debug.xcconfig */,
+				CE55A6A9B93BEB1C5673B8C6 /* Pods-WLEDKit.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		135704A82656282D00B74344 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				135704B12656282D00B74344 /* ErrorErrorErrorUIKit.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		135CFDD526563CC300D05757 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				135CFDDE26563CC300D05757 /* WLEDKit.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		135704AC2656282D00B74344 /* ErrorErrorErrorUIKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 135704B62656282D00B74344 /* Build configuration list for PBXNativeTarget "ErrorErrorErrorUIKit" */;
+			buildPhases = (
+				AA8B36EFBF2E5810D59F2179 /* [CP] Check Pods Manifest.lock */,
+				135704A82656282D00B74344 /* Headers */,
+				135704A92656282D00B74344 /* Sources */,
+				135704AA2656282D00B74344 /* Frameworks */,
+				135704AB2656282D00B74344 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ErrorErrorErrorUIKit;
+			productName = ErrorErrorErrorUIKit;
+			productReference = 135704AD2656282D00B74344 /* ErrorErrorErrorUIKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		135CFDD926563CC300D05757 /* WLEDKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 135CFDE326563CC300D05757 /* Build configuration list for PBXNativeTarget "WLEDKit" */;
+			buildPhases = (
+				B05AEDE30FC97B3E2568F00D /* [CP] Check Pods Manifest.lock */,
+				135CFDD526563CC300D05757 /* Headers */,
+				135CFDD626563CC300D05757 /* Sources */,
+				135CFDD726563CC300D05757 /* Frameworks */,
+				135CFDD826563CC300D05757 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WLEDKit;
+			productName = WLEDKit;
+			productReference = 135CFDDA26563CC300D05757 /* WLEDKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		135EE14C264731A00027909B /* WLED Remote */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 135EE164264731A10027909B /* Build configuration list for PBXNativeTarget "WLED Remote" */;
+			buildPhases = (
+				9C0A56CAF20088E9F6A41225 /* [CP] Check Pods Manifest.lock */,
+				135EE149264731A00027909B /* Sources */,
+				135EE14A264731A00027909B /* Frameworks */,
+				135EE14B264731A00027909B /* Resources */,
+				E92379B8D57B56E2EE22E177 /* [CP] Embed Pods Frameworks */,
+				1357047E2655EF5E00B74344 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				135704B32656282D00B74344 /* PBXTargetDependency */,
+				135CFDE026563CC300D05757 /* PBXTargetDependency */,
+			);
+			name = "WLED Remote";
+			productName = "WLED Remote";
+			productReference = 135EE14D264731A00027909B /* WLED Remote.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		135EE145264731A00027909B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1250;
+				LastUpgradeCheck = 1250;
+				TargetAttributes = {
+					135704AC2656282D00B74344 = {
+						CreatedOnToolsVersion = 12.5;
+					};
+					135CFDD926563CC300D05757 = {
+						CreatedOnToolsVersion = 12.5;
+					};
+					135EE14C264731A00027909B = {
+						CreatedOnToolsVersion = 12.5;
+					};
+				};
+			};
+			buildConfigurationList = 135EE148264731A00027909B /* Build configuration list for PBXProject "WLED Remote" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 135EE144264731A00027909B;
+			productRefGroup = 135EE14E264731A00027909B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				135EE14C264731A00027909B /* WLED Remote */,
+				135704AC2656282D00B74344 /* ErrorErrorErrorUIKit */,
+				135CFDD926563CC300D05757 /* WLEDKit */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		135704AB2656282D00B74344 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		135CFDD826563CC300D05757 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		135EE14B264731A00027909B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				135EE160264731A10027909B /* LaunchScreen.storyboard in Resources */,
+				135EE15D264731A10027909B /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9C0A56CAF20088E9F6A41225 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-WLED Remote-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AA8B36EFBF2E5810D59F2179 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ErrorErrorErrorUIKit-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B05AEDE30FC97B3E2568F00D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-WLEDKit-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E92379B8D57B56E2EE22E177 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WLED Remote/Pods-WLED Remote-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WLED Remote/Pods-WLED Remote-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WLED Remote/Pods-WLED Remote-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		135704A92656282D00B74344 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		135CFDD626563CC300D05757 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				135CFDF826563E3100D05757 /* StateService.swift in Sources */,
+				135CFDEB26563DDE00D05757 /* CDDevice.swift in Sources */,
+				135CFDF526563E3100D05757 /* InfoService.swift in Sources */,
+				135CFDEA26563DDE00D05757 /* CDDevice+Ext.swift in Sources */,
+				135CFDE726563DBF00D05757 /* CoreDataStack.swift in Sources */,
+				135CFDF326563E1800D05757 /* DevicesUseCase.swift in Sources */,
+				135CFDF226563E1200D05757 /* State.swift in Sources */,
+				135CFDEF26563E1200D05757 /* Segment.swift in Sources */,
+				135CFDF026563E1200D05757 /* Preset.swift in Sources */,
+				135CFDFC2656411B00D05757 /* JSON+Utils.swift in Sources */,
+				135CFDF626563E3100D05757 /* APIClient.swift in Sources */,
+				135CFDF126563E1200D05757 /* Nightlight.swift in Sources */,
+				135CFDED26563E1200D05757 /* Info.swift in Sources */,
+				135CFDF926563F4100D05757 /* CardModalTransitioningDelegate.swift in Sources */,
+				135CFDF426563E1800D05757 /* UseCaseProvider.swift in Sources */,
+				135CFDEC26563DDE00D05757 /* CDDevice+CoreDataProperties.swift in Sources */,
+				135CFDFA26563F4100D05757 /* CardModalPresentationController.swift in Sources */,
+				135CFDEE26563E1200D05757 /* Device.swift in Sources */,
+				135CFDE826563DD300D05757 /* Model.xcdatamodeld in Sources */,
+				135CFDF726563E3100D05757 /* DeviceService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		135EE149264731A00027909B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				135EE155264731A00027909B /* MainViewController.swift in Sources */,
+				13209477264C9F1F007049D7 /* DevicesViewController.swift in Sources */,
+				130CEFCC264DCA9300BECFDF /* BrightnessSlider.swift in Sources */,
+				135704BC26562A6600B74344 /* ViewModelType.swift in Sources */,
+				130CEFCA264DBB9900BECFDF /* DeviceCollectionViewCell.swift in Sources */,
+				13912EA52651A3D400BD5095 /* ManuallyAddDeviceViewController.swift in Sources */,
+				13912EB62651D6F200BD5095 /* AddDeviceViewController.swift in Sources */,
+				139F9FCC2650C59B0056FC57 /* UIScreen+cornerRadiusDevice.swift in Sources */,
+				139F9FC92650C09D0056FC57 /* DeviceInfoCollectionViewCell.swift in Sources */,
+				138FF65A264C706900216D47 /* DeviceViewController.swift in Sources */,
+				139F9FBF26507F050056FC57 /* DiscoverDevicesViewController.swift in Sources */,
+				135EE151264731A00027909B /* AppDelegate.swift in Sources */,
+				135EE153264731A00027909B /* SceneDelegate.swift in Sources */,
+				1357CD192653A85F009731D6 /* UIColor+Int.swift in Sources */,
+				132853B726530C9E006F3692 /* SettingsViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		135704B32656282D00B74344 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 135704AC2656282D00B74344 /* ErrorErrorErrorUIKit */;
+			targetProxy = 135704B22656282D00B74344 /* PBXContainerItemProxy */;
+		};
+		135CFDE026563CC300D05757 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 135CFDD926563CC300D05757 /* WLEDKit */;
+			targetProxy = 135CFDDF26563CC300D05757 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		135EE15E264731A10027909B /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				135EE15F264731A10027909B /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		135704B72656282D00B74344 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4DB6FE4EE0193D0177D19A71 /* Pods-ErrorErrorErrorUIKit.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = A6HC4Y86NJ;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = ErrorErrorErrorUIKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.errorerrorerror.ErrorErrorErrorUIKit;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		135704B82656282D00B74344 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FEA6B6837944483B052AA0F6 /* Pods-ErrorErrorErrorUIKit.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = A6HC4Y86NJ;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = ErrorErrorErrorUIKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.errorerrorerror.ErrorErrorErrorUIKit;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		135CFDE426563CC300D05757 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8411C7EE1F6D383D10CC4CF5 /* Pods-WLEDKit.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = A6HC4Y86NJ;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = WLEDKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.errorerrorerror.WLEDKit;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		135CFDE526563CC300D05757 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CE55A6A9B93BEB1C5673B8C6 /* Pods-WLEDKit.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = A6HC4Y86NJ;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = WLEDKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.errorerrorerror.WLEDKit;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		135EE162264731A10027909B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		135EE163264731A10027909B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		135EE165264731A10027909B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 547F9126CAD67604AAF15EEC /* Pods-WLED Remote.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A6HC4Y86NJ;
+				INFOPLIST_FILE = "WLED Remote/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.errorerrorerror.WLED-Remote";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		135EE166264731A10027909B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B4616C391026848545E3CB6 /* Pods-WLED Remote.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A6HC4Y86NJ;
+				INFOPLIST_FILE = "WLED Remote/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.errorerrorerror.WLED-Remote";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		135704B62656282D00B74344 /* Build configuration list for PBXNativeTarget "ErrorErrorErrorUIKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				135704B72656282D00B74344 /* Debug */,
+				135704B82656282D00B74344 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		135CFDE326563CC300D05757 /* Build configuration list for PBXNativeTarget "WLEDKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				135CFDE426563CC300D05757 /* Debug */,
+				135CFDE526563CC300D05757 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		135EE148264731A00027909B /* Build configuration list for PBXProject "WLED Remote" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				135EE162264731A10027909B /* Debug */,
+				135EE163264731A10027909B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		135EE164264731A10027909B /* Build configuration list for PBXNativeTarget "WLED Remote" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				135EE165264731A10027909B /* Debug */,
+				135EE166264731A10027909B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		135CFDBD2656396600D05757 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				135CFDBE2656396600D05757 /* Model.xcdatamodel */,
+			);
+			currentVersion = 135CFDBE2656396600D05757 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 135EE145264731A00027909B /* Project object */;
+}

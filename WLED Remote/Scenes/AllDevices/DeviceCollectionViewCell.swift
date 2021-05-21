@@ -10,7 +10,7 @@ import UIKit
 class DeviceCollectionViewCell: UICollectionViewCell {
     static var identifier = "device-cell"
 
-    let textLabel: UILabel = {
+    let nameLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.font = UIFont.systemFont(ofSize: 14)
         return label
@@ -49,7 +49,7 @@ class DeviceCollectionViewCell: UICollectionViewCell {
         layer.cornerRadius = height / 2
         clipsToBounds = true
 
-        let deviceInfoStackView = UIStackView(arrangedSubviews: [textLabel, lightSwitch])
+        let deviceInfoStackView = UIStackView(arrangedSubviews: [nameLabel, lightSwitch])
         deviceInfoStackView.spacing = inset
         deviceInfoStackView.distribution = .fill
         deviceInfoStackView.alignment = .center
@@ -84,24 +84,28 @@ class DeviceCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    func configure(_ data: Device) {
-        textLabel.text = data.name
+//    func configure(_ data: Device) {
+//        nameLabel.text = data.name
+//
+//        if let state = data.state {
+//            let enabled = state.on == true
+//            brightnessSlider.isHidden = !enabled
+//            brightnessSlider.value = Float(state.bri ?? 127)
+//            lightSwitch.isOn = enabled
+//            brightnessSlider.isEnabled = true
+//            lightSwitch.isEnabled = true
+//            lightSwitch.backgroundColor = !enabled ? nil : UIColor(red: 90/255, green: 90/255, blue: 90/255, alpha: 0.2)
+//
+//        } else {
+//            brightnessSlider.isHidden = true
+//            brightnessSlider.isEnabled = false
+//            lightSwitch.isOn = false
+//            lightSwitch.isEnabled = false
+//        }
+//    }
 
-        if let state = data.state {
-            let enabled = state.on == true
-            brightnessSlider.isHidden = !enabled
-            brightnessSlider.value = Float(state.bri ?? 127)
-            lightSwitch.isOn = enabled
-            brightnessSlider.isEnabled = true
-            lightSwitch.isEnabled = true
-            lightSwitch.backgroundColor = !enabled ? nil : UIColor(red: 90/255, green: 90/255, blue: 90/255, alpha: 0.2)
-
-        } else {
-            brightnessSlider.isHidden = true
-            brightnessSlider.isEnabled = false
-            lightSwitch.isOn = false
-            lightSwitch.isEnabled = false
-        }
+    func bind(_ viewModel: DeviceItemViewModel) {
+        self.nameLabel.text = viewModel.name
     }
 
     private func getFirstSelectedSegment(state: State) -> Segment? {

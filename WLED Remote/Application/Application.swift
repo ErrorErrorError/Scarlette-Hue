@@ -18,7 +18,11 @@ final class Application {
     }
 
     func configureMainInterface(in window: UIWindow) {
-        let mainViewController = MainViewController()
-        window.rootViewController = mainViewController
+        let devicesNavigationController = UINavigationController()
+
+        let deviceNavigator = DefaultDevicesNavigator(services: coreDataUseCaseProvider, navigationController: devicesNavigationController)
+        window.rootViewController = devicesNavigationController
+    
+        deviceNavigator.toDevices()
     }
 }

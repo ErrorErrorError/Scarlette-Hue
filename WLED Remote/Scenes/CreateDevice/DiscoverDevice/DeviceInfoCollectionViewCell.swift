@@ -69,8 +69,8 @@ class DeviceInfoCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(device: Device) {
-        deviceNameLabel.text = device.name
-        ipAddressLabel.text = device.ip
+    func bind(viewModel: DeviceInfoItemViewModel) {
+        deviceNameLabel.text = viewModel.name
+        ipAddressLabel.text = viewModel.ip
     }
 }

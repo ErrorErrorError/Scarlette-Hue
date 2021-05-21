@@ -21,11 +21,16 @@ def query_kit
   pod 'QueryKit'
 end
 
+def rx_data_source
+  pod 'RxDataSources'
+end
+
 target 'WLED Remote' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
   rx_swift
   rx_cocoa
+  rx_data_source
   alamofire
   rx_alamofire
   query_kit

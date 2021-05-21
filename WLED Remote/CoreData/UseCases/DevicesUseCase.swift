@@ -9,7 +9,6 @@ import Foundation
 import RxSwift
 
 class DevicesUseCase<Repository>: DevicesUseCaseProtocol where Repository: AbstractRepository, Repository.T == Device {
-    typealias T = Device
     private let repository: Repository
 
     init(repository: Repository) {

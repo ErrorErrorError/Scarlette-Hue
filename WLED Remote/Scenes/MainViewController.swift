@@ -13,7 +13,7 @@ class MainViewController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        
+
         let devicesViewController = DevicesViewController()
 
         pushViewController(devicesViewController, animated: false)

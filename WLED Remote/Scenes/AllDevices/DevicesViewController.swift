@@ -6,9 +6,8 @@
 //
 
 import UIKit
-import CoreData
-import Alamofire
 import RxSwift
+import RxCocoa
 
 class DevicesViewController: UICollectionViewController {
 
@@ -32,13 +31,7 @@ class DevicesViewController: UICollectionViewController {
 
     // MARK: View Model
 
-    // MARK: Views
-
-    private let devicesLabel: UILabel = {
-        let label = UILabel(frame: CGRect.zero)
-        label.text = "Devices"
-        return label
-    }()
+    var viewModel: DevicesViewModel!
 
     // MARK: Constructors
 
@@ -56,17 +49,8 @@ class DevicesViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Devices"
-        navigationItem.largeTitleDisplayMode = .always
-        navigationController?.navigationBar.prefersLargeTitles = true
-
-        collectionView.delegate = self
-        collectionView.dataSource = dataSource
-        collectionView.register(DeviceCollectionViewCell.self, forCellWithReuseIdentifier: DeviceCollectionViewCell.identifier)
-        collectionView.alwaysBounceVertical = true
-        collectionView.backgroundColor = .systemBackground
-
         setupNavigationBar()
+        setupCollectionView()
         setupConstraints()
         setupObservers()
         setupListeners()
@@ -94,10 +78,22 @@ class DevicesViewController: UICollectionViewController {
     private func setupListeners() {}
 
     private func setupNavigationBar() {
+        title = "Devices"
+        navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.prefersLargeTitles = true
+
         let addNewDevice = UIBarButtonItem(systemItem: .add)
         addNewDevice.target = self
         addNewDevice.action = #selector(handlePlusClicked)
         navigationItem.setRightBarButton(addNewDevice, animated: true)
+    }
+
+    private func setupCollectionView() {
+        collectionView.delegate = self
+        collectionView.dataSource = dataSource
+        collectionView.register(DeviceCollectionViewCell.self, forCellWithReuseIdentifier: DeviceCollectionViewCell.identifier)
+        collectionView.alwaysBounceVertical = true
+        collectionView.backgroundColor = .systemBackground
     }
 }
 
@@ -124,47 +120,18 @@ extension DevicesViewController {
         }
     }
 
-    private func clearDevices() {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Device")
-        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        let managedObjectContext = appDelegate.persistentContainer.viewContext
-        do {
-            try managedObjectContext.execute(batchDeleteRequest)
-        } catch {
-            print("There was an error erasing all devices.")
-        }
-    }
-
     @objc private func fetchDevicesFromCoreData(animation: Bool = true) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-
-        let request = CDDevice.createFetchRequest()
-        let creationSort = NSSortDescriptor(key: "created", ascending: true)
-        request.sortDescriptors = [creationSort]
-
-        let context = appDelegate.persistentContainer.viewContext
-
-        if let fetch = try? context.fetch(request) {
-            devicesList = fetch.map({ $0.asDevice() })
-            requestDevicesState()
-            applySnapshot()
-        }
     }
 }
 
 // MARK: - Actions
 extension DevicesViewController {
     @objc func handlePlusClicked() {
-        let discoverDevicesViewController = DiscoverDevicesViewController()
-        let cardTransitioningDelegate = CardModalTransitioningDelegate(from: self, to: discoverDevicesViewController)
-        discoverDevicesViewController.modalPresentationStyle = .custom
-        discoverDevicesViewController.transitioningDelegate = cardTransitioningDelegate
-        present(discoverDevicesViewController, animated: true)
+//        let discoverDevicesViewController = DiscoverDevicesViewController()
+//        let cardTransitioningDelegate = CardModalTransitioningDelegate(from: self, to: discoverDevicesViewController)
+//        discoverDevicesViewController.modalPresentationStyle = .custom
+//        discoverDevicesViewController.transitioningDelegate = cardTransitioningDelegate
+//        present(discoverDevicesViewController, animated: true)
     }
 
     @objc func handleOnSwitchChanged(index: IndexPath, on: Bool) {

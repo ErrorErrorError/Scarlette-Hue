@@ -12,7 +12,7 @@ enum ModalScaleState {
     case interaction
 }
 
-final class CardModalPresentationController: UIPresentationController {
+public final class CardModalPresentationController: UIPresentationController {
 
     private var canDismiss = false
 
@@ -96,12 +96,12 @@ final class CardModalPresentationController: UIPresentationController {
         })
     }
 
-    override var frameOfPresentedViewInContainerView: CGRect {
+    public override var frameOfPresentedViewInContainerView: CGRect {
         guard let container = containerView else { return .zero }
         return CGRect(x: 0, y: 0, width: container.bounds.width, height: container.bounds.height)
     }
 
-    override func presentationTransitionWillBegin() {
+    public override func presentationTransitionWillBegin() {
         guard let container = containerView, let coordinator = presentingViewController.transitionCoordinator else { return }
 
         dimmingView.alpha = 0
@@ -114,7 +114,7 @@ final class CardModalPresentationController: UIPresentationController {
         }, completion: nil)
     }
 
-    override func dismissalTransitionWillBegin() {
+    public override func dismissalTransitionWillBegin() {
         guard let coordinator = presentingViewController.transitionCoordinator else { return }
 
         coordinator.animate(alongsideTransition: { [weak self] (context) -> Void in
@@ -123,7 +123,7 @@ final class CardModalPresentationController: UIPresentationController {
         }, completion: nil)
     }
 
-    override func dismissalTransitionDidEnd(_ completed: Bool) {
+    public override func dismissalTransitionDidEnd(_ completed: Bool) {
         if completed {
             dimmingView.removeFromSuperview()
         }

@@ -10,6 +10,7 @@ import Foundation
 import CoreData
 
 extension CDDevice {
+
     @nonobjc public class func createFetchRequest() -> NSFetchRequest<CDDevice> {
         return NSFetchRequest<CDDevice>(entityName: "CDDevice")
     }

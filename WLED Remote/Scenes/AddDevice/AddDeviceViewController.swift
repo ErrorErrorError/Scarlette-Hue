@@ -181,25 +181,25 @@ extension AddDeviceViewController {
     }
 
     private func addDevice() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-          return
-        }
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//          return
+//        }
 
-        let context = appDelegate.persistentContainer.viewContext
-        if let entity = NSEntityDescription.entity(forEntityName: "CDDevice", in: context), let modelDevice = device {
-            let device = CDDevice(entity: entity, insertInto: context)
-            device.id = modelDevice.id
-            device.name = deviceNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "WLED"
-            device.ip = modelDevice.ip
-            device.port = Int32(modelDevice.port)
-            device.created =  Date()
-            NotificationCenter.default.post(name: .init("updateDevicesNotification"), object: nil)
-        }
-        do {
-            try context.save()
-        } catch {
-            print("There was an error saving context")
-        }
+//        let context = appDelegate.persistentContainer.viewContext
+//        if let entity = NSEntityDescription.entity(forEntityName: "CDDevice", in: context), let modelDevice = device {
+//            let device = CDDevice(entity: entity, insertInto: context)
+//            device.id = modelDevice.id
+//            device.name = deviceNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "WLED"
+//            device.ip = modelDevice.ip
+//            device.port = Int32(modelDevice.port)
+//            device.created =  Date()
+//            NotificationCenter.default.post(name: .init("updateDevicesNotification"), object: nil)
+//        }
+//        do {
+//            try context.save()
+//        } catch {
+//            print("There was an error saving context")
+//        }
         dismiss(animated: true)
     }
 

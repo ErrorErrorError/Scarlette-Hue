@@ -8,7 +8,7 @@
 import Foundation
 import RxSwift
 
-public protocol DevicesUseCase {
+public protocol DevicesUseCaseProtocol {
     func devices() -> Observable<[Device]>
     func save(device: Device) -> Observable<Void>
     func delete(device: Device) -> Observable<Void>

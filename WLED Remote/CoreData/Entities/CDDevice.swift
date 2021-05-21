@@ -10,5 +10,5 @@ import Foundation
 import CoreData
 
 @objc(CDDevice)
-public class CDDevice: NSManagedObject {
+public final class CDDevice: NSManagedObject {
 }

@@ -13,6 +13,10 @@ def rx_cocoa
   pod 'RxCocoa', '6.2.0'
 end
 
+def rx_alamofire
+  pod 'RxAlamofire'
+end
+
 def query_kit
   pod 'QueryKit'
 end
@@ -23,6 +27,7 @@ target 'WLED Remote' do
   rx_swift
   rx_cocoa
   alamofire
+  rx_alamofire
   query_kit
 end
 
@@ -30,12 +35,4 @@ target 'ErrorErrorErrorUIKit' do
   use_frameworks!
   rx_swift
   rx_cocoa
-end
-
-target 'WLEDKit' do
-  use_frameworks!
-  rx_swift
-  rx_cocoa
-  alamofire
-  query_kit
 end

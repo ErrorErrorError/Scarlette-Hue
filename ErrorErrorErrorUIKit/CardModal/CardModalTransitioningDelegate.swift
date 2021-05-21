@@ -7,14 +7,14 @@
 
 import UIKit
 
-final class CardModalTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
+public final class CardModalTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
     var interactiveDismiss = true
 
     init(from presented: UIViewController, to presenting: UIViewController) {
         super.init()
     }
 
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+    public func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         return CardModalPresentationController(presentedViewController: presented, presenting: presenting)
     }
 }

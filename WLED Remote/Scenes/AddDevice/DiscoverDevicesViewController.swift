@@ -181,34 +181,35 @@ extension DiscoverDevicesViewController: NetServiceDelegate {
         AF.request("http://\(ipAddress):\(sender.port)/win", method: .get).response { data in
             switch data.result {
             case .success(_):
+                break
                 // Make sure this device has not been added to the database already. If it has skip it.
-                guard let managedContext = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext else {
-                    return
-                }
-
-                let request = CDDevice.createFetchRequest()
-                request.fetchLimit = 1
-                request.predicate = NSPredicate(format: "ip == %@", ipAddress)
-
-                do {
-                    let count = try managedContext.count(for: request)
-                    if count > 0 {
-                        print("Device already saved in database: \(ipAddress)")
-                        return
-                    }
-                } catch {
-                    print("Could not validate it's existance in the database: \(error)")
-                    return
-                }
-
-                // If there is no devices with the same IP address saved, then proceed to show it's available to add
-                // Do not insert into database yet
-                let device = Device(name: sender.name, ip: ipAddress, port: sender.port)
-                self.devices.add(device)
-                DispatchQueue.main.async {
-                    self.scanningSpinner.stopAnimating()
-                    self.devicesFoundCollectionView.reloadData()
-                }
+//                guard let managedContext = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext else {
+//                    return
+//                }
+//
+//                let request = CDDevice.fetchRequest()
+//                request.fetchLimit = 1
+//                request.predicate = NSPredicate(format: "ip == %@", ipAddress)
+//
+//                do {
+//                    let count = try managedContext.count(for: request)
+//                    if count > 0 {
+//                        print("Device already saved in database: \(ipAddress)")
+//                        return
+//                    }
+//                } catch {
+//                    print("Could not validate it's existance in the database: \(error)")
+//                    return
+//                }
+//
+//                // If there is no devices with the same IP address saved, then proceed to show it's available to add
+//                // Do not insert into database yet
+//                let device = Device(name: sender.name, ip: ipAddress, port: sender.port)
+//                self.devices.add(device)
+//                DispatchQueue.main.async {
+//                    self.scanningSpinner.stopAnimating()
+//                    self.devicesFoundCollectionView.reloadData()
+//                }
             case .failure(let error):
                 print("error: \(error)")
             }

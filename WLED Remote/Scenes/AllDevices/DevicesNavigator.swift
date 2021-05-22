@@ -9,7 +9,7 @@ import UIKit
 import ErrorErrorErrorUIKit
 
 protocol DevicesNavigator {
-    func toCreateDevice()
+    func toDiscoverDevice()
     func toDevice(_ device: Device)
     func toDevices()
 }
@@ -26,16 +26,18 @@ class DefaultDevicesNavigator: DevicesNavigator {
 
     func toDevices() {
         let viewController = DevicesViewController()
-        viewController.viewModel = DevicesViewModel(useCase: services.makeDevicesUseCase(),
+        viewController.viewModel = DevicesViewModel(devicesRepository: services.makeDevicesRepository(),
                                                     navigator: self)
         navigationController.pushViewController(viewController, animated: true)
     }
 
-    func toCreateDevice() {
+    func toDiscoverDevice() {
         guard let topViewController = navigationController.topViewController else { return }
-        let navigator = DefaultDiscoverDeviceNavigator(navigationController: navigationController)
-        let viewModel = DiscoverDeviceViewModel(createDeviceUseCase: services.makeDevicesUseCase(),
-                                              navigator: navigator)
+        let navigator = DefaultDiscoverDeviceNavigator(createDevicesUseCase: services.makeDevicesRepository(), navigationController: navigationController)
+        let viewModel = DiscoverDeviceViewModel(devicesRepository: services.makeDevicesRepository(),
+                                                bonjourService: services.makeDevicesBonjourService(),
+                                                stateNetworkService: services.makeStateNetwork(),
+                                                navigator: navigator)
         let viewController = DiscoverDeviceViewController()
         let transitionDelegate = CardModalTransitioningDelegate(from: topViewController, to: viewController)
         viewController.viewModel = viewModel

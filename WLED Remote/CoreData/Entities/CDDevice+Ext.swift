@@ -28,6 +28,10 @@ extension CDDevice: DomainConvertibleType {
 }
 
 extension CDDevice: Persistable {
+    static func createFetchRequest() -> NSFetchRequest<CDDevice> {
+        return NSFetchRequest<CDDevice>(entityName: "CDDevice")
+    }
+
     static var entityName: String {
         return "CDDevice"
     }

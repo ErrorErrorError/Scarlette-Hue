@@ -50,6 +50,7 @@ class DevicesViewController: UICollectionViewController {
 
     private func bindViewController() {
         assert(viewModel != nil)
+
         let viewWillAppear = rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
             .mapToVoid()
             .asDriverOnErrorJustComplete()
@@ -95,9 +96,10 @@ class DevicesViewController: UICollectionViewController {
     private func setupCollectionView() {
         collectionView.addSubview(refreshControl)
         collectionView.refreshControl = refreshControl
-        collectionView.delegate = nil
+        collectionView.delegate = self
         collectionView.dataSource = nil
         collectionView.alwaysBounceVertical = true
+        collectionView.register(DeviceCollectionViewCell.self, forCellWithReuseIdentifier: DeviceCollectionViewCell.identifier)
         collectionView.backgroundColor = .systemBackground
     }
 }

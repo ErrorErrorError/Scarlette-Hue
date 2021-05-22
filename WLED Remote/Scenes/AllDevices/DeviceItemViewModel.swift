@@ -1,13 +1,13 @@
 //
-//  DeviceInfoItemViewModel.swift
+//  DeviceItemViewModel.swift
 //  WLED Remote
 //
-//  Created by Erik Bautista on 5/21/21.
+//  Created by Erik Bautista on 5/20/21.
 //
 
 import Foundation
 
-final class DeviceInfoItemViewModel {
+final class DeviceItemViewModel {
     let name: String
     let ip: String
     let device: Device

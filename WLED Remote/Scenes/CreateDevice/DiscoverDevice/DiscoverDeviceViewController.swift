@@ -8,7 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
-
+import RxDataSources
 
 class DiscoverDeviceViewController: UIViewController {
     // MARK: Rx
@@ -52,9 +52,10 @@ class DiscoverDeviceViewController: UIViewController {
         return button
     }()
 
-    private lazy var devicesFoundCollectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.backgroundColor = .clear
+        collectionView.register(DeviceInfoCollectionViewCell.self, forCellWithReuseIdentifier: DeviceInfoCollectionViewCell.identifier)
         return collectionView
     }()
 
@@ -81,7 +82,7 @@ class DiscoverDeviceViewController: UIViewController {
         contentView.addSubview(exitButton)
         contentView.addSubview(titleLabel)
         contentView.addSubview(descriptionLabel)
-        contentView.addSubview(devicesFoundCollectionView)
+        contentView.addSubview(collectionView)
         contentView.addSubview(scanningSpinner)
         contentView.addSubview(primaryButton)
 
@@ -114,17 +115,17 @@ class DiscoverDeviceViewController: UIViewController {
         descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: outerXAxisInset).isActive = true
         descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -outerXAxisInset).isActive = true
 
-        devicesFoundCollectionView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: insetSpacing + 20).isActive = true
-        devicesFoundCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: outerXAxisInset).isActive = true
-        devicesFoundCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -outerXAxisInset).isActive = true
-        devicesFoundCollectionView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        collectionView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: insetSpacing + 20).isActive = true
+        collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: outerXAxisInset).isActive = true
+        collectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -outerXAxisInset).isActive = true
+        collectionView.heightAnchor.constraint(equalToConstant: 100).isActive = true
 
-        scanningSpinner.topAnchor.constraint(equalTo: devicesFoundCollectionView.topAnchor).isActive = true
-        scanningSpinner.centerYAnchor.constraint(equalTo: devicesFoundCollectionView.centerYAnchor).isActive = true
-        scanningSpinner.leadingAnchor.constraint(equalTo: devicesFoundCollectionView.leadingAnchor).isActive = true
-        scanningSpinner.trailingAnchor.constraint(equalTo: devicesFoundCollectionView.trailingAnchor).isActive = true
+        scanningSpinner.topAnchor.constraint(equalTo: collectionView.topAnchor).isActive = true
+        scanningSpinner.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor).isActive = true
+        scanningSpinner.leadingAnchor.constraint(equalTo: collectionView.leadingAnchor).isActive = true
+        scanningSpinner.trailingAnchor.constraint(equalTo: collectionView.trailingAnchor).isActive = true
 
-        primaryButton.topAnchor.constraint(equalTo: devicesFoundCollectionView.bottomAnchor, constant: insetSpacing + 20).isActive = true
+        primaryButton.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: insetSpacing + 20).isActive = true
         primaryButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: outerXAxisInset).isActive = true
         primaryButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -outerXAxisInset).isActive = true
         primaryButton.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
@@ -137,14 +138,29 @@ class DiscoverDeviceViewController: UIViewController {
             .mapToVoid()
             .asDriverOnErrorJustComplete()
 
-        let input = DiscoverDeviceViewModel.Input(devicesTrigger: viewWillAppear,
-                                                  cancelTrigger: exitButton.rx.tap.asDriver(),
-                                                  nextTrigger: primaryButton.rx.tap.asDriver(),
-                                                  name: Driver.empty(),
-                                                  ip: Driver.empty(),
-                                                  port: Driver.empty())
+        collectionView.delegate = self
+
+        let input = DiscoverDeviceViewModel.Input(scanDevicesTrigger: viewWillAppear,
+                                                  devicesTrigger: viewWillAppear,
+                                                  dismissTrigger: exitButton.rx.tap.asDriver(),
+                                                  nextTrigger: collectionView.rx.itemSelected.asDriver())
 
         let output = viewModel.transform(input: input)
+
+        let dataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, DeviceInfoItemViewModel>>(configureCell: { _, collectionView, indexPath, item in
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DeviceInfoCollectionViewCell.identifier, for: indexPath)
+            if let cell = cell as? DeviceInfoCollectionViewCell {
+                cell.bind(viewModel: item)
+            }
+            return cell
+        })
+
+        output.scannedDevices.compactMap({[SectionModel<String, DeviceInfoItemViewModel>(model: "Device", items: $0)]})
+            .drive(collectionView.rx.items(dataSource: dataSource)).disposed(by: disposeBag)
+
+        output.scannedDevices.map({ $0.isEmpty }).drive(scanningSpinner.rx.isAnimating).disposed(by: disposeBag)
+
+        output.devices.drive().disposed(by: disposeBag)
 
         output.dismiss.drive()
             .disposed(by: disposeBag)

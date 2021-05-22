@@ -2,16 +2,17 @@
 //  CDDevice+CoreDataProperties.swift
 //  WLED Remote
 //
-//  Created by Erik Bautista on 5/17/21.
+//  Created by Erik Bautista on 5/21/21.
 //
 //
 
 import Foundation
 import CoreData
 
+
 extension CDDevice {
 
-    @nonobjc public class func createFetchRequest() -> NSFetchRequest<CDDevice> {
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<CDDevice> {
         return NSFetchRequest<CDDevice>(entityName: "CDDevice")
     }
 
@@ -20,4 +21,9 @@ extension CDDevice {
     @NSManaged public var name: String
     @NSManaged public var port: Int32
     @NSManaged public var created: Date
+
+}
+
+extension CDDevice : Identifiable {
+
 }

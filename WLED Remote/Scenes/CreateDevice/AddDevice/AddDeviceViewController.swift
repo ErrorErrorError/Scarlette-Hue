@@ -6,10 +6,20 @@
 //
 
 import UIKit
-import CoreData
+import RxSwift
 
 
 class AddDeviceViewController: UIViewController {
+
+    // MARK: ViewModel
+
+    var viewModel: AddDeviceViewModel!
+
+    // MARK: Rx
+
+    private let disposeBag = DisposeBag()
+
+    // MARK: Views
 
     private let contentView: UIView = {
         let view = UIView(frame: .zero)
@@ -62,7 +72,7 @@ class AddDeviceViewController: UIViewController {
     }()
 
     private lazy var primaryButton: UIButton = {
-        let button = UIButton(type: .roundedRect, primaryAction: UIAction(handler: { _ in self.addDevice() }))
+        let button = UIButton(type: .roundedRect)
         button.setTitle("Add Device", for: .normal)
         button.tintColor = .label
         button.layer.cornerRadius = buttonHeight / 4
@@ -71,8 +81,6 @@ class AddDeviceViewController: UIViewController {
     }()
 
     private let buttonHeight: CGFloat = 48
-
-    var device: Device?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,8 +98,7 @@ class AddDeviceViewController: UIViewController {
 
         setupConstraints()
         setListeners()
-
-        deviceNameTextField.text = device?.name
+        bindViewController()
     }
 
     private func setupConstraints() {
@@ -141,6 +148,26 @@ class AddDeviceViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+
+    private func bindViewController() {
+        assert(viewModel != nil)
+
+        let input = AddDeviceViewModel.Input(saveTrigger: primaryButton.rx.tap.asDriver(),
+                                             exitTrigger: exitButton.rx.tap.asDriver(),
+                                             name: deviceNameTextField.rx.text.orEmpty.asDriver())
+        let output = viewModel.transform(input: input)
+
+        output.canSave.drive(primaryButton.rx.isEnabled).disposed(by: disposeBag)
+        output.device.drive(deviceBinding).disposed(by: disposeBag)
+        output.exit.drive().disposed(by: disposeBag)
+        output.save.drive().disposed(by: disposeBag)
+    }
+
+    var deviceBinding: Binder<Device> {
+        return Binder(self, binding: { (vc, device) in
+            vc.deviceNameTextField.text = device.name
+        })
+    }
 }
 
 extension AddDeviceViewController: UITextFieldDelegate {
@@ -153,23 +180,6 @@ extension AddDeviceViewController: UITextFieldDelegate {
         }
         return true
     }
-
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        if let text = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines), !text.isEmpty {
-            primaryButton.isEnabled = true
-        } else {
-            primaryButton.isEnabled = false
-        }
-    }
-
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if let text = (textField.text as NSString?)?.replacingCharacters(in: range, with: string).trimmingCharacters(in: .whitespacesAndNewlines), !text.isEmpty {
-            primaryButton.isEnabled = true
-        } else {
-            primaryButton.isEnabled = false
-        }
-        return true
-    }
 }
 
 // MARK: - Actions
@@ -178,29 +188,6 @@ extension AddDeviceViewController {
         if deviceNameTextField.isFirstResponder {
             deviceNameTextField.resignFirstResponder()
         }
-    }
-
-    private func addDevice() {
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-//          return
-//        }
-
-//        let context = appDelegate.persistentContainer.viewContext
-//        if let entity = NSEntityDescription.entity(forEntityName: "CDDevice", in: context), let modelDevice = device {
-//            let device = CDDevice(entity: entity, insertInto: context)
-//            device.id = modelDevice.id
-//            device.name = deviceNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "WLED"
-//            device.ip = modelDevice.ip
-//            device.port = Int32(modelDevice.port)
-//            device.created =  Date()
-//            NotificationCenter.default.post(name: .init("updateDevicesNotification"), object: nil)
-//        }
-//        do {
-//            try context.save()
-//        } catch {
-//            print("There was an error saving context")
-//        }
-        dismiss(animated: true)
     }
 
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -226,5 +213,13 @@ extension AddDeviceViewController {
 
     @objc func keyboardWillHide(notification: NSNotification) {
         self.view.frame.origin.y = 0
+    }
+}
+
+extension Reactive where Base: UITextView {
+    var isEditable: Binder<Bool> {
+        return Binder(self.base, binding: { (textView, isEditable) in
+            textView.isEditable = isEditable
+        })
     }
 }

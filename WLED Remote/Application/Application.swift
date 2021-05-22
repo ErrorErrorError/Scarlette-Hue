@@ -11,16 +11,16 @@ import UIKit
 final class Application {
     static let shared = Application()
 
-    private let coreDataUseCaseProvider: UseCaseProvider
+    private let services: UseCaseProvider
 
     private init() {
-        self.coreDataUseCaseProvider = UseCaseProvider()
+        self.services = UseCaseProvider()
     }
 
     func configureMainInterface(in window: UIWindow) {
         let devicesNavigationController = UINavigationController()
 
-        let deviceNavigator = DefaultDevicesNavigator(services: coreDataUseCaseProvider, navigationController: devicesNavigationController)
+        let deviceNavigator = DefaultDevicesNavigator(services: services, navigationController: devicesNavigationController)
         window.rootViewController = devicesNavigationController
     
         deviceNavigator.toDevices()

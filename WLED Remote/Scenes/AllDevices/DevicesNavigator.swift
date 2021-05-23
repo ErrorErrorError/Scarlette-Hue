@@ -33,7 +33,8 @@ class DefaultDevicesNavigator: DevicesNavigator {
 
     func toDiscoverDevice() {
         guard let topViewController = navigationController.topViewController else { return }
-        let navigator = DefaultDiscoverDeviceNavigator(createDevicesUseCase: services.makeDevicesRepository(), navigationController: navigationController)
+        let navigator = DefaultDiscoverDeviceNavigator(services: services,
+                                                       navigationController: navigationController)
         let viewModel = DiscoverDeviceViewModel(devicesRepository: services.makeDevicesRepository(),
                                                 bonjourService: services.makeDevicesBonjourService(),
                                                 stateNetworkService: services.makeStateNetwork(),
@@ -48,6 +49,13 @@ class DefaultDevicesNavigator: DevicesNavigator {
 
     func toDevice(_ device: Device) {
         let viewController = DeviceViewController()
+        let navigator = DefaultDeviceNavigator(services: services,
+                                               navigationController: navigationController)
+        let viewModel = DeviceViewModel(device: device,
+                                        stateNetworkService: services.makeStateNetwork(),
+                                        deviceRepository: services.makeDevicesRepository(),
+                                        navigator: navigator)
+        viewController.viewModel = viewModel
         navigationController.pushViewController(viewController, animated: true)
     }
 }

@@ -29,4 +29,9 @@ public final class UseCaseProvider {
         let network = Network<State>(apiEndpoint)
         return StateNetwork(network: network)
     }
+
+    public func makeInfoNetwork() -> InfoNetwork {
+        let network = Network<Info>(apiEndpoint)
+        return InfoNetwork(network: network)
+    }
 }

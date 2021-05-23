@@ -49,9 +49,11 @@
 		1357CD192653A85F009731D6 /* UIColor+Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1357CD182653A85F009731D6 /* UIColor+Int.swift */; };
 		135EE151264731A00027909B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135EE150264731A00027909B /* AppDelegate.swift */; };
 		135EE153264731A00027909B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135EE152264731A00027909B /* SceneDelegate.swift */; };
-		135EE155264731A00027909B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135EE154264731A00027909B /* MainViewController.swift */; };
 		135EE15D264731A10027909B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 135EE15C264731A10027909B /* Assets.xcassets */; };
 		135EE160264731A10027909B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 135EE15E264731A10027909B /* LaunchScreen.storyboard */; };
+		136EE14B2659B0630015C333 /* DeviceNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136EE14A2659B0630015C333 /* DeviceNavigator.swift */; };
+		136EE14D2659B0760015C333 /* DeviceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136EE14C2659B0760015C333 /* DeviceViewModel.swift */; };
+		136EE14F2659B6500015C333 /* InfoNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136EE14E2659B6500015C333 /* InfoNetwork.swift */; };
 		138FF65A264C706900216D47 /* DeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138FF659264C706900216D47 /* DeviceViewController.swift */; };
 		1390518F26573BCB007CA620 /* ErrorErrorErrorUIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 1390518D26573BCB007CA620 /* ErrorErrorErrorUIKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1390519726573C6C007CA620 /* CardModalTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139F9FC1265083810056FC57 /* CardModalTransitioningDelegate.swift */; };
@@ -137,10 +139,12 @@
 		135EE14D264731A00027909B /* WLED Remote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WLED Remote.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		135EE150264731A00027909B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		135EE152264731A00027909B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		135EE154264731A00027909B /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		135EE15C264731A10027909B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		135EE15F264731A10027909B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		135EE161264731A10027909B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		136EE14A2659B0630015C333 /* DeviceNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceNavigator.swift; sourceTree = "<group>"; };
+		136EE14C2659B0760015C333 /* DeviceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceViewModel.swift; sourceTree = "<group>"; };
+		136EE14E2659B6500015C333 /* InfoNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoNetwork.swift; sourceTree = "<group>"; };
 		1380FFC12654A82200FC692E /* Nightlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nightlight.swift; sourceTree = "<group>"; };
 		1380FFC32654A83F00FC692E /* Segment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Segment.swift; sourceTree = "<group>"; };
 		1380FFC52654AAEA00FC692E /* JSON+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSON+Utils.swift"; sourceTree = "<group>"; };
@@ -284,7 +288,6 @@
 		1357046C2654FA5600B74344 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				135EE154264731A00027909B /* MainViewController.swift */,
 				135704A62656275800B74344 /* AllSettings */,
 				135704A52656270500B74344 /* EditDevice */,
 				135704A4265626E800B74344 /* CreateDevice */,
@@ -318,7 +321,12 @@
 		135704A52656270500B74344 /* EditDevice */ = {
 			isa = PBXGroup;
 			children = (
+				136EE1522659C5450015C333 /* DeviceEffects */,
+				136EE1512659C5320015C333 /* DeviceInfo */,
+				136EE1502659C5280015C333 /* DeviceSettings */,
 				138FF659264C706900216D47 /* DeviceViewController.swift */,
+				136EE14A2659B0630015C333 /* DeviceNavigator.swift */,
+				136EE14C2659B0760015C333 /* DeviceViewModel.swift */,
 			);
 			path = EditDevice;
 			sourceTree = "<group>";
@@ -418,6 +426,27 @@
 			path = "WLED Remote";
 			sourceTree = "<group>";
 		};
+		136EE1502659C5280015C333 /* DeviceSettings */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DeviceSettings;
+			sourceTree = "<group>";
+		};
+		136EE1512659C5320015C333 /* DeviceInfo */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DeviceInfo;
+			sourceTree = "<group>";
+		};
+		136EE1522659C5450015C333 /* DeviceEffects */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DeviceEffects;
+			sourceTree = "<group>";
+		};
 		138F32892656453800379A0F /* Entities */ = {
 			isa = PBXGroup;
 			children = (
@@ -442,6 +471,7 @@
 			children = (
 				138F32912656479900379A0F /* StateNetwork.swift */,
 				13E930F2265885EA00C1EEF6 /* DeviceNetwork.swift */,
+				136EE14E2659B6500015C333 /* InfoNetwork.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -686,7 +716,6 @@
 				130C3ABF265795F000C7425D /* NetService+Rx.swift in Sources */,
 				13233CBB26573426005B1270 /* Preset.swift in Sources */,
 				13233CC026573426005B1270 /* Info.swift in Sources */,
-				135EE155264731A00027909B /* MainViewController.swift in Sources */,
 				13577F4926576E670074329C /* DiscoverDeviceViewModel.swift in Sources */,
 				13233CAB265733FB005B1270 /* NSManagedObjectContext+Ext.swift in Sources */,
 				13233CA226572E71005B1270 /* DevicesViewModel.swift in Sources */,
@@ -704,11 +733,13 @@
 				13233CA6265733C6005B1270 /* JSON+Utils.swift in Sources */,
 				130CEFCA264DBB9900BECFDF /* DeviceCollectionViewCell.swift in Sources */,
 				13E930F3265885EA00C1EEF6 /* DeviceNetwork.swift in Sources */,
+				136EE14D2659B0760015C333 /* DeviceViewModel.swift in Sources */,
 				13512FE82658B1DF00C4040F /* CDDevice+CoreDataClass.swift in Sources */,
 				13E930F52658866D00C1EEF6 /* Network.swift in Sources */,
 				13912EA52651A3D400BD5095 /* ManuallyAddDeviceViewController.swift in Sources */,
 				1356002C2658363B00B16B59 /* AddDeviceNavigator.swift in Sources */,
 				13912EB62651D6F200BD5095 /* AddDeviceViewController.swift in Sources */,
+				136EE14F2659B6500015C333 /* InfoNetwork.swift in Sources */,
 				139F9FCC2650C59B0056FC57 /* UIScreen+cornerRadiusDevice.swift in Sources */,
 				13233CBE26573426005B1270 /* Nightlight.swift in Sources */,
 				13233CB62657341A005B1270 /* StateNetwork.swift in Sources */,
@@ -723,6 +754,7 @@
 				135EE153264731A00027909B /* SceneDelegate.swift in Sources */,
 				13233CB126573403005B1270 /* Persistable.swift in Sources */,
 				13512FE92659050F00C4040F /* Model.xcdatamodeld in Sources */,
+				136EE14B2659B0630015C333 /* DeviceNavigator.swift in Sources */,
 				13E930F1265867F500C1EEF6 /* Single+Ext.swift in Sources */,
 				13233CBD26573426005B1270 /* Device.swift in Sources */,
 				13233CAE26573400005B1270 /* CDDevice+CoreDataProperties.swift in Sources */,

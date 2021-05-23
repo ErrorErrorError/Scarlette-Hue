@@ -13,7 +13,7 @@ public struct Device: Codable {
     public let ip: String
     public let port: Int
     public var created: Date
-    public var state: State?
+//    public var state: State?
 //    public var info: Info?
 
     public init(id: UUID, name: String, ip: String, port: Int, created: Date? = nil, state: State? = nil, info: Info? = nil) {
@@ -22,7 +22,7 @@ public struct Device: Codable {
         self.ip = ip
         self.port = port
         self.created = created == nil ? Date() : created!
-        self.state = state
+//        self.state = state
 //        self.info = info
     }
 
@@ -35,8 +35,8 @@ public struct Device: Codable {
         case name
         case ip
         case port
-        case state
         case created
+//        case state
 //        case info
     }
 
@@ -48,7 +48,7 @@ public struct Device: Codable {
         ip = try container.decode(String.self, forKey: .ip)
         port = try container.decode(Int.self, forKey: .port)
         created = try container.decode(Date.self, forKey: .created)
-        state = try? container.decode(State.self, forKey: .state)
+//        state = try? container.decode(State.self, forKey: .state)
 //        info = try? container.decode(Info.self, forKey: .info)
     }
 }
@@ -59,8 +59,9 @@ extension Device: Equatable {
             lhs.name == rhs.name &&
             lhs.ip == rhs.ip &&
             lhs.port == rhs.port &&
-            lhs.created == rhs.created &&
-            lhs.state == rhs.state
+            lhs.created == rhs.created
+//        &&
+//            lhs.state == rhs.state
     }
 }
 

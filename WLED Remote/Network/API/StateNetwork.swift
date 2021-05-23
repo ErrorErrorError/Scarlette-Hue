@@ -21,4 +21,8 @@ public final class StateNetwork {
     public func validateNetwork(ip: String, port: Int) -> Observable<State> {
         return network.getItem(ip, port, "state")
     }
+
+    public func updateState(device: Device, state: State) -> Observable<Bool> {
+        return network.postItem(device, "si", (try? state.jsonData()) ?? Data())
+    }
 }

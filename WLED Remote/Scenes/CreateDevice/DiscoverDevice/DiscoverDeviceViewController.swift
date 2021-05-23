@@ -30,7 +30,7 @@ class DiscoverDeviceViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.text = "Select a WLED Device to Add to Your Collection"
-        label.font = UIFont.boldSystemFont(ofSize: 24)
+        label.font = UIFont.boldSystemFont(ofSize: 26)
         label.textColor = UIColor.label
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -40,8 +40,8 @@ class DiscoverDeviceViewController: UIViewController {
     private let descriptionLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.text = "Make sure your WLED device is on and connected to the same network."
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = UIColor.secondaryLabel
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.textColor = UIColor.label
         label.textAlignment = .center
         label.numberOfLines = 0
         return label
@@ -70,6 +70,7 @@ class DiscoverDeviceViewController: UIViewController {
     private lazy var primaryButton: UIButton = {
         let button = UIButton(type: .roundedRect)
         button.setTitle("Manually Add Device", for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.tintColor = .label
         button.layer.cornerRadius = buttonHeight / 4
         button.backgroundColor = .secondarySystemBackground

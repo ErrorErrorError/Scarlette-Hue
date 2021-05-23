@@ -17,12 +17,25 @@ final class Application {
         self.services = UseCaseProvider()
     }
 
+    // TODO: Create a tab bar controller for each element
     func configureMainInterface(in window: UIWindow) {
         let devicesNavigationController = UINavigationController()
-
-        let deviceNavigator = DefaultDevicesNavigator(services: services, navigationController: devicesNavigationController)
+        let deviceNavigator = DefaultDevicesNavigator(services: services,
+                                                      navigationController: devicesNavigationController)
         window.rootViewController = devicesNavigationController
-    
+
         deviceNavigator.toDevices()
+
+        //        let devicesViewController = UINavigationController(rootViewController: DevicesCollectionViewController())
+        //        let settingsViewController = UINavigationController(rootViewController: SettingsViewController())
+        //        devicesViewController.tabBarItem = UITabBarItem(title: "Devices",
+        //                                                          image: UIImage(systemName: "lightbulb.fill"),
+        //                                                          tag: 0)
+        //        settingsViewController.tabBarItem = UITabBarItem(title: "Settings",
+        //                                                          image: UIImage(systemName: "gearshape.fill"),
+        //                                                          tag: 0)
+        //
+        //        setViewControllers([devicesViewController, settingsViewController], animated: true)
+
     }
 }

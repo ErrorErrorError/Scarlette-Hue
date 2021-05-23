@@ -10,7 +10,7 @@ import UIKit
 class BrightnessSlider: UISlider {
     override init(frame: CGRect) {
         super.init(frame: frame)
-        minimumValue = 0
+        minimumValue = 1
         maximumValue = 255
 
         updateTracks()

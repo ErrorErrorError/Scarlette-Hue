@@ -21,13 +21,7 @@ final class Network<T: Decodable> {
     }
 
     func getItem(_ device: Device, _ path: String) -> Observable<T> {
-        let absolutePath = String(format: "\(endPoint)", device.ip, device.port) + "/\(path)"
-        return RxAlamofire
-            .data(.get, absolutePath)
-            .observe(on: scheduler)
-            .map({ data -> T in
-                return try JSONDecoder().decode(T.self, from: data)
-            })
+        return getItem(device.ip, device.port, path)
     }
 
     func getItem(_ ip: String, _ port: Int, _ path: String) -> Observable<T> {
@@ -38,5 +32,41 @@ final class Network<T: Decodable> {
             .map({ data -> T in
                 return try JSONDecoder().decode(T.self, from: data)
             })
+    }
+
+    func postItem(_ device: Device, _ path: String, _ data: Data) -> Observable<T> {
+        return postItem(device.ip, device.port, path, data)
+    }
+
+    func postItem(_ ip: String, _ port: Int, _ path: String, _ data: Data) -> Observable<T> {
+        let absolutePath = String(format: "\(endPoint)", ip, port) + "/\(path)"
+        var request = try! URLRequest(url: absolutePath, method: .post)
+        request.httpBody = data
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        return RxAlamofire
+            .requestData(request)
+            .observe(on: scheduler)
+            .map({ response -> T in
+                return try JSONDecoder().decode(T.self, from: response.1)
+            })
+    }
+
+    func postItem(_ device: Device, _ path: String, _ data: Data) -> Observable<Bool> {
+        return postItem(device.ip, device.port, path, data)
+    }
+
+    func postItem(_ ip: String, _ port: Int, _ path: String, _ data: Data) -> Observable<Bool> {
+        let absolutePath = String(format: "\(endPoint)", ip, port) + "/\(path)"
+        if var request = try? URLRequest(url: absolutePath, method: .post) {
+            request.httpBody = data
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            return RxAlamofire
+                .requestJSON(request)
+                .observe(on: scheduler)
+                .map { (response, data) in
+                    (200..<300).contains(response.statusCode)
+                }
+        }
+        return Observable.just(false)
     }
 }

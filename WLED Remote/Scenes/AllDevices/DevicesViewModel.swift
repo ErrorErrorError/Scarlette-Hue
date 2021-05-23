@@ -41,7 +41,7 @@ final class DevicesViewModel: ViewModelType {
             .withLatestFrom(devices) { indexPath, devices in
                 return devices[indexPath.row].device
             }
-
+            .do(onNext: navigator.toDevice)
 
         let createDevice = input.createDeviceTrigger
             .do(onNext: navigator.toDiscoverDevice)

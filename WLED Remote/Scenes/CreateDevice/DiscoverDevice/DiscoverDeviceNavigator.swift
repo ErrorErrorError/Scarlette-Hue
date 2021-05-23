@@ -16,10 +16,10 @@ protocol DiscoverDeviceNavigator {
 
 final class DefaultDiscoverDeviceNavigator: DiscoverDeviceNavigator {
     private let navigationController: UINavigationController
-    private let createDevicesUseCase: DevicesUseCaseProtocol
+    private let services: UseCaseProvider
 
-    init(createDevicesUseCase: DevicesUseCaseProtocol, navigationController: UINavigationController) {
-        self.createDevicesUseCase = createDevicesUseCase
+    init(services: UseCaseProvider, navigationController: UINavigationController) {
+        self.services = services
         self.navigationController = navigationController
     }
 
@@ -32,7 +32,7 @@ final class DefaultDiscoverDeviceNavigator: DiscoverDeviceNavigator {
             let navigator = AddDeviceNavigator(navigationController: navigationController)
             let viewController = AddDeviceViewController()
             let viewModel = AddDeviceViewModel(device: device,
-                                               devicesRepository: createDevicesUseCase,
+                                               devicesRepository: services.makeDevicesRepository(),
                                                navigator: navigator)
             viewController.viewModel = viewModel
 

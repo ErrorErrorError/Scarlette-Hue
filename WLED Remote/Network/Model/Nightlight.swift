@@ -52,17 +52,6 @@ extension Nightlight {
     }
 }
 
-extension Nightlight: Equatable {
-    public static func == (lhs: Nightlight, rhs: Nightlight) -> Bool {
-        return lhs.on == rhs.on &&
-            lhs.dur == rhs.dur &&
-            lhs.fade == rhs.fade &&
-            lhs.mode == rhs.mode &&
-            lhs.tbri == rhs.tbri &&
-            lhs.rem == rhs.rem
-    }
-}
+extension Nightlight: Equatable { }
 
-extension Nightlight: Hashable {
-    
-}
+extension Nightlight: Hashable { }

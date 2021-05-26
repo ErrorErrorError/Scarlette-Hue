@@ -11,17 +11,20 @@ import RxCocoa
 
 class DeviceViewModel: ViewModelType {
     private let device: Device
+    private let deviceData: DeviceData
     private let deviceRepository: DevicesUseCaseProtocol
     private let navigator: DeviceNavigator
-    private let stateNetworkService: StateNetwork
+    private let deviceDataNetworkService: DeviceDataNetwork
 
     init(device: Device,
-         stateNetworkService: StateNetwork,
+         deviceData: DeviceData,
+         deviceDataNetworkService: DeviceDataNetwork,
          deviceRepository: DevicesUseCaseProtocol,
          navigator: DeviceNavigator) {
         self.device = device
+        self.deviceData = deviceData
         self.deviceRepository = deviceRepository
-        self.stateNetworkService = stateNetworkService
+        self.deviceDataNetworkService = deviceDataNetworkService
         self.navigator = navigator
     }
 
@@ -37,25 +40,30 @@ class DeviceViewModel: ViewModelType {
 
         let device = Driver.just(device)
 
-        let state = input.fetchState
-            .flatMapLatest({ self.stateNetworkService.fetchState(device: self.device)
+        let fetchState = input.fetchState
+            .flatMapLatest({ self.deviceDataNetworkService.fetchDeviceData(device: self.device)
+                .map({ $0.state })
                 .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
                 .asDriverOnErrorJustComplete()
             })
+            .startWith(deviceData.state)
 
         let updateOn = input.updateOn
             .skip(1)                        // Do not want initial state
+            .startWith(deviceData.state.on!)
 
         let updateBrightness = input.updateBrightness
             .skip(1)                        // Do not want initial state
+            .startWith(deviceData.state.bri!)
 
         let updateColors = input.updateColors
+            .startWith(deviceData.state.firstSegment!.colors)
 
         let updated = Driver.combineLatest(updateOn, updateBrightness, updateColors)
             .map { (on, brightness, colors) in
                 State(on: on, bri: brightness, segments: [Segment(colors: colors)])
             }
-            .flatMapLatest({ self.stateNetworkService.updateState(device: self.device, state: $0)
+            .flatMapLatest({ self.deviceDataNetworkService.updateState(device: self.device, state: $0)
                 .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
                 .asDriverOnErrorJustComplete()
             })
@@ -63,7 +71,7 @@ class DeviceViewModel: ViewModelType {
         return Output(settings: settings,
                       effects: effects,
                       info: info,
-                      state: state,
+                      state: fetchState,
                       device: device,
                       updated: updated)
     }

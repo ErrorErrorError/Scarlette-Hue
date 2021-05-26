@@ -34,4 +34,9 @@ public final class UseCaseProvider {
         let network = Network<Info>(apiEndpoint)
         return InfoNetwork(network: network)
     }
+
+    public func makeDeviceDataNetwork() -> DeviceDataNetwork {
+        let network = Network<DeviceData>(apiEndpoint)
+        return DeviceDataNetwork(network: network)
+    }
 }

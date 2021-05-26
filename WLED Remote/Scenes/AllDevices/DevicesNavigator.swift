@@ -10,7 +10,7 @@ import ErrorErrorErrorUIKit
 
 protocol DevicesNavigator {
     func toDiscoverDevice()
-    func toDevice(_ device: Device)
+    func toDevice(_ device: Device, _ deviceData: DeviceData)
     func toDevices()
 }
 
@@ -27,6 +27,7 @@ class DefaultDevicesNavigator: DevicesNavigator {
     func toDevices() {
         let viewController = DevicesViewController()
         viewController.viewModel = DevicesViewModel(devicesRepository: services.makeDevicesRepository(),
+                                                    deviceDataNetworkService: services.makeDeviceDataNetwork(),
                                                     navigator: self)
         navigationController.pushViewController(viewController, animated: true)
     }
@@ -47,12 +48,13 @@ class DefaultDevicesNavigator: DevicesNavigator {
         topViewController.present(viewController, animated: true)
     }
 
-    func toDevice(_ device: Device) {
+    func toDevice(_ device: Device, _ deviceData: DeviceData) {
         let viewController = DeviceViewController()
         let navigator = DefaultDeviceNavigator(services: services,
                                                navigationController: navigationController)
         let viewModel = DeviceViewModel(device: device,
-                                        stateNetworkService: services.makeStateNetwork(),
+                                        deviceData: deviceData,
+                                        deviceDataNetworkService: services.makeDeviceDataNetwork(),
                                         deviceRepository: services.makeDevicesRepository(),
                                         navigator: navigator)
         viewController.viewModel = viewModel

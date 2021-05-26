@@ -17,7 +17,7 @@ struct Segment: Codable {
     var spacing: Int? = nil
     var on: Bool? = nil
     var brightness: Int? = nil
-    var colors: [[Int]]? = nil
+    var colors: [[Int]]
     var effect: Int? = nil
     var speed: Int? = nil
     var intensity: Int? = nil

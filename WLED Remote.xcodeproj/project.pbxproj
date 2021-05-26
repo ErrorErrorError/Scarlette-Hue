@@ -51,9 +51,15 @@
 		135EE153264731A00027909B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135EE152264731A00027909B /* SceneDelegate.swift */; };
 		135EE15D264731A10027909B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 135EE15C264731A10027909B /* Assets.xcassets */; };
 		135EE160264731A10027909B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 135EE15E264731A10027909B /* LaunchScreen.storyboard */; };
+		136841CE265CC51000C828BF /* DeviceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136841CD265CC51000C828BF /* DeviceData.swift */; };
+		136841D0265CD37500C828BF /* DeviceDataNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136841CF265CD37500C828BF /* DeviceDataNetwork.swift */; };
+		136841D2265CDEBA00C828BF /* Wifi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136841D1265CDEBA00C828BF /* Wifi.swift */; };
+		136841D4265CDEF400C828BF /* Leds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136841D3265CDEF400C828BF /* Leds.swift */; };
+		136841D7265CDF6800C828BF /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136841D6265CDF6800C828BF /* FileSystem.swift */; };
 		136EE14B2659B0630015C333 /* DeviceNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136EE14A2659B0630015C333 /* DeviceNavigator.swift */; };
 		136EE14D2659B0760015C333 /* DeviceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136EE14C2659B0760015C333 /* DeviceViewModel.swift */; };
 		136EE14F2659B6500015C333 /* InfoNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136EE14E2659B6500015C333 /* InfoNetwork.swift */; };
+		136EE154265A360A0015C333 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136EE153265A360A0015C333 /* ActivityIndicator.swift */; };
 		138FF65A264C706900216D47 /* DeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138FF659264C706900216D47 /* DeviceViewController.swift */; };
 		1390518F26573BCB007CA620 /* ErrorErrorErrorUIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 1390518D26573BCB007CA620 /* ErrorErrorErrorUIKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1390519726573C6C007CA620 /* CardModalTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139F9FC1265083810056FC57 /* CardModalTransitioningDelegate.swift */; };
@@ -69,8 +75,8 @@
 		139F9FC92650C09D0056FC57 /* DeviceInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139F9FC82650C09D0056FC57 /* DeviceInfoCollectionViewCell.swift */; };
 		139F9FCC2650C59B0056FC57 /* UIScreen+cornerRadiusDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139F9FCB2650C59B0056FC57 /* UIScreen+cornerRadiusDevice.swift */; };
 		13E930F1265867F500C1EEF6 /* Single+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E930F0265867F500C1EEF6 /* Single+Ext.swift */; };
-		13E930F3265885EA00C1EEF6 /* DeviceNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E930F2265885EA00C1EEF6 /* DeviceNetwork.swift */; };
 		13E930F52658866D00C1EEF6 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E930F42658866D00C1EEF6 /* Network.swift */; };
+		13F72AAB265E3DDB0013FE16 /* UIColor+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F72AAA265E3DDB0013FE16 /* UIColor+Custom.swift */; };
 		D30749BE3C47D395E5CAA495 /* Pods_ErrorErrorErrorUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D55626E9B4BB38966FE5563 /* Pods_ErrorErrorErrorUIKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -142,9 +148,15 @@
 		135EE15C264731A10027909B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		135EE15F264731A10027909B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		135EE161264731A10027909B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		136841CD265CC51000C828BF /* DeviceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceData.swift; sourceTree = "<group>"; };
+		136841CF265CD37500C828BF /* DeviceDataNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDataNetwork.swift; sourceTree = "<group>"; };
+		136841D1265CDEBA00C828BF /* Wifi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wifi.swift; sourceTree = "<group>"; };
+		136841D3265CDEF400C828BF /* Leds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Leds.swift; sourceTree = "<group>"; };
+		136841D6265CDF6800C828BF /* FileSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystem.swift; sourceTree = "<group>"; };
 		136EE14A2659B0630015C333 /* DeviceNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceNavigator.swift; sourceTree = "<group>"; };
 		136EE14C2659B0760015C333 /* DeviceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceViewModel.swift; sourceTree = "<group>"; };
 		136EE14E2659B6500015C333 /* InfoNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoNetwork.swift; sourceTree = "<group>"; };
+		136EE153265A360A0015C333 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		1380FFC12654A82200FC692E /* Nightlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nightlight.swift; sourceTree = "<group>"; };
 		1380FFC32654A83F00FC692E /* Segment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Segment.swift; sourceTree = "<group>"; };
 		1380FFC52654AAEA00FC692E /* JSON+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSON+Utils.swift"; sourceTree = "<group>"; };
@@ -163,8 +175,8 @@
 		139F9FC82650C09D0056FC57 /* DeviceInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		139F9FCB2650C59B0056FC57 /* UIScreen+cornerRadiusDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+cornerRadiusDevice.swift"; sourceTree = "<group>"; };
 		13E930F0265867F500C1EEF6 /* Single+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Single+Ext.swift"; sourceTree = "<group>"; };
-		13E930F2265885EA00C1EEF6 /* DeviceNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceNetwork.swift; sourceTree = "<group>"; };
 		13E930F42658866D00C1EEF6 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		13F72AAA265E3DDB0013FE16 /* UIColor+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Custom.swift"; sourceTree = "<group>"; };
 		4B4616C391026848545E3CB6 /* Pods-WLED Remote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WLED Remote.release.xcconfig"; path = "Target Support Files/Pods-WLED Remote/Pods-WLED Remote.release.xcconfig"; sourceTree = "<group>"; };
 		4DB6FE4EE0193D0177D19A71 /* Pods-ErrorErrorErrorUIKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ErrorErrorErrorUIKit.debug.xcconfig"; path = "Target Support Files/Pods-ErrorErrorErrorUIKit/Pods-ErrorErrorErrorUIKit.debug.xcconfig"; sourceTree = "<group>"; };
 		547F9126CAD67604AAF15EEC /* Pods-WLED Remote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WLED Remote.debug.xcconfig"; path = "Target Support Files/Pods-WLED Remote/Pods-WLED Remote.debug.xcconfig"; sourceTree = "<group>"; };
@@ -368,12 +380,9 @@
 		135704D126562DBB00B74344 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				136841CD265CC51000C828BF /* DeviceData.swift */,
 				13209478264CA3FA007049D7 /* Preset.swift */,
-				13209481264D1534007049D7 /* State.swift */,
-				130CEFC2264D1D5900BECFDF /* Info.swift */,
 				134DF8D526545C24005B7DFE /* Device.swift */,
-				1380FFC12654A82200FC692E /* Nightlight.swift */,
-				1380FFC32654A83F00FC692E /* Segment.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -426,6 +435,20 @@
 			path = "WLED Remote";
 			sourceTree = "<group>";
 		};
+		136841D5265CDEFC00C828BF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				13209481264D1534007049D7 /* State.swift */,
+				130CEFC2264D1D5900BECFDF /* Info.swift */,
+				1380FFC12654A82200FC692E /* Nightlight.swift */,
+				1380FFC32654A83F00FC692E /* Segment.swift */,
+				136841D1265CDEBA00C828BF /* Wifi.swift */,
+				136841D3265CDEF400C828BF /* Leds.swift */,
+				136841D6265CDF6800C828BF /* FileSystem.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		136EE1502659C5280015C333 /* DeviceSettings */ = {
 			isa = PBXGroup;
 			children = (
@@ -470,8 +493,8 @@
 			isa = PBXGroup;
 			children = (
 				138F32912656479900379A0F /* StateNetwork.swift */,
-				13E930F2265885EA00C1EEF6 /* DeviceNetwork.swift */,
 				136EE14E2659B6500015C333 /* InfoNetwork.swift */,
+				136841CF265CD37500C828BF /* DeviceDataNetwork.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -479,6 +502,7 @@
 		138FF658264C6E0400216D47 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				136841D5265CDEFC00C828BF /* Model */,
 				130C3ABB2657950800C7425D /* Bonjour */,
 				138F32902656477F00379A0F /* API */,
 				13E930F42658866D00C1EEF6 /* Network.swift */,
@@ -504,6 +528,8 @@
 				139F9FCB2650C59B0056FC57 /* UIScreen+cornerRadiusDevice.swift */,
 				1357CD182653A85F009731D6 /* UIColor+Int.swift */,
 				13E930F0265867F500C1EEF6 /* Single+Ext.swift */,
+				136EE153265A360A0015C333 /* ActivityIndicator.swift */,
+				13F72AAA265E3DDB0013FE16 /* UIColor+Custom.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -709,10 +735,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				136841D0265CD37500C828BF /* DeviceDataNetwork.swift in Sources */,
 				1356002A2658362C00B16B59 /* AddDeviceViewModel.swift in Sources */,
 				13577F4726576E410074329C /* DiscoverDeviceNavigator.swift in Sources */,
 				13233CB42657340B005B1270 /* DevicesUseCase.swift in Sources */,
 				13233CA0265726F2005B1270 /* Application.swift in Sources */,
+				136EE154265A360A0015C333 /* ActivityIndicator.swift in Sources */,
 				130C3ABF265795F000C7425D /* NetService+Rx.swift in Sources */,
 				13233CBB26573426005B1270 /* Preset.swift in Sources */,
 				13233CC026573426005B1270 /* Info.swift in Sources */,
@@ -732,12 +760,13 @@
 				1393CD0C2657508200BAAF44 /* DeviceItemViewModel.swift in Sources */,
 				13233CA6265733C6005B1270 /* JSON+Utils.swift in Sources */,
 				130CEFCA264DBB9900BECFDF /* DeviceCollectionViewCell.swift in Sources */,
-				13E930F3265885EA00C1EEF6 /* DeviceNetwork.swift in Sources */,
 				136EE14D2659B0760015C333 /* DeviceViewModel.swift in Sources */,
 				13512FE82658B1DF00C4040F /* CDDevice+CoreDataClass.swift in Sources */,
 				13E930F52658866D00C1EEF6 /* Network.swift in Sources */,
 				13912EA52651A3D400BD5095 /* ManuallyAddDeviceViewController.swift in Sources */,
+				136841CE265CC51000C828BF /* DeviceData.swift in Sources */,
 				1356002C2658363B00B16B59 /* AddDeviceNavigator.swift in Sources */,
+				13F72AAB265E3DDB0013FE16 /* UIColor+Custom.swift in Sources */,
 				13912EB62651D6F200BD5095 /* AddDeviceViewController.swift in Sources */,
 				136EE14F2659B6500015C333 /* InfoNetwork.swift in Sources */,
 				139F9FCC2650C59B0056FC57 /* UIScreen+cornerRadiusDevice.swift in Sources */,
@@ -751,6 +780,7 @@
 				139F9FBF26507F050056FC57 /* DiscoverDeviceViewController.swift in Sources */,
 				13233CA9265733F6005B1270 /* NSManagedObjectContext+Rx.swift in Sources */,
 				135EE151264731A00027909B /* AppDelegate.swift in Sources */,
+				136841D4265CDEF400C828BF /* Leds.swift in Sources */,
 				135EE153264731A00027909B /* SceneDelegate.swift in Sources */,
 				13233CB126573403005B1270 /* Persistable.swift in Sources */,
 				13512FE92659050F00C4040F /* Model.xcdatamodeld in Sources */,
@@ -760,8 +790,10 @@
 				13233CAE26573400005B1270 /* CDDevice+CoreDataProperties.swift in Sources */,
 				13233CB52657340D005B1270 /* CoreDataStack.swift in Sources */,
 				1357CD192653A85F009731D6 /* UIColor+Int.swift in Sources */,
+				136841D2265CDEBA00C828BF /* Wifi.swift in Sources */,
 				130C3AC1265795FD00C7425D /* NetServiceBrowser+Rx.swift in Sources */,
 				13233CAD26573400005B1270 /* CDDevice+Ext.swift in Sources */,
+				136841D7265CDF6800C828BF /* FileSystem.swift in Sources */,
 				132853B726530C9E006F3692 /* SettingsViewController.swift in Sources */,
 				13233CB026573403005B1270 /* DomainConvertibleType.swift in Sources */,
 			);

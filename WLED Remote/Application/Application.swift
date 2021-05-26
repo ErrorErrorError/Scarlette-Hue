@@ -23,6 +23,7 @@ final class Application {
         let deviceNavigator = DefaultDevicesNavigator(services: services,
                                                       navigationController: devicesNavigationController)
         window.rootViewController = devicesNavigationController
+        window.backgroundColor = UIColor.mainSystemBackground
 
         deviceNavigator.toDevices()
 

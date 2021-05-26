@@ -26,10 +26,14 @@ final class Network<T: Decodable> {
 
     func getItem(_ ip: String, _ port: Int, _ path: String) -> Observable<T> {
         let absolutePath = String(format: "\(endPoint)", ip, port) + "/\(path)"
+        var request = try! URLRequest(url: absolutePath, method: .get)
+        request.timeoutInterval = 5
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         return RxAlamofire
-            .data(.get, absolutePath)
+            .request(request)
+            .responseData()
             .observe(on: scheduler)
-            .map({ data -> T in
+            .map({ response, data -> T in
                 return try JSONDecoder().decode(T.self, from: data)
             })
     }
@@ -41,10 +45,12 @@ final class Network<T: Decodable> {
     func postItem(_ ip: String, _ port: Int, _ path: String, _ data: Data) -> Observable<T> {
         let absolutePath = String(format: "\(endPoint)", ip, port) + "/\(path)"
         var request = try! URLRequest(url: absolutePath, method: .post)
+        request.timeoutInterval = 5
         request.httpBody = data
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         return RxAlamofire
-            .requestData(request)
+            .request(request)
+            .responseData()
             .observe(on: scheduler)
             .map({ response -> T in
                 return try JSONDecoder().decode(T.self, from: response.1)
@@ -59,9 +65,11 @@ final class Network<T: Decodable> {
         let absolutePath = String(format: "\(endPoint)", ip, port) + "/\(path)"
         if var request = try? URLRequest(url: absolutePath, method: .post) {
             request.httpBody = data
+            request.timeoutInterval = 5
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             return RxAlamofire
-                .requestJSON(request)
+                .request(request)
+                .responseData()
                 .observe(on: scheduler)
                 .map { (response, data) in
                     (200..<300).contains(response.statusCode)

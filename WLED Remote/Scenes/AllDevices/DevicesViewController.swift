@@ -22,7 +22,6 @@ class DevicesViewController: UICollectionViewController {
 
     // Views
     private let addNewDevice = UIBarButtonItem(systemItem: .add)
-    private let refreshControl = UIRefreshControl()
 
     // MARK: Constructors
 
@@ -54,8 +53,8 @@ class DevicesViewController: UICollectionViewController {
         let viewWillAppear = rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
             .mapToVoid()
             .asDriverOnErrorJustComplete()
-        let pull = collectionView.refreshControl!.rx.controlEvent(.valueChanged).asDriver()
-        let input = DevicesViewModel.Input(trigger: Driver.merge(viewWillAppear, pull),
+
+        let input = DevicesViewModel.Input(trigger: viewWillAppear,
                                            createDeviceTrigger: addNewDevice.rx.tap.asDriver(),
                                            selection: collectionView.rx.itemSelected.asDriver())
         let output = viewModel.transform(input: input)
@@ -81,7 +80,7 @@ class DevicesViewController: UICollectionViewController {
 
     private func setupConstraints() {
         if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.estimatedItemSize = CGSize(width: collectionView.bounds.width - 32, height: 50)
+            layout.estimatedItemSize = CGSize(width: collectionView.bounds.width - 32, height: 80)
         }
     }
 
@@ -94,17 +93,16 @@ class DevicesViewController: UICollectionViewController {
     }
 
     private func setupCollectionView() {
-        collectionView.addSubview(refreshControl)
-        collectionView.refreshControl = refreshControl
         collectionView.delegate = self
         collectionView.dataSource = nil
         collectionView.alwaysBounceVertical = true
         collectionView.register(DeviceCollectionViewCell.self, forCellWithReuseIdentifier: DeviceCollectionViewCell.identifier)
-        collectionView.backgroundColor = .systemBackground
+        collectionView.backgroundColor = .mainSystemBackground
     }
 }
 
 // MARK: - Flow layout
+
 extension DevicesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)

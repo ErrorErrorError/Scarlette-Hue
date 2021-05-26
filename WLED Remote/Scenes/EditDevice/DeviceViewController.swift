@@ -10,9 +10,6 @@ import RxSwift
 import RxCocoa
 
 class DeviceViewController: UIViewController {
-
-    var presets: [Preset] = []
-
     static let buttonSize: CGFloat = 32
 
     // MARK: Rx
@@ -44,7 +41,7 @@ class DeviceViewController: UIViewController {
     let settingsButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "gearshape"), for: .normal)
-        button.backgroundColor = UIColor.secondarySystemBackground
+        button.backgroundColor = .secondarySystemBackground
         button.layer.cornerRadius = DeviceViewController.buttonSize / 2
         return button
     }()
@@ -52,7 +49,7 @@ class DeviceViewController: UIViewController {
     let effectsButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "wand.and.stars.inverse"), for: .normal)
-        button.backgroundColor = UIColor.secondarySystemBackground
+        button.backgroundColor = .secondarySystemBackground
         button.layer.cornerRadius = DeviceViewController.buttonSize / 2
         return button
     }()
@@ -61,7 +58,7 @@ class DeviceViewController: UIViewController {
         let button = UIButton()
         let image = UIImage(systemName: "info.circle")
         button.setImage(image, for: .normal)
-        button.backgroundColor = UIColor.secondarySystemBackground
+        button.backgroundColor = .secondarySystemBackground
         button.layer.cornerRadius = DeviceViewController.buttonSize / 2
         return button
     }()
@@ -75,6 +72,7 @@ class DeviceViewController: UIViewController {
 
     let colorWellPrimary: UIColorWell = {
         let well = UIColorWell(frame: .zero)
+        well.title = "Primary Color"
         well.selectedColor = .red
         well.supportsAlpha = false
         return well
@@ -82,6 +80,7 @@ class DeviceViewController: UIViewController {
 
     let colorWellSecondary: UIColorWell = {
         let well = UIColorWell(frame: .zero)
+        well.title = "Secondary Color"
         well.selectedColor = .green
         well.supportsAlpha = false
         return well
@@ -89,6 +88,7 @@ class DeviceViewController: UIViewController {
 
     let colorWellTertiary: UIColorWell = {
         let well = UIColorWell(frame: .zero)
+        well.title = "Tertiary Color"
         well.selectedColor = .blue
         well.supportsAlpha = false
         return well
@@ -170,44 +170,33 @@ class DeviceViewController: UIViewController {
             vc.switchButton.isOn = state.on == true
             vc.brightnessBar.value = Float(state.bri ?? 1)
 
-            if (vc.switchButton.isOn) {
-                if let segment = state.firstSegment {
-                    if let firstColor = segment.colors?[0] {
-                        let color = UIColor.getColor(red: firstColor[0], green: firstColor[1], blue: firstColor[2])
-                        vc.colorWellPrimary.selectedColor = color
-                    }
+            if let segment = state.firstSegment {
+                let firstColor = segment.colors[0]
+                    let firstColorUI = UIColor(red: firstColor[0], green: firstColor[1], blue: firstColor[2])
+                    vc.colorWellPrimary.selectedColor = firstColorUI
 
-                    if let secondColor = segment.colors?[1] {
-                        let color = UIColor.getColor(red: secondColor[0], green: secondColor[1], blue: secondColor[2])
-                        vc.colorWellSecondary.selectedColor = color
-                    }
+                let secondColor = segment.colors[1]
+                    let secondColorUI = UIColor(red: secondColor[0], green: secondColor[1], blue: secondColor[2])
+                    vc.colorWellSecondary.selectedColor = secondColorUI
 
-                    if let thirdColor = segment.colors?[2] {
-                        let color = UIColor.getColor(red: thirdColor[0], green: thirdColor[1], blue: thirdColor[2])
-                        vc.colorWellTertiary.selectedColor = color
-                    }
-                }
+                let thirdColor = segment.colors[2]
+                    let thirdColorUI = UIColor(red: thirdColor[0], green: thirdColor[1], blue: thirdColor[2])
+                    vc.colorWellTertiary.selectedColor = thirdColorUI
+            }
+
+            if vc.switchButton.isOn {
+                // Set background color
             } else {
-                vc.brightnessBar.backgroundColor = vc.oldNavColor
-                vc.navigationController?.navigationBar.standardAppearance.backgroundColor = vc.oldNavColor
-                vc.navigationController?.navigationBar.shadowImage = vc.oldShadowLine
             }
         })
     }
 
     private func setupViewsAndConstraints() {
-        view.backgroundColor = .systemBackground
-
         let barButton = UIBarButtonItem(customView: switchButton)
         navigationItem.setRightBarButton(barButton, animated: true)
-
-        oldNavColor = navigationController!.navigationBar.standardAppearance.backgroundColor
-//        oldShadowLine = self.navigationController?.navigationBar.shadowImage
-//        brightnessBar.backgroundColor = oldNavColor
-//        self.navigationController?.navigationBar.shadowImage = UIImage() // remove shadow image
+        view.backgroundColor = .mainSystemBackground
 
         // Add brightness
-
         let buttonStackView = UIStackView(arrangedSubviews: [effectsButton, infoButton, settingsButton])
         buttonStackView.axis = .horizontal
         buttonStackView.distribution = .fillEqually
@@ -261,14 +250,6 @@ class DeviceViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.navigationBar.standardAppearance.backgroundColor = oldNavColor
-//        navigationController?.navigationBar.shadowImage = oldShadowLine
-    }
-}
-
-private extension UIColor {
-    static func getColor(red: Int, green: Int, blue: Int) -> UIColor {
-        return UIColor(red: CGFloat(red) / 255, green: CGFloat(green) / 255, blue: CGFloat(blue) / 255, alpha: 1.0)
     }
 }
 

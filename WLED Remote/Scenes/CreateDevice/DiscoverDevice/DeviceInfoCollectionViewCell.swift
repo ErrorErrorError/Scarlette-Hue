@@ -38,7 +38,7 @@ class DeviceInfoCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        backgroundColor = .secondarySystemBackground
+//        backgroundColor = .secondarySystemBackground
         layer.cornerRadius = 18
         layer.cornerCurve = .continuous
 

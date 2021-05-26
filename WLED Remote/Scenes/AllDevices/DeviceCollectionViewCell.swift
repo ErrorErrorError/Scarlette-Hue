@@ -25,7 +25,7 @@ class DeviceCollectionViewCell: UICollectionViewCell {
 
     let connectionLabel: UILabel = {
         let label = UILabel(frame: .zero)
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = UIFont.boldSystemFont(ofSize: 12)
         label.textColor = .secondaryLabel
         label.text = "Connecting"
         return label
@@ -33,7 +33,7 @@ class DeviceCollectionViewCell: UICollectionViewCell {
 
     let lightSwitch: UISwitch = {
         let switchs = UISwitch(frame: .zero)
-        switchs.onTintColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25)
+        switchs.onTintColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.20)
         switchs.tintColor = UIColor(red: 90/255, green: 90/255, blue: 90/255, alpha: 0.2)
         switchs.layer.cornerRadius = 16
         switchs.isOn = false
@@ -66,15 +66,21 @@ class DeviceCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        let height: CGFloat = 30
-
+        let cornerRadius: CGFloat = 30 / 2
         backgroundColor = .contentOverSystembackground
-        layer.cornerRadius = height / 2
-        clipsToBounds = true
+
+        layer.cornerRadius = cornerRadius
+        layer.masksToBounds = false
+        layer.cornerCurve = .circular
+
+        layer.shadowRadius = 8.0
+        layer.shadowOpacity = 0.10
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 5)
 
         setupConstraints()
 
-        lightSwitch.rx.isOn.asDriver().skip(1).drive(onNext: { _ in self.animateSwitchBrightness() }).disposed(by: dispose)
+//        lightSwitch.rx.isOn.asDriver().skip(1).drive(onNext: { _ in self.animateSwitchBrightness() }).disposed(by: dispose)
     }
 
     required init?(coder: NSCoder) {
@@ -95,7 +101,7 @@ class DeviceCollectionViewCell: UICollectionViewCell {
         deviceStateStackView.distribution = .fill
         deviceStateStackView.alignment = .center
         deviceStateStackView.isLayoutMarginsRelativeArrangement = true
-        deviceStateStackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 16, leading: inset, bottom: 16, trailing: inset)
+        deviceStateStackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 20, leading: inset, bottom: 20, trailing: inset)
 
         animatableStackView.addArrangedSubview(deviceStateStackView)
         animatableStackView.addArrangedSubview(brightnessSlider)
@@ -117,11 +123,13 @@ class DeviceCollectionViewCell: UICollectionViewCell {
 
     override func prepareForReuse() {
         dispose = DisposeBag()
-        lightSwitch.rx.isOn.asDriver().drive(onNext: { _ in self.animateSwitchBrightness() }).disposed(by: dispose)
+//        lightSwitch.rx.isOn.asDriver().drive(onNext: { _ in self.animateSwitchBrightness() }).disposed(by: dispose)
         lightSwitch.isOn = false
         lightSwitch.isEnabled = false
-        brightnessSlider.isEnabled = false
-        brightnessSlider.isHidden = true
+//        brightnessSlider.isEnabled = false
+//        brightnessSlider.isHidden = true
+        nameLabel.textColor = .label
+        connectionLabel.textColor = .secondaryLabel
         resizeView()
     }
 
@@ -143,6 +151,9 @@ class DeviceCollectionViewCell: UICollectionViewCell {
 
     private var stateBinding: Binder<State?> {
         return Binder(self) { cell, state in
+            var deviceNameTextColor = UIColor.label
+            var connectionTextColor = UIColor.secondaryLabel
+
             let gradientLayer = cell.layer as! CAGradientLayer
             gradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
             gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
@@ -160,15 +171,15 @@ class DeviceCollectionViewCell: UICollectionViewCell {
             if let state = state {
                 let enabled = state.on == true
                 cell.lightSwitch.isEnabled = true
-                cell.lightSwitch.backgroundColor = !enabled ? nil : UIColor(red: 90/255, green: 90/255, blue: 90/255, alpha: 0.15)
+                cell.lightSwitch.backgroundColor = !enabled ? nil : UIColor(red: 90/255, green: 90/255, blue: 90/255, alpha: 0.20)
                 cell.brightnessSlider.value = Float(state.bri ?? 127)
-                cell.brightnessSlider.isEnabled = true
-                cell.brightnessSlider.isHidden = !enabled
+//                cell.brightnessSlider.isEnabled = true
+//                cell.brightnessSlider.isHidden = !enabled
                 cell.lightSwitch.isOn = enabled
             } else {
                 cell.lightSwitch.isEnabled = false
-                cell.brightnessSlider.isEnabled = false
-                cell.brightnessSlider.isHidden = true
+//                cell.brightnessSlider.isEnabled = false
+//                cell.brightnessSlider.isHidden = true
                 cell.lightSwitch.isOn = false
             }
 
@@ -189,7 +200,16 @@ class DeviceCollectionViewCell: UICollectionViewCell {
 
                 gradientLayer.colors = newColors
                 gradientAnimation.toValue = gradientLayer.colors
+
+                if let first = newColors.first {
+                    let color = UIColor(cgColor: first)
+                    deviceNameTextColor = color.isLight ? .black : .white
+                    connectionTextColor = color.isLight ?  .darkGray : .lightGray
+                }
             }
+
+            cell.nameLabel.textColor = deviceNameTextColor
+            cell.connectionLabel.textColor = connectionTextColor
 
             cell.layer.add(gradientAnimation, forKey: nil)
         }
@@ -211,5 +231,25 @@ class DeviceCollectionViewCell: UICollectionViewCell {
                                                                           withHorizontalFittingPriority: .required,
                                                                           verticalFittingPriority: .fittingSizeLevel)
         return layoutAttributes
+    }
+}
+
+
+// MARK: Animation on highlight
+extension DeviceCollectionViewCell {
+    override var isHighlighted: Bool {
+        didSet { shrink(down: isHighlighted) }
+    }
+
+    func shrink(down: Bool) {
+        UIView.animate(
+            withDuration: 0.8,
+            delay: 0,
+            usingSpringWithDamping: 0.4,
+            initialSpringVelocity: 0.8,
+            options: [.allowUserInteraction, .beginFromCurrentState],
+            animations: { self.transform = down ? CGAffineTransform(scaleX: 0.95, y: 0.95) : .identity },
+            completion: nil)
+
     }
 }

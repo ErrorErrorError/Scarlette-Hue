@@ -41,7 +41,7 @@ class DiscoverDeviceViewController: UIViewController {
         let label = UILabel(frame: .zero)
         label.text = "Make sure your WLED device is on and connected to the same network."
         label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = UIColor.label
+        label.textColor = UIColor.secondaryLabel
         label.textAlignment = .center
         label.numberOfLines = 0
         return label

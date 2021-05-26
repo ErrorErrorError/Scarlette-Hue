@@ -41,7 +41,7 @@ class DeviceViewController: UIViewController {
     let settingsButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "gearshape"), for: .normal)
-        button.backgroundColor = .secondarySystemBackground
+        button.backgroundColor = .contentOverSystembackground
         button.layer.cornerRadius = DeviceViewController.buttonSize / 2
         return button
     }()
@@ -49,7 +49,7 @@ class DeviceViewController: UIViewController {
     let effectsButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "wand.and.stars.inverse"), for: .normal)
-        button.backgroundColor = .secondarySystemBackground
+        button.backgroundColor = .contentOverSystembackground
         button.layer.cornerRadius = DeviceViewController.buttonSize / 2
         return button
     }()
@@ -58,7 +58,7 @@ class DeviceViewController: UIViewController {
         let button = UIButton()
         let image = UIImage(systemName: "info.circle")
         button.setImage(image, for: .normal)
-        button.backgroundColor = .secondarySystemBackground
+        button.backgroundColor = .contentOverSystembackground
         button.layer.cornerRadius = DeviceViewController.buttonSize / 2
         return button
     }()

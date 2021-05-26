@@ -20,8 +20,18 @@ class DevicesViewController: UICollectionViewController {
 
     var viewModel: DevicesViewModel!
 
-    // Views
-    private let addNewDevice = UIBarButtonItem(systemItem: .add)
+    // MARK: Views
+
+    private let largeStateButtonSize: CGFloat = 30
+    private let smallStateButtonSize: CGFloat = 18
+
+    private lazy var addNewDeviceButton: UIButton = {
+        let image = UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: largeStateButtonSize))
+        let button = UIButton()
+        button.setImage(image, for: .normal)
+        button.tintColor = .label
+        return button
+    }()
 
     // MARK: Constructors
 
@@ -45,6 +55,22 @@ class DevicesViewController: UICollectionViewController {
         bindViewController()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        addDeviceButtonAnimation(show: true)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        addDeviceButtonAnimation(show: false)
+    }
+
+    private func addDeviceButtonAnimation(show: Bool) {
+        UIView.animate(withDuration: 0.2) {
+            self.addNewDeviceButton.alpha = show ? 1.0 : 0.0
+        }
+    }
+
     // MARK: Setups
 
     private func bindViewController() {
@@ -55,7 +81,7 @@ class DevicesViewController: UICollectionViewController {
             .asDriverOnErrorJustComplete()
 
         let input = DevicesViewModel.Input(trigger: viewWillAppear,
-                                           createDeviceTrigger: addNewDevice.rx.tap.asDriver(),
+                                           createDeviceTrigger: addNewDeviceButton.rx.tap.asDriver(),
                                            selection: collectionView.rx.itemSelected.asDriver())
         let output = viewModel.transform(input: input)
 
@@ -87,9 +113,14 @@ class DevicesViewController: UICollectionViewController {
     private func setupNavigationBar() {
         title = "Devices"
         navigationItem.largeTitleDisplayMode = .always
-        navigationController?.navigationBar.prefersLargeTitles = true
 
-        navigationItem.setRightBarButton(addNewDevice, animated: true)
+        guard let navigationBar = self.navigationController?.navigationBar else { return }
+        navigationBar.prefersLargeTitles = true
+        navigationBar.addSubview(addNewDeviceButton)
+        addNewDeviceButton.translatesAutoresizingMaskIntoConstraints = false
+        addNewDeviceButton.rightAnchor.constraint(equalTo: navigationBar.layoutMarginsGuide.rightAnchor, constant: -8).isActive = true
+        addNewDeviceButton.bottomAnchor.constraint(equalTo: navigationBar.layoutMarginsGuide.bottomAnchor).isActive = true
+        addNewDeviceButton.widthAnchor.constraint(equalTo: addNewDeviceButton.heightAnchor).isActive = true
     }
 
     private func setupCollectionView() {
@@ -98,7 +129,6 @@ class DevicesViewController: UICollectionViewController {
         collectionView.alwaysBounceVertical = true
         collectionView.register(DeviceCollectionViewCell.self, forCellWithReuseIdentifier: DeviceCollectionViewCell.identifier)
         collectionView.backgroundColor = .mainSystemBackground
-        collectionView.delaysContentTouches = false
     }
 }
 

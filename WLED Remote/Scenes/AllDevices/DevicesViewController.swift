@@ -55,12 +55,12 @@ class DevicesViewController: UICollectionViewController {
         bindViewController()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         addDeviceButtonAnimation(show: true)
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         addDeviceButtonAnimation(show: false)
     }

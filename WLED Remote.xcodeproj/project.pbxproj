@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		130195F5265F329300FB8223 /* SettingsNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130195F4265F329300FB8223 /* SettingsNavigator.swift */; };
 		130C3ABF265795F000C7425D /* NetService+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130C3ABE265795F000C7425D /* NetService+Rx.swift */; };
 		130C3AC1265795FD00C7425D /* NetServiceBrowser+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130C3AC0265795FD00C7425D /* NetServiceBrowser+Rx.swift */; };
 		130C3AC62657A7BC00C7425D /* DeviceInfoItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130C3AC52657A7BC00C7425D /* DeviceInfoItemViewModel.swift */; };
@@ -107,6 +108,7 @@
 
 /* Begin PBXFileReference section */
 		0D55626E9B4BB38966FE5563 /* Pods_ErrorErrorErrorUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ErrorErrorErrorUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		130195F4265F329300FB8223 /* SettingsNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNavigator.swift; sourceTree = "<group>"; };
 		130C3ABE265795F000C7425D /* NetService+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetService+Rx.swift"; sourceTree = "<group>"; };
 		130C3AC0265795FD00C7425D /* NetServiceBrowser+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetServiceBrowser+Rx.swift"; sourceTree = "<group>"; };
 		130C3AC52657A7BC00C7425D /* DeviceInfoItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfoItemViewModel.swift; sourceTree = "<group>"; };
@@ -174,6 +176,9 @@
 		139F9FC4265084520056FC57 /* CardModalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardModalPresentationController.swift; sourceTree = "<group>"; };
 		139F9FC82650C09D0056FC57 /* DeviceInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		139F9FCB2650C59B0056FC57 /* UIScreen+cornerRadiusDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+cornerRadiusDevice.swift"; sourceTree = "<group>"; };
+		13BD1BD0265F402A00F6C640 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		13BD1BD3265F403F00F6C640 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		13BD1BD4265F403F00F6C640 /* RxMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13E930F0265867F500C1EEF6 /* Single+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Single+Ext.swift"; sourceTree = "<group>"; };
 		13E930F42658866D00C1EEF6 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		13F72AAA265E3DDB0013FE16 /* UIColor+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Custom.swift"; sourceTree = "<group>"; };
@@ -347,6 +352,7 @@
 			isa = PBXGroup;
 			children = (
 				132853B626530C9E006F3692 /* SettingsViewController.swift */,
+				130195F4265F329300FB8223 /* SettingsNavigator.swift */,
 			);
 			path = AllSettings;
 			sourceTree = "<group>";
@@ -537,6 +543,9 @@
 		89C8DE4967D0B33B586E7866 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				13BD1BD3265F403F00F6C640 /* Moya.framework */,
+				13BD1BD4265F403F00F6C640 /* RxMoya.framework */,
+				13BD1BD0265F402A00F6C640 /* Alamofire.framework */,
 				6EB4E333E80206DF476A2100 /* Pods_WLED_Remote.framework */,
 				0D55626E9B4BB38966FE5563 /* Pods_ErrorErrorErrorUIKit.framework */,
 				8BDBB47A2A6CB0C3385B4D6A /* Pods_WLEDKit.framework */,
@@ -745,6 +754,7 @@
 				13233CBB26573426005B1270 /* Preset.swift in Sources */,
 				13233CC026573426005B1270 /* Info.swift in Sources */,
 				13577F4926576E670074329C /* DiscoverDeviceViewModel.swift in Sources */,
+				130195F5265F329300FB8223 /* SettingsNavigator.swift in Sources */,
 				13233CAB265733FB005B1270 /* NSManagedObjectContext+Ext.swift in Sources */,
 				13233CA226572E71005B1270 /* DevicesViewModel.swift in Sources */,
 				13233CAA265733F6005B1270 /* ContexScheduler.swift in Sources */,

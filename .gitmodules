@@ -1,0 +1,6 @@
+[submodule "Moya"]
+	path = Moya
+	url = https://github.com/Moya/Moya.git
+[submodule "Alamofire"]
+	path = Alamofire
+	url = https://github.com/Alamofire/Alamofire.git

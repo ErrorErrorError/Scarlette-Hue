@@ -79,8 +79,6 @@ class DeviceCollectionViewCell: UICollectionViewCell {
         layer.shadowOffset = CGSize(width: 0, height: 5)
 
         setupConstraints()
-
-//        lightSwitch.rx.isOn.asDriver().skip(1).drive(onNext: { _ in self.animateSwitchBrightness() }).disposed(by: dispose)
     }
 
     required init?(coder: NSCoder) {
@@ -123,11 +121,8 @@ class DeviceCollectionViewCell: UICollectionViewCell {
 
     override func prepareForReuse() {
         dispose = DisposeBag()
-//        lightSwitch.rx.isOn.asDriver().drive(onNext: { _ in self.animateSwitchBrightness() }).disposed(by: dispose)
         lightSwitch.isOn = false
         lightSwitch.isEnabled = false
-//        brightnessSlider.isEnabled = false
-//        brightnessSlider.isHidden = true
         nameLabel.textColor = .label
         connectionLabel.textColor = .secondaryLabel
         resizeView()
@@ -137,9 +132,6 @@ class DeviceCollectionViewCell: UICollectionViewCell {
         self.nameLabel.text = viewModel.name
 
         let input = DeviceItemViewModel.Input(heartbeat: Driver.empty(),
-                                              brightness: brightnessSlider.rx.value.asDriver()
-                                                .debounce(.milliseconds(250))
-                                                .map({ Int($0) }),
                                               on: lightSwitch.rx.value.asDriverOnErrorJustComplete())
 
         let output = viewModel.transform(input: input)
@@ -173,13 +165,9 @@ class DeviceCollectionViewCell: UICollectionViewCell {
                 cell.lightSwitch.isEnabled = true
                 cell.lightSwitch.backgroundColor = !enabled ? nil : UIColor(red: 90/255, green: 90/255, blue: 90/255, alpha: 0.20)
                 cell.brightnessSlider.value = Float(state.bri ?? 127)
-//                cell.brightnessSlider.isEnabled = true
-//                cell.brightnessSlider.isHidden = !enabled
                 cell.lightSwitch.isOn = enabled
             } else {
                 cell.lightSwitch.isEnabled = false
-//                cell.brightnessSlider.isEnabled = false
-//                cell.brightnessSlider.isHidden = true
                 cell.lightSwitch.isOn = false
             }
 
@@ -204,7 +192,13 @@ class DeviceCollectionViewCell: UICollectionViewCell {
                 if let first = newColors.first {
                     let color = UIColor(cgColor: first)
                     deviceNameTextColor = color.isLight ? .black : .white
-                    connectionTextColor = color.isLight ?  .darkGray : .lightGray
+                    connectionTextColor = color.isLight ?  .init(red: 0.1,
+                                                                 green: 0.1,
+                                                                 blue: 0.1,
+                                                                 alpha: 1.0) : .init(red: 0.9,
+                                                                                     green: 0.9,
+                                                                                     blue: 0.9,
+                                                                                     alpha: 1.0)
                 }
             }
 

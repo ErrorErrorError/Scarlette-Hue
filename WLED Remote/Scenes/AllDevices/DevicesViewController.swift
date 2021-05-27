@@ -23,7 +23,8 @@ class DevicesViewController: UICollectionViewController {
     // MARK: Views
 
     private let largeStateButtonSize: CGFloat = 30
-    private let smallStateButtonSize: CGFloat = 18
+    private let smallStateButtonSize: CGFloat = 24
+    private let smallStateBottomMargin: CGFloat = 8
 
     private lazy var addNewDeviceButton: UIButton = {
         let image = UIImage(systemName: "plus.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: largeStateButtonSize))
@@ -53,22 +54,6 @@ class DevicesViewController: UICollectionViewController {
         setupCollectionView()
         setupConstraints()
         bindViewController()
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        addDeviceButtonAnimation(show: true)
-    }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        addDeviceButtonAnimation(show: false)
-    }
-
-    private func addDeviceButtonAnimation(show: Bool) {
-        UIView.animate(withDuration: 0.2) {
-            self.addNewDeviceButton.alpha = show ? 1.0 : 0.0
-        }
     }
 
     // MARK: Setups
@@ -129,6 +114,61 @@ class DevicesViewController: UICollectionViewController {
         collectionView.alwaysBounceVertical = true
         collectionView.register(DeviceCollectionViewCell.self, forCellWithReuseIdentifier: DeviceCollectionViewCell.identifier)
         collectionView.backgroundColor = .mainSystemBackground
+    }
+}
+
+extension DevicesViewController {
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        addDeviceButtonAnimation(show: false)
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        addDeviceButtonAnimation(show: true)
+    }
+
+    private func addDeviceButtonAnimation(show: Bool) {
+        UIView.animate(withDuration: 0.2) {
+            self.addNewDeviceButton.alpha = show ? 1.0 : 0.0
+        }
+    }
+
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard let height = navigationController?.navigationBar.frame.height else { return }
+        resizeButtonOnScroll(for: height)
+    }
+
+    private func resizeButtonOnScroll(for height: CGFloat) {
+        let smallNavHeight: CGFloat = 44.0
+        let largeNavHeight: CGFloat = 96.0
+        let coeff: CGFloat = {
+            let delta = height - smallNavHeight
+            let heightDifferenceBetweenStates = (largeNavHeight - smallNavHeight)
+            return delta / heightDifferenceBetweenStates
+        }()
+
+        let factor = smallStateButtonSize / largeStateButtonSize
+
+        let scale: CGFloat = {
+            let sizeAddendumFactor = coeff * (1.0 - factor)
+            return min(1.0, sizeAddendumFactor + factor)
+        }()
+
+        // Value of difference between icons for large and small states
+        let sizeDiff = largeStateButtonSize * (1.0 - factor) // 8.0
+        let yTranslation: CGFloat = {
+            /// This value = 14. It equals to difference of 12 and 6 (bottom margin for large and small states). Also it adds 8.0 (size difference when the image gets smaller size)
+            let maxYTranslation = navigationController!.navigationBar.layoutMargins.bottom - smallStateBottomMargin + sizeDiff
+            return max(0, min(maxYTranslation, (maxYTranslation - coeff * (6 + sizeDiff))))
+        }()
+
+        let xTranslation = max(0, sizeDiff - coeff * sizeDiff)
+
+        addNewDeviceButton.transform = CGAffineTransform.identity
+            .scaledBy(x: scale, y: scale)
+            .translatedBy(x: xTranslation, y: yTranslation)
+
     }
 }
 

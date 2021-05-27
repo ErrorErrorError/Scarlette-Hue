@@ -15,7 +15,6 @@ final class DeviceItemViewModel {
     private let concurrentScheduler = ConcurrentDispatchQueueScheduler(qos: .background)
 
     let name: String
-    let ip: String
     let device: Device
 
     // MARK: Rx
@@ -27,14 +26,12 @@ final class DeviceItemViewModel {
         self.deviceDataNetworkService = deviceDataNetworkService
         self.device = device
         self.name = device.name
-        self.ip = device.ip
     }
 }
 
 extension DeviceItemViewModel: ViewModelType {
     struct Input {
         let heartbeat: Driver<Void>
-        let brightness: Driver<Int>
         let on: Driver<Bool>
     }
 
@@ -101,25 +98,6 @@ extension DeviceItemViewModel: ViewModelType {
                 .asDriverOnErrorJustComplete()
             })
 
-        let updateBrightness = input.brightness
-            .skip(1)
-            .map({ State(bri: $0) })
-            .filter { _ in self.deviceDataRelay.value != nil }
-            .do(onNext: { newState in
-                if var deviceData = self.deviceDataRelay.value {
-                    var state = deviceData.state
-                    state.bri = newState.bri
-                    deviceData.state = state
-                    self.deviceDataRelay.accept(deviceData)
-                }
-            })
-            .flatMapLatest({ self.deviceDataNetworkService.updateState(device: self.device, state: $0)
-                .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
-                .asDriverOnErrorJustComplete()
-            })
-
-        let updated = Driver.merge(updateOn, updateBrightness)
-
-        return Output(heartbeat: heartbeat, connection: connection, state: state, update: updated)
+        return Output(heartbeat: heartbeat, connection: connection, state: state, update: updateOn)
     }
 }

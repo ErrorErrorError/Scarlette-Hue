@@ -11,10 +11,10 @@ import RxCocoa
 
 class DeviceViewModel: ViewModelType {
     private let device: Device
-    private let deviceData: DeviceData
     private let deviceRepository: DevicesUseCaseProtocol
     private let navigator: DeviceNavigator
     private let deviceDataNetworkService: DeviceDataNetwork
+    private let deviceDataRelay: BehaviorRelay<DeviceData>
 
     init(device: Device,
          deviceData: DeviceData,
@@ -22,7 +22,7 @@ class DeviceViewModel: ViewModelType {
          deviceRepository: DevicesUseCaseProtocol,
          navigator: DeviceNavigator) {
         self.device = device
-        self.deviceData = deviceData
+        self.deviceDataRelay = BehaviorRelay(value: deviceData)
         self.deviceRepository = deviceRepository
         self.deviceDataNetworkService = deviceDataNetworkService
         self.navigator = navigator
@@ -40,29 +40,35 @@ class DeviceViewModel: ViewModelType {
 
         let device = Driver.just(device)
 
-        let fetchState = input.fetchState
-            .flatMapLatest({ self.deviceDataNetworkService.fetchDeviceData(device: self.device)
-                .map({ $0.state })
-                .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
-                .asDriverOnErrorJustComplete()
-            })
-            .startWith(deviceData.state)
+        let fetchState = deviceDataRelay.asObservable()
+            .skip(1)
+            .map({ $0.state})
+            .asDriverOnErrorJustComplete()
 
         let updateOn = input.updateOn
             .skip(1)                        // Do not want initial state
-            .startWith(deviceData.state.on!)
+            .startWith(deviceDataRelay.value.state.on!)
 
         let updateBrightness = input.updateBrightness
             .skip(1)                        // Do not want initial state
-            .startWith(deviceData.state.bri!)
+            .startWith(deviceDataRelay.value.state.bri!)
 
         let updateColors = input.updateColors
-            .startWith(deviceData.state.firstSegment!.colors)
+            .startWith(deviceDataRelay.value.state.firstSegment!.colors)
 
         let updated = Driver.combineLatest(updateOn, updateBrightness, updateColors)
             .map { (on, brightness, colors) in
                 State(on: on, bri: brightness, segments: [Segment(colors: colors)])
             }
+            .do(onNext: { newState in
+                var oldData = self.deviceDataRelay.value
+                var oldState = oldData.state
+                oldState.on = newState.on
+                oldState.bri = newState.bri
+                oldState.segments = newState.segments
+                oldData.state = oldState
+                self.deviceDataRelay.accept(oldData)
+            })
             .flatMapLatest({ self.deviceDataNetworkService.updateState(device: self.device, state: $0)
                 .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
                 .asDriverOnErrorJustComplete()

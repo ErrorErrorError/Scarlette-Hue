@@ -143,21 +143,13 @@ class DeviceCollectionViewCell: UICollectionViewCell {
 
     private var stateBinding: Binder<State?> {
         return Binder(self) { cell, state in
+            var colors = [UIColor.clear.cgColor, UIColor.clear.cgColor]
             var deviceNameTextColor = UIColor.label
             var connectionTextColor = UIColor.secondaryLabel
 
             let gradientLayer = cell.layer as! CAGradientLayer
             gradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
             gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-
-            // MARK: Animate color changed
-            let gradientAnimation = CABasicAnimation(keyPath: "colors")
-            gradientAnimation.fromValue = gradientLayer.colors ?? [UIColor.clear.cgColor, UIColor.clear.cgColor]
-            gradientLayer.colors = [UIColor.clear.cgColor, UIColor.clear.cgColor]
-            gradientAnimation.toValue = gradientLayer.colors
-            gradientAnimation.duration = 0.25
-            gradientAnimation.isRemovedOnCompletion = true
-            gradientAnimation.fillMode = .forwards
 
             // MARK: set state
             if let state = state {
@@ -186,8 +178,7 @@ class DeviceCollectionViewCell: UICollectionViewCell {
                     newColors.append(newColors[0])
                 }
 
-                gradientLayer.colors = newColors
-                gradientAnimation.toValue = gradientLayer.colors
+                colors = newColors
 
                 if let first = newColors.first {
                     let color = UIColor(cgColor: first)
@@ -205,7 +196,7 @@ class DeviceCollectionViewCell: UICollectionViewCell {
             cell.nameLabel.textColor = deviceNameTextColor
             cell.connectionLabel.textColor = connectionTextColor
 
-            cell.layer.add(gradientAnimation, forKey: nil)
+            gradientLayer.changeGradients(colors, animate: true)
         }
     }
 
@@ -228,7 +219,6 @@ class DeviceCollectionViewCell: UICollectionViewCell {
     }
 }
 
-
 // MARK: Animation on highlight
 extension DeviceCollectionViewCell {
     override var isHighlighted: Bool {
@@ -245,5 +235,23 @@ extension DeviceCollectionViewCell {
             animations: { self.transform = down ? CGAffineTransform(scaleX: 0.95, y: 0.95) : .identity },
             completion: nil)
 
+    }
+}
+
+extension CAGradientLayer {
+    func changeGradients(_ newColors: [CGColor]? = nil, _ location: [NSNumber]? = nil, animate: Bool) {
+        // MARK: Animate color changed
+        let gradientAnimation = CABasicAnimation(keyPath: "colors")
+        if self.colors == nil {
+            self.colors = [UIColor.clear.cgColor, UIColor.clear.cgColor]
+        }
+        gradientAnimation.fromValue = self.colors
+        gradientAnimation.toValue = newColors
+        gradientAnimation.duration = 0.25
+        gradientAnimation.isRemovedOnCompletion = true
+        gradientAnimation.fillMode = .forwards
+
+        self.colors = newColors
+        self.add(gradientAnimation, forKey: nil)
     }
 }

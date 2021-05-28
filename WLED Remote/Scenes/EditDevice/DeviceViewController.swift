@@ -8,13 +8,23 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import simd
 
 class DeviceViewController: UIViewController {
     static let buttonSize: CGFloat = 32
 
+    var topBarHeight: CGFloat {
+        var top = self.navigationController?.navigationBar.frame.height ?? 0.0
+        if let manager = self.view.window?.windowScene?.statusBarManager {
+           top += manager.statusBarFrame.height
+        }
+
+        return top
+    }
+
     // MARK: Rx
 
-    private let disposeBag = DisposeBag()
+    private var disposeBag = DisposeBag()
 
     // MARK: View Model
 
@@ -22,7 +32,12 @@ class DeviceViewController: UIViewController {
 
     // MARK: Views
 
-    let switchButton = UISwitch(frame: .zero)
+    let switchButton: UISwitch = {
+        let view = UISwitch(frame: .zero)
+        view.onTintColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.20)
+        view.tintColor = UIColor(red: 90/255, green: 90/255, blue: 90/255, alpha: 0.2)
+        return view
+    }()
 
     let scrollView: UIScrollView = {
         let scroll = UIScrollView(frame: .zero)
@@ -30,11 +45,21 @@ class DeviceViewController: UIViewController {
         return scroll
     }()
 
-    lazy var brightnessBar: BrightnessSlider = {
+    private let backgroundNavigationHeight: CGFloat = 50
+    private var backgroundNavigationHeightLayout: NSLayoutConstraint!
+
+    let backgroundNavigationView: GradientView = {
+        let view = GradientView(frame: .zero)
+        view.backgroundColor = .contentOverSystembackground
+        view.layer.cornerRadius = 14
+        view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        view.clipsToBounds = true
+        return view
+    }()
+
+    let brightnessBar: BrightnessSlider = {
         let bar = BrightnessSlider(frame: .zero)
-        bar.layer.cornerRadius = 28 / 2
-        bar.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        bar.clipsToBounds = true
+        bar.translatesAutoresizingMaskIntoConstraints = false
         return bar
     }()
 
@@ -106,89 +131,65 @@ class DeviceViewController: UIViewController {
         return collectionView
     }()
 
-    var oldNavColor: UIColor! = nil
+    // MARK: Original Appearance
 
-    var oldShadowLine: UIImage! = nil
+    private var navigationBarCompact: UINavigationBarAppearance?
+    private var navigationBarStandard: UINavigationBarAppearance?
+    private var navigationBarScroll: UINavigationBarAppearance?
+}
 
+// MARK: - Lifecycle
+
+extension DeviceViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupViewsAndConstraints()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        disposeBag = DisposeBag()
+        setupNavigationBar()
         bindViewController()
     }
 
-    private func bindViewController() {
-        assert(viewModel != nil)
-
-        let viewWillAppear = rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
-            .mapToVoid()
-            .asDriverOnErrorJustComplete()
-
-        let colorChanged = Driver.merge(colorWellPrimary.rx.controlEvent(.valueChanged).asDriver()
-                                            .debounce(.milliseconds(250)),
-                                        colorWellSecondary.rx.controlEvent(.valueChanged).asDriver()
-                                            .debounce(.milliseconds(250)),
-                                        colorWellTertiary.rx.controlEvent(.valueChanged).asDriver()
-                                            .debounce(.milliseconds(250)))
-            .map { _ -> [[Int]] in
-                if let primary = self.colorWellPrimary.selectedColor,
-                   let secondary = self.colorWellSecondary.selectedColor,
-                   let tertiary = self.colorWellTertiary.selectedColor {
-                    return [primary.intArray, secondary.intArray, tertiary.intArray]
-                }
-                return []
-            }
-
-        let input = DeviceViewModel.Input(effectTrigger: effectsButton.rx.tap.asDriver(),
-                                          infoTrigger: infoButton.rx.tap.asDriver(),
-                                          settingsTrigger: settingsButton.rx.tap.asDriver(),
-                                          fetchState: viewWillAppear,
-                                          updateColors: colorChanged,
-                                          updateBrightness: brightnessBar.rx.value.asDriver()
-                                            .debounce(.milliseconds(250))
-                                            .map({ Int($0) }),
-                                          updateOn: switchButton.rx.value.asDriver()
-        )
-
-        let output = viewModel.transform(input: input)
-        output.settings.drive().disposed(by: disposeBag)
-        output.info.drive().disposed(by: disposeBag)
-        output.effects.drive().disposed(by: disposeBag)
-        output.device.drive(deviceBinding).disposed(by: disposeBag)
-        output.state.drive(stateBinding).disposed(by: disposeBag)
-        output.updated.drive().disposed(by: disposeBag)
-    }
-
-    var deviceBinding: Binder<Device> {
-        return Binder(self) { vc, device in
-            vc.title = device.name
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let navigationBar = navigationController?.navigationBar {
+            navigationBar.standardAppearance = navigationBarStandard ?? UINavigationBarAppearance()
+            navigationBar.scrollEdgeAppearance = navigationBarScroll
+            navigationBar.compactAppearance = navigationBarCompact
+            navigationBar.largeTitleTextAttributes = [.foregroundColor : UIColor.label]
+            navigationBar.barStyle = .default
+            navigationBarStandard = nil
+            navigationBarScroll = nil
         }
     }
 
-    var stateBinding: Binder<State> {
-        return Binder(self, binding: { (vc, state) in
-            vc.switchButton.isOn = state.on == true
-            vc.brightnessBar.value = Float(state.bri ?? 1)
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        backgroundNavigationHeightLayout.constant = topBarHeight + backgroundNavigationHeight
+    }
+}
 
-            if let segment = state.firstSegment {
-                let firstColor = segment.colors[0]
-                    let firstColorUI = UIColor(red: firstColor[0], green: firstColor[1], blue: firstColor[2])
-                    vc.colorWellPrimary.selectedColor = firstColorUI
+// MARK: - Setup
 
-                let secondColor = segment.colors[1]
-                    let secondColorUI = UIColor(red: secondColor[0], green: secondColor[1], blue: secondColor[2])
-                    vc.colorWellSecondary.selectedColor = secondColorUI
+extension DeviceViewController {
+    private func setupNavigationBar() {
+        if let navigationBar = navigationController?.navigationBar {
+            if navigationBarStandard == nil { navigationBarStandard = navigationBar.standardAppearance }
+            if navigationBarScroll == nil { navigationBarScroll = navigationBar.scrollEdgeAppearance }
+            if navigationBarCompact == nil { navigationBarCompact = navigationBar.compactAppearance }
 
-                let thirdColor = segment.colors[2]
-                    let thirdColorUI = UIColor(red: thirdColor[0], green: thirdColor[1], blue: thirdColor[2])
-                    vc.colorWellTertiary.selectedColor = thirdColorUI
-            }
+            let titleAppearance = UINavigationBarAppearance()
+            titleAppearance.configureWithTransparentBackground()
+            titleAppearance.shadowImage = nil
+            titleAppearance.backgroundImage = nil
 
-            if vc.switchButton.isOn {
-                // Set background color
-            } else {
-            }
-        })
+            navigationBar.standardAppearance = titleAppearance
+            navigationBar.scrollEdgeAppearance = titleAppearance
+            navigationBar.compactAppearance = titleAppearance
+        }
     }
 
     private func setupViewsAndConstraints() {
@@ -212,30 +213,37 @@ class DeviceViewController: UIViewController {
         paletteStackView.axis = .vertical
         paletteStackView.spacing = 8
 
-        view.addSubview(scrollView)
-        view.addSubview(brightnessBar)
+        backgroundNavigationView.addSubview(brightnessBar)
 
         scrollView.addSubview(buttonStackView)
         scrollView.addSubview(colorsStackView)
         scrollView.addSubview(paletteStackView)
 
+        view.addSubview(backgroundNavigationView)
+        view.addSubview(scrollView)
+
         view.subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         scrollView.subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
 
-        // Auto Layout
+        backgroundNavigationView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        backgroundNavigationView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        backgroundNavigationView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        backgroundNavigationHeightLayout = backgroundNavigationView.heightAnchor.constraint(equalToConstant: topBarHeight + backgroundNavigationHeight)
+        backgroundNavigationHeightLayout.isActive = true
+
+        brightnessBar.leadingAnchor.constraint(equalTo: backgroundNavigationView.leadingAnchor, constant: 16).isActive = true
+        brightnessBar.trailingAnchor.constraint(equalTo: backgroundNavigationView.trailingAnchor, constant: -16).isActive = true
+        brightnessBar.bottomAnchor.constraint(equalTo: backgroundNavigationView.bottomAnchor, constant: -20).isActive = true
         brightnessBar.heightAnchor.constraint(equalToConstant: 28).isActive = true
-        brightnessBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        brightnessBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        brightnessBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
 
         scrollView.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
         scrollView.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor).isActive = true
-        scrollView.topAnchor.constraint(equalTo: brightnessBar.bottomAnchor).isActive = true
+        scrollView.topAnchor.constraint(equalTo: backgroundNavigationView.bottomAnchor).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor).isActive = true
 
         buttonStackView.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
         buttonStackView.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor).isActive = true
-        buttonStackView.topAnchor.constraint(equalTo: brightnessBar.bottomAnchor, constant: 16).isActive = true
+        buttonStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 16).isActive = true
         buttonStackView.heightAnchor.constraint(equalToConstant: DeviceViewController.buttonSize).isActive = true
 
         colorsStackView.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
@@ -247,33 +255,132 @@ class DeviceViewController: UIViewController {
         paletteStackView.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor ).isActive = true
         paletteStackView.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
 }
 
-//private extension UIButton {
-//    func animateWhenPressed(disposeBag: DisposeBag) {
-//        let pressDownTransform = rx.controlEvent([.touchDown, .touchDragEnter])
-//            .map({ CGAffineTransform.identity.scaledBy(x: 0.95, y: 0.95) })
-//
-//        let pressUpTransform = rx.controlEvent([.touchDragExit, .touchCancel, .touchUpInside, .touchUpOutside])
-//            .map({ CGAffineTransform.identity })
-//
-//        Observable.merge(pressDownTransform, pressUpTransform)
-//            .distinctUntilChanged()
-//            .subscribe(onNext: animate(_:))
-//            .disposed(by: disposeBag)
-//    }
-//
-//    private func animate(_ transform: CGAffineTransform) {
-//        UIView.animate(withDuration: 0.4,
-//                       delay: 0,
-//                       usingSpringWithDamping: 0.5,
-//                       initialSpringVelocity: 3,
-//                       options: [.curveEaseInOut],
-//                       animations: { self.transform = transform },
-//                       completion: nil)
-//    }
-//}
+// MARK: - Rx Binding
+
+extension DeviceViewController {
+    private func bindViewController() {
+        assert(viewModel != nil)
+
+        let viewWillAppear = rx.sentMessage(#selector(UIViewController.viewWillAppear))
+            .mapToVoid()
+            .asDriverOnErrorJustComplete()
+
+        let traitCollectionChanged = rx.sentMessage(#selector(UIViewController.traitCollectionDidChange(_:)))
+            .map({ _ in self.switchButton.isOn })
+            .asDriverOnErrorJustComplete()
+
+        let colorChanged = Driver.merge(colorWellPrimary.rx.controlEvent(.valueChanged).asDriver(),
+                                        colorWellSecondary.rx.controlEvent(.valueChanged).asDriver(),
+                                        colorWellTertiary.rx.controlEvent(.valueChanged).asDriver())
+            .debounce(.milliseconds(250))
+            .map { _ -> [[Int]] in
+                if let primary = self.colorWellPrimary.selectedColor,
+                   let secondary = self.colorWellSecondary.selectedColor,
+                   let tertiary = self.colorWellTertiary.selectedColor {
+                    return [primary.intArray, secondary.intArray, tertiary.intArray]
+                }
+                return []
+            }
+
+        let input = DeviceViewModel.Input(effectTrigger: effectsButton.rx.tap.asDriver(),
+                                          infoTrigger: infoButton.rx.tap.asDriver(),
+                                          settingsTrigger: settingsButton.rx.tap.asDriver(),
+                                          fetchState: viewWillAppear,
+                                          updateColors: colorChanged,
+                                          updateBrightness: brightnessBar.rx.value.asDriver()
+                                            .debounce(.milliseconds(250))
+                                            .map({ Int($0) }),
+                                          updateOn: Driver.merge(switchButton.rx.value.asDriver(), traitCollectionChanged))
+
+        let output = viewModel.transform(input: input)
+        output.settings.drive().disposed(by: disposeBag)
+        output.info.drive().disposed(by: disposeBag)
+        output.effects.drive().disposed(by: disposeBag)
+        output.device.drive(deviceBinding).disposed(by: disposeBag)
+        output.state.drive(stateBinding).disposed(by: disposeBag)
+        output.updated.drive().disposed(by: disposeBag)
+    }
+
+    var deviceBinding: Binder<Device> {
+        return Binder(self) { vc, device in
+            vc.title = device.name
+        }
+    }
+
+    var stateBinding: Binder<State> {
+        return Binder(self, binding: { (vc, state) in
+            var colors = [UIColor.clear.cgColor, UIColor.clear.cgColor]
+            var deviceNameTextColor = UIColor.label
+
+            vc.switchButton.isOn = state.on == true
+            vc.brightnessBar.value = Float(state.bri ?? 1)
+
+            if let segment = state.firstSegment {
+                let firstColor = segment.colors[0]
+                let firstColorUI = UIColor(red: firstColor[0], green: firstColor[1], blue: firstColor[2])
+                vc.colorWellPrimary.selectedColor = firstColorUI
+
+                let secondColor = segment.colors[1]
+                let secondColorUI = UIColor(red: secondColor[0], green: secondColor[1], blue: secondColor[2])
+                vc.colorWellSecondary.selectedColor = secondColorUI
+
+                let thirdColor = segment.colors[2]
+                let thirdColorUI = UIColor(red: thirdColor[0], green: thirdColor[1], blue: thirdColor[2])
+                vc.colorWellTertiary.selectedColor = thirdColorUI
+            } else {
+                vc.colorWellPrimary.selectedColor = UIColor.black
+                vc.colorWellSecondary.selectedColor = UIColor.black
+                vc.colorWellTertiary.selectedColor = UIColor.black
+            }
+
+            // Get colors
+
+            if state.on == true, let segment = state.firstSegment {
+                // Set background color
+                let primary = segment.colors[0]
+                let secondary = segment.colors[1]
+                let tertiary = segment.colors[2]
+
+                var newColors = [primary, secondary, tertiary]
+                    .filter({ $0.reduce(0, +) != 0 })
+                    .map({ UIColor(red: $0[0], green: $0[1], blue: $0[2]).cgColor })
+
+                if newColors.count == 1 {
+                    newColors.append(newColors[0])
+                }
+
+                colors = newColors
+
+                if let first = newColors.first {
+                    let color = UIColor(cgColor: first)
+                    deviceNameTextColor = color.isLight ? .black : .white
+                }
+            }
+
+            // Set colors to navigation
+
+            if let gradientLayer = vc.backgroundNavigationView.layer as? CAGradientLayer {
+                gradientLayer.changeGradients(colors, animate: true)
+            }
+
+            if let navigationBar = vc.navigationController?.navigationBar {
+                navigationBar.standardAppearance.titleTextAttributes = [.foregroundColor: deviceNameTextColor]
+                navigationBar.scrollEdgeAppearance?.largeTitleTextAttributes = [.foregroundColor: deviceNameTextColor]
+                navigationBar.compactAppearance?.titleTextAttributes = [.foregroundColor: deviceNameTextColor]
+                if deviceNameTextColor == .white || deviceNameTextColor == .black {
+                    navigationBar.barStyle = deviceNameTextColor == .white ? .black : .default
+                } else {
+                    navigationBar.barStyle = .default
+                }
+    
+                vc.setNeedsStatusBarAppearanceUpdate()
+
+                UIView.animate(withDuration: 0.2) {
+                    navigationBar.tintColor = deviceNameTextColor
+                }
+            }
+        })
+    }
+}

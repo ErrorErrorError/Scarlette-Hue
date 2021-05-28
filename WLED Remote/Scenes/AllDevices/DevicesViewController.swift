@@ -56,6 +56,16 @@ class DevicesViewController: UICollectionViewController {
         bindViewController()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        addDeviceButtonAnimation(show: false)
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        addDeviceButtonAnimation(show: true)
+    }
+
     // MARK: Setups
 
     private func bindViewController() {
@@ -118,16 +128,6 @@ class DevicesViewController: UICollectionViewController {
 }
 
 extension DevicesViewController {
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        addDeviceButtonAnimation(show: false)
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        addDeviceButtonAnimation(show: true)
-    }
-
     private func addDeviceButtonAnimation(show: Bool) {
         UIView.animate(withDuration: 0.2) {
             self.addNewDeviceButton.alpha = show ? 1.0 : 0.0
@@ -155,10 +155,8 @@ extension DevicesViewController {
             return min(1.0, sizeAddendumFactor + factor)
         }()
 
-        // Value of difference between icons for large and small states
         let sizeDiff = largeStateButtonSize * (1.0 - factor) // 8.0
         let yTranslation: CGFloat = {
-            /// This value = 14. It equals to difference of 12 and 6 (bottom margin for large and small states). Also it adds 8.0 (size difference when the image gets smaller size)
             let maxYTranslation = navigationController!.navigationBar.layoutMargins.bottom - smallStateBottomMargin + sizeDiff
             return max(0, min(maxYTranslation, (maxYTranslation - coeff * (6 + sizeDiff))))
         }()

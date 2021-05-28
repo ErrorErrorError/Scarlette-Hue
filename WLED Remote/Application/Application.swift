@@ -39,6 +39,7 @@ final class Application {
 
         window.rootViewController = tabBarViewController
         window.backgroundColor = UIColor.mainSystemBackground
+        window.makeKeyAndVisible()
 
         deviceNavigator.toDevices()
         settingsNavigator.toSettings()

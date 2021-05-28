@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -70,15 +70,14 @@
 		13912EA52651A3D400BD5095 /* ManuallyAddDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13912EA42651A3D400BD5095 /* ManuallyAddDeviceViewController.swift */; };
 		13912EB62651D6F200BD5095 /* AddDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13912EB52651D6F200BD5095 /* AddDeviceViewController.swift */; };
 		1393CD0C2657508200BAAF44 /* DeviceItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1393CD0B2657508200BAAF44 /* DeviceItemViewModel.swift */; };
-		1393CD10265769DD00BAAF44 /* Pods_WLED_Remote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EB4E333E80206DF476A2100 /* Pods_WLED_Remote.framework */; };
-		1393CD11265769DD00BAAF44 /* Pods_WLED_Remote.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6EB4E333E80206DF476A2100 /* Pods_WLED_Remote.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		139F9FBF26507F050056FC57 /* DiscoverDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139F9FBE26507F050056FC57 /* DiscoverDeviceViewController.swift */; };
 		139F9FC92650C09D0056FC57 /* DeviceInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139F9FC82650C09D0056FC57 /* DeviceInfoCollectionViewCell.swift */; };
 		139F9FCC2650C59B0056FC57 /* UIScreen+cornerRadiusDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139F9FCB2650C59B0056FC57 /* UIScreen+cornerRadiusDevice.swift */; };
+		13B9D7132660B31D009BD4DD /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B9D7122660B31D009BD4DD /* GradientView.swift */; };
 		13E930F1265867F500C1EEF6 /* Single+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E930F0265867F500C1EEF6 /* Single+Ext.swift */; };
 		13E930F52658866D00C1EEF6 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E930F42658866D00C1EEF6 /* Network.swift */; };
 		13F72AAB265E3DDB0013FE16 /* UIColor+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F72AAA265E3DDB0013FE16 /* UIColor+Custom.swift */; };
-		D30749BE3C47D395E5CAA495 /* Pods_ErrorErrorErrorUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D55626E9B4BB38966FE5563 /* Pods_ErrorErrorErrorUIKit.framework */; };
+		280C5BC0ABB9CCD89FFA9CC1 /* libPods-ErrorErrorErrorUIKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 916B1F466EC12F01E1A646B1 /* libPods-ErrorErrorErrorUIKit.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,7 +97,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1393CD11265769DD00BAAF44 /* Pods_WLED_Remote.framework in Embed Frameworks */,
 				1390519B26574041007CA620 /* ErrorErrorErrorUIKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -107,7 +105,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0D55626E9B4BB38966FE5563 /* Pods_ErrorErrorErrorUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ErrorErrorErrorUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		130195F4265F329300FB8223 /* SettingsNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNavigator.swift; sourceTree = "<group>"; };
 		130C3ABE265795F000C7425D /* NetService+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetService+Rx.swift"; sourceTree = "<group>"; };
 		130C3AC0265795FD00C7425D /* NetServiceBrowser+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetServiceBrowser+Rx.swift"; sourceTree = "<group>"; };
@@ -159,6 +156,8 @@
 		136EE14C2659B0760015C333 /* DeviceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceViewModel.swift; sourceTree = "<group>"; };
 		136EE14E2659B6500015C333 /* InfoNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoNetwork.swift; sourceTree = "<group>"; };
 		136EE153265A360A0015C333 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		137196BE265F568400A2269F /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		137196BF265F568400A2269F /* RxMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1380FFC12654A82200FC692E /* Nightlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nightlight.swift; sourceTree = "<group>"; };
 		1380FFC32654A83F00FC692E /* Segment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Segment.swift; sourceTree = "<group>"; };
 		1380FFC52654AAEA00FC692E /* JSON+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSON+Utils.swift"; sourceTree = "<group>"; };
@@ -176,18 +175,21 @@
 		139F9FC4265084520056FC57 /* CardModalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardModalPresentationController.swift; sourceTree = "<group>"; };
 		139F9FC82650C09D0056FC57 /* DeviceInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		139F9FCB2650C59B0056FC57 /* UIScreen+cornerRadiusDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+cornerRadiusDevice.swift"; sourceTree = "<group>"; };
+		13B9D7122660B31D009BD4DD /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		13BD1BD0265F402A00F6C640 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13BD1BD3265F403F00F6C640 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13BD1BD4265F403F00F6C640 /* RxMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13E930F0265867F500C1EEF6 /* Single+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Single+Ext.swift"; sourceTree = "<group>"; };
 		13E930F42658866D00C1EEF6 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		13F72AAA265E3DDB0013FE16 /* UIColor+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Custom.swift"; sourceTree = "<group>"; };
+		2C2C93A3AB069E9E71E954EC /* libPods-WLED Remote.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WLED Remote.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B4616C391026848545E3CB6 /* Pods-WLED Remote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WLED Remote.release.xcconfig"; path = "Target Support Files/Pods-WLED Remote/Pods-WLED Remote.release.xcconfig"; sourceTree = "<group>"; };
 		4DB6FE4EE0193D0177D19A71 /* Pods-ErrorErrorErrorUIKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ErrorErrorErrorUIKit.debug.xcconfig"; path = "Target Support Files/Pods-ErrorErrorErrorUIKit/Pods-ErrorErrorErrorUIKit.debug.xcconfig"; sourceTree = "<group>"; };
 		547F9126CAD67604AAF15EEC /* Pods-WLED Remote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WLED Remote.debug.xcconfig"; path = "Target Support Files/Pods-WLED Remote/Pods-WLED Remote.debug.xcconfig"; sourceTree = "<group>"; };
 		6EB4E333E80206DF476A2100 /* Pods_WLED_Remote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WLED_Remote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8411C7EE1F6D383D10CC4CF5 /* Pods-WLEDKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WLEDKit.debug.xcconfig"; path = "Target Support Files/Pods-WLEDKit/Pods-WLEDKit.debug.xcconfig"; sourceTree = "<group>"; };
 		8BDBB47A2A6CB0C3385B4D6A /* Pods_WLEDKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WLEDKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		916B1F466EC12F01E1A646B1 /* libPods-ErrorErrorErrorUIKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ErrorErrorErrorUIKit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE55A6A9B93BEB1C5673B8C6 /* Pods-WLEDKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WLEDKit.release.xcconfig"; path = "Target Support Files/Pods-WLEDKit/Pods-WLEDKit.release.xcconfig"; sourceTree = "<group>"; };
 		FEA6B6837944483B052AA0F6 /* Pods-ErrorErrorErrorUIKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ErrorErrorErrorUIKit.release.xcconfig"; path = "Target Support Files/Pods-ErrorErrorErrorUIKit/Pods-ErrorErrorErrorUIKit.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -197,7 +199,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1393CD10265769DD00BAAF44 /* Pods_WLED_Remote.framework in Frameworks */,
 				1390519A26574041007CA620 /* ErrorErrorErrorUIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -206,7 +207,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D30749BE3C47D395E5CAA495 /* Pods_ErrorErrorErrorUIKit.framework in Frameworks */,
+				280C5BC0ABB9CCD89FFA9CC1 /* libPods-ErrorErrorErrorUIKit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,6 +361,7 @@
 		135704A72656276B00B74344 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				13B9D7122660B31D009BD4DD /* GradientView.swift */,
 				130CEFCB264DCA9300BECFDF /* BrightnessSlider.swift */,
 				135704BB26562A6600B74344 /* ViewModelType.swift */,
 			);
@@ -409,6 +411,7 @@
 				135EE14E264731A00027909B /* Products */,
 				DF1ACE9D95E33863870EF693 /* Pods */,
 				89C8DE4967D0B33B586E7866 /* Frameworks */,
+				137196C9265F62E500A2269F /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -474,6 +477,14 @@
 			children = (
 			);
 			path = DeviceEffects;
+			sourceTree = "<group>";
+		};
+		137196C9265F62E500A2269F /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				6EB4E333E80206DF476A2100 /* Pods_WLED_Remote.framework */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		138F32892656453800379A0F /* Entities */ = {
@@ -543,12 +554,14 @@
 		89C8DE4967D0B33B586E7866 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				137196BE265F568400A2269F /* Moya.framework */,
+				137196BF265F568400A2269F /* RxMoya.framework */,
 				13BD1BD3265F403F00F6C640 /* Moya.framework */,
 				13BD1BD4265F403F00F6C640 /* RxMoya.framework */,
 				13BD1BD0265F402A00F6C640 /* Alamofire.framework */,
-				6EB4E333E80206DF476A2100 /* Pods_WLED_Remote.framework */,
-				0D55626E9B4BB38966FE5563 /* Pods_ErrorErrorErrorUIKit.framework */,
 				8BDBB47A2A6CB0C3385B4D6A /* Pods_WLEDKit.framework */,
+				916B1F466EC12F01E1A646B1 /* libPods-ErrorErrorErrorUIKit.a */,
+				2C2C93A3AB069E9E71E954EC /* libPods-WLED Remote.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -588,7 +601,6 @@
 				135EE149264731A00027909B /* Sources */,
 				135EE14A264731A00027909B /* Frameworks */,
 				135EE14B264731A00027909B /* Resources */,
-				E92379B8D57B56E2EE22E177 /* [CP] Embed Pods Frameworks */,
 				1390519E26574041007CA620 /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -720,23 +732,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E92379B8D57B56E2EE22E177 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-WLED Remote/Pods-WLED Remote-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-WLED Remote/Pods-WLED Remote-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WLED Remote/Pods-WLED Remote-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -805,6 +800,7 @@
 				13233CAD26573400005B1270 /* CDDevice+Ext.swift in Sources */,
 				136841D7265CDF6800C828BF /* FileSystem.swift in Sources */,
 				132853B726530C9E006F3692 /* SettingsViewController.swift in Sources */,
+				13B9D7132660B31D009BD4DD /* GradientView.swift in Sources */,
 				13233CB026573403005B1270 /* DomainConvertibleType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

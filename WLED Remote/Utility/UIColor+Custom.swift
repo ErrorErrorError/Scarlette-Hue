@@ -12,7 +12,7 @@ extension UIColor {
         return UIColor(named: "mainSystemBackground")!
     }
 
-    class var contentOverSystembackground: UIColor {
+    class var contentOverSystemBackground: UIColor {
         return UIColor(named: "contentOverSystemBackground")!
     }
 }

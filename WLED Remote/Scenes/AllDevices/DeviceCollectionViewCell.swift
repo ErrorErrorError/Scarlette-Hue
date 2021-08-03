@@ -67,7 +67,7 @@ class DeviceCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
 
         let cornerRadius: CGFloat = 30 / 2
-        backgroundColor = .contentOverSystembackground
+        backgroundColor = .contentOverSystemBackground
 
         layer.cornerRadius = cornerRadius
         layer.masksToBounds = false

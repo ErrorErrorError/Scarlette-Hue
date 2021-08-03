@@ -100,9 +100,11 @@ class DevicesViewController: UICollectionViewController {
     }
 
     private func setupConstraints() {
-        if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.estimatedItemSize = CGSize(width: collectionView.bounds.width - 32, height: 80)
-        }
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor).isActive = true
+        collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor).isActive = true
+        collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
 
     private func setupNavigationBar() {
@@ -124,6 +126,9 @@ class DevicesViewController: UICollectionViewController {
         collectionView.alwaysBounceVertical = true
         collectionView.register(DeviceCollectionViewCell.self, forCellWithReuseIdentifier: DeviceCollectionViewCell.identifier)
         collectionView.backgroundColor = .mainSystemBackground
+        if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        }
     }
 }
 
@@ -172,7 +177,11 @@ extension DevicesViewController {
 
 // MARK: - Flow layout
 extension DevicesViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+    func collectionView(_ collectionView: UICollectionView,
+                   layout collectionViewLayout: UICollectionViewLayout,
+                   sizeForItemAt indexPath: IndexPath) -> CGSize {
+        guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return .zero }
+        let availableWidth = collectionView.frame.width - collectionView.safeAreaInsets.left - collectionView.safeAreaInsets.right - flowLayout.sectionInset.left - flowLayout.sectionInset.right
+        return CGSize(width: availableWidth, height: 80)
     }
 }

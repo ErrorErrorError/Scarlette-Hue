@@ -7,7 +7,6 @@
 
 import Foundation
 
-public struct Preset {
+public struct Palette {
     var title: String = ""
-    var leds: [Int] = []
 }

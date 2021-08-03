@@ -45,27 +45,47 @@ class DeviceViewModel: ViewModelType {
             .map({ $0.state})
             .asDriverOnErrorJustComplete()
 
+        let fetchPalettes = deviceDataRelay.asObservable()
+            .map({ $0.palettes })
+            .map({ $0.map { title in Palette(title: title) } })
+            .map({ $0.map { palette in PaletteItemViewModel(with: palette) } })
+            .asDriverOnErrorJustComplete()
+
         let updateOn = input.updateOn
-            .skip(1)                        // Do not want initial state
+            .skip(1)
             .startWith(deviceDataRelay.value.state.on!)
 
         let updateBrightness = input.updateBrightness
-            .skip(1)                        // Do not want initial state
+            .skip(1)
             .startWith(deviceDataRelay.value.state.bri!)
 
         let updateColors = input.updateColors
             .startWith(deviceDataRelay.value.state.firstSegment!.colors)
 
-        let updated = Driver.combineLatest(updateOn, updateBrightness, updateColors)
-            .map { (on, brightness, colors) in
-                State(on: on, bri: brightness, segments: [Segment(colors: colors)])
+        let updatePalette = input.updatePalette
+            .map({ $0.row + $0.section })
+            .startWith(deviceDataRelay.value.state.firstSegment?.palette)
+
+        let updated = Driver.combineLatest(updateOn, updateBrightness, updateColors, updatePalette)
+            .map { (on, brightness, colors, palette) in
+                State(on: on, bri: brightness, segments: [Segment(colors: colors, palette: palette)])
             }
             .do(onNext: { newState in
                 var oldData = self.deviceDataRelay.value
                 var oldState = oldData.state
+                if var oldSegments = oldState.selectedSegments, let newColors = newState.firstSegment?.colors {
+                    for index in oldSegments.indices {
+                        var segment = oldSegments[index]
+                        segment.colors = newColors
+                        segment.palette = newState.firstSegment?.palette
+                        // TODO, modify segments
+                        oldSegments[index] = segment
+                    }
+                    oldState.segments = oldSegments
+                }
+
                 oldState.on = newState.on
                 oldState.bri = newState.bri
-                oldState.segments = newState.segments
                 oldData.state = oldState
                 self.deviceDataRelay.accept(oldData)
             })
@@ -78,6 +98,7 @@ class DeviceViewModel: ViewModelType {
                       effects: effects,
                       info: info,
                       state: fetchState,
+                      palettes: fetchPalettes,
                       device: device,
                       updated: updated)
     }
@@ -92,6 +113,7 @@ extension DeviceViewModel {
         let updateColors: Driver<[[Int]]>
         let updateBrightness: Driver<Int>
         let updateOn: Driver<Bool>
+        let updatePalette: Driver<IndexPath>
     }
 
     struct Output {
@@ -99,6 +121,7 @@ extension DeviceViewModel {
         let effects: Driver<Void>
         let info: Driver<Void>
         let state: Driver<State>
+        let palettes: Driver<[PaletteItemViewModel]>
         let device: Driver<Device>
         let updated: Driver<Bool>
     }

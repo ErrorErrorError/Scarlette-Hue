@@ -15,6 +15,9 @@ struct SettingsOption {
 
 class SettingsViewController: UITableViewController {
 
+    // MARK: View Model
+    var viewModel: SettingsViewModel!
+
     var models: [SettingsOption] = []
 
     override func viewDidLoad() {
@@ -23,19 +26,25 @@ class SettingsViewController: UITableViewController {
         title = "Settings"
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
+        view.backgroundColor = .mainSystemBackground
 
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 
-//        configure()
+        configure()
         tableView.reloadData()
+        bindViewController()
     }
 
     private func configure() {
         models.append(SettingsOption(title: "Light Setup", image: nil, handler: {
             // hola
         }))
+    }
+
+    func bindViewController() {
+
     }
 }
 

@@ -7,6 +7,8 @@
 
 import UIKit
 
+// TODO: Create own UISlider with background semi transparent kind of like the switch
+
 class BrightnessSlider: UISlider {
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -14,6 +16,10 @@ class BrightnessSlider: UISlider {
         maximumValue = 255
 
         updateTracks()
+//        backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25)
+//        layer.bounds.size.height -= 1.5
+//        layer.masksToBounds = true
+//        clipsToBounds = true
     }
 
     required init?(coder: NSCoder) {
@@ -22,9 +28,8 @@ class BrightnessSlider: UISlider {
 
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-//        let thumb = createThumb()
-//        self.setThumbImage(thumb, for: .normal)
         updateTracks()
+        layer.cornerRadius = bounds.height / 2
     }
 
     override func setValue(_ value: Float, animated: Bool) {
@@ -44,34 +49,30 @@ class BrightnessSlider: UISlider {
         let rect = CGRect(x: 0, y: 0, width: size, height: size)
 
         let renderer = UIGraphicsImageRenderer(bounds: rect)
+
         let image = renderer.image { ctx in
-            ctx.cgContext.saveGState()
+            ctx.cgContext.setShadow(offset: CGSize(width: 20, height: 20), blur: 20)
             ctx.cgContext.setFillColor(UIColor.white.cgColor)
             ctx.cgContext.fillEllipse(in: rect)
-            ctx.cgContext.restoreGState()
         }
         return image
     }
 
-    private func minTrackImageGradient() -> UIImage {
-        let minTrackStartColor = UIColor(hue: 0, saturation: 0, brightness: 0, alpha: 0.2)
-        let minTrackEndColor = UIColor.white
+    let inset: CGFloat = 2
+    let offset: CGFloat = -0.5
 
+    private func minTrackImageGradient() -> UIImage {
         let trackRect = bounds
         let thumbRect = thumbRect(forBounds: bounds, trackRect: trackRect, value: self.value)
 
-        let gradient = CAGradientLayer()
-        gradient.frame = CGRect(x: 0, y: 0, width: thumbRect.origin.x + (thumbRect.width / 2) + 3.0, height: thumbRect.height)
-        gradient.colors = [minTrackStartColor.cgColor, minTrackEndColor.cgColor]
-        gradient.masksToBounds = true
-        gradient.type = .axial
-        gradient.locations = [0.0, 0.90]
-        gradient.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradient.endPoint = CGPoint(x: 1.0, y: 0.5)
-
-        let renderer = UIGraphicsImageRenderer(size: trackRect.size)
+        let drawBounds = CGRect(x: 0, y: 0, width: trackRect.width, height: thumbRect.height)
+        let renderer = UIGraphicsImageRenderer(bounds: drawBounds)
+        let bezier = UIBezierPath(roundedRect: drawBounds.insetBy(dx: 0, dy: inset).offsetBy(dx: 0, dy: offset), byRoundingCorners: [.topLeft, .bottomLeft], cornerRadii: CGSize(width: drawBounds.width, height: drawBounds.height))
         let image = renderer.image { ctx in
-            gradient.render(in: ctx.cgContext)
+            ctx.cgContext.addPath(bezier.cgPath)
+            ctx.cgContext.clip()
+            UIColor.white.setFill()
+            ctx.fill(drawBounds)
         }
 
         return image
@@ -83,9 +84,13 @@ class BrightnessSlider: UISlider {
         let trackRect = bounds
         let thumbRect = thumbRect(forBounds: bounds, trackRect: trackRect, value: self.value)
 
-        let drawBounds = CGRect(x: 0, y: 0, width: trackRect.size.width - thumbRect.origin.x, height: thumbRect.height)
+        let drawBounds = CGRect(x: 0, y: 0, width: trackRect.width, height: thumbRect.height)
         let renderer = UIGraphicsImageRenderer(bounds: drawBounds)
+
+        let bezier = UIBezierPath(roundedRect: drawBounds.insetBy(dx: 0, dy: inset).offsetBy(dx: 0, dy: offset), byRoundingCorners: [.topRight, .bottomRight], cornerRadii: CGSize(width: drawBounds.width, height: drawBounds.height))
         let image = renderer.image { ctx in
+            ctx.cgContext.addPath(bezier.cgPath)
+            ctx.cgContext.clip()
             maxTrackColor.setFill()
             ctx.fill(drawBounds)
         }

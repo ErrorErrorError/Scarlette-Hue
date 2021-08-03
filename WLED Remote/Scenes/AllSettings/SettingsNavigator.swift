@@ -24,8 +24,8 @@ class DefaultSettingsNavigator: SettingsNavigator {
 
     func toSettings() {
         let viewController = SettingsViewController()
-//        viewController.viewModel = SettingsViewModel(devicesRepository: services.makeDevicesRepository(),
-//                                                    navigator: self)
+        viewController.viewModel = SettingsViewModel(devicesRepository: services.makeDevicesRepository(),
+                                                    navigator: self)
         navigationController.pushViewController(viewController, animated: true)
     }
 

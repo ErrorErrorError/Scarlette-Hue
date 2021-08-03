@@ -62,6 +62,10 @@ extension State {
     var firstSegment: Segment? {
         return segments?.first(where: { segment in segment.selected == true }) ?? segments?.first
     }
+
+    var selectedSegments: [Segment]? {
+        return segments?.filter({ segment in segment.selected == true }) ?? segments?[0..<1].map({ $0 })
+    }
 }
 
 extension State: Equatable {

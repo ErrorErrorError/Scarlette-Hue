@@ -18,7 +18,7 @@ class DevicesViewController: UICollectionViewController {
 
     // MARK: View Model
 
-    var viewModel: DevicesViewModel!
+    let viewModel: DevicesViewModel
 
     // MARK: Views
 
@@ -36,7 +36,8 @@ class DevicesViewController: UICollectionViewController {
 
     // MARK: Constructors
 
-    init() {
+    init(viewModel: DevicesViewModel) {
+        self.viewModel = viewModel
         let layout = UICollectionViewFlowLayout()
         super.init(collectionViewLayout: layout)
     }

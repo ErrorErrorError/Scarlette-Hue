@@ -25,7 +25,7 @@ def rx_data_source
   pod 'RxDataSources'
 end
 
-target 'WLED Remote' do
+target 'WLED Hue' do
   rx_swift
   rx_cocoa
   rx_data_source

@@ -30,11 +30,10 @@ final class DefaultDiscoverDeviceNavigator: DiscoverDeviceNavigator {
     func toAddDevice(_ device: Device) {
         if let presentingViewController = navigationController.topViewController?.presentedViewController {
             let navigator = AddDeviceNavigator(navigationController: navigationController)
-            let viewController = AddDeviceViewController()
             let viewModel = AddDeviceViewModel(device: device,
                                                devicesRepository: services.makeDevicesRepository(),
                                                navigator: navigator)
-            viewController.viewModel = viewModel
+            let viewController = AddDeviceViewController(viewModel: viewModel)
 
             UIView.transition(with: presentingViewController.view, duration: 0.25, options: [.transitionCrossDissolve], animations: {
                 presentingViewController.view.subviews.forEach { $0.removeFromSuperview() }

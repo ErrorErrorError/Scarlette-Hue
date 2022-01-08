@@ -25,10 +25,10 @@ class DefaultDevicesNavigator: DevicesNavigator {
     }
 
     func toDevices() {
-        let viewController = DevicesViewController()
-        viewController.viewModel = DevicesViewModel(devicesRepository: services.makeDevicesRepository(),
+        let viewModel = DevicesViewModel(devicesRepository: services.makeDevicesRepository(),
                                                     deviceDataNetworkService: services.makeDeviceDataNetwork(),
                                                     navigator: self)
+        let viewController = DevicesViewController(viewModel: viewModel)
         navigationController.pushViewController(viewController, animated: true)
     }
 
@@ -40,16 +40,14 @@ class DefaultDevicesNavigator: DevicesNavigator {
                                                 bonjourService: services.makeDevicesBonjourService(),
                                                 stateNetworkService: services.makeStateNetwork(),
                                                 navigator: navigator)
-        let viewController = DiscoverDeviceViewController()
+        let viewController = DiscoverDeviceViewController(viewModel: viewModel)
         let transitionDelegate = CardModalTransitioningDelegate(from: topViewController, to: viewController)
-        viewController.viewModel = viewModel
         viewController.modalPresentationStyle = .custom
         viewController.transitioningDelegate = transitionDelegate
         topViewController.present(viewController, animated: true)
     }
 
     func toDevice(_ device: Device, _ deviceData: DeviceData) {
-        let viewController = DeviceViewController()
         let navigator = DefaultDeviceNavigator(services: services,
                                                navigationController: navigationController)
         let viewModel = DeviceViewModel(device: device,
@@ -57,7 +55,7 @@ class DefaultDevicesNavigator: DevicesNavigator {
                                         deviceDataNetworkService: services.makeDeviceDataNetwork(),
                                         deviceRepository: services.makeDevicesRepository(),
                                         navigator: navigator)
-        viewController.viewModel = viewModel
+        let viewController = DeviceViewController(viewModel: viewModel)
         navigationController.pushViewController(viewController, animated: true)
     }
 }

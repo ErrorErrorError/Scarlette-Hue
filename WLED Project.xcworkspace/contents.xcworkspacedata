@@ -5,9 +5,6 @@
       location = "group:WLED Remote.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Moya/Moya.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
 </Workspace>

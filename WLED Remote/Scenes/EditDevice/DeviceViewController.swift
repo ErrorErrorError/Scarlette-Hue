@@ -28,7 +28,7 @@ class DeviceViewController: UICollectionViewController {
 
     // MARK: View Model
 
-    var viewModel: DeviceViewModel!
+    let viewModel: DeviceViewModel
 
     // MARK: Views
 
@@ -156,7 +156,8 @@ class DeviceViewController: UICollectionViewController {
         return stackView
     }()
 
-    init() {
+    init(viewModel: DeviceViewModel) {
+        self.viewModel = viewModel
         super.init(collectionViewLayout: UICollectionViewFlowLayout())
     }
 

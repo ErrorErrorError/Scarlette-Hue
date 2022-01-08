@@ -94,6 +94,7 @@
 		13E930F52658866D00C1EEF6 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E930F42658866D00C1EEF6 /* Network.swift */; };
 		13F72AAB265E3DDB0013FE16 /* UIColor+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F72AAA265E3DDB0013FE16 /* UIColor+Custom.swift */; };
 		280C5BC0ABB9CCD89FFA9CC1 /* libPods-ErrorErrorErrorUIKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 916B1F466EC12F01E1A646B1 /* libPods-ErrorErrorErrorUIKit.a */; };
+		EEAADD131EE63984578EE11B /* libPods-WLED Hue.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00D5686858AC6BF8A7AD297E /* libPods-WLED Hue.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +122,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		00D5686858AC6BF8A7AD297E /* libPods-WLED Hue.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WLED Hue.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		130195F4265F329300FB8223 /* SettingsNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNavigator.swift; sourceTree = "<group>"; };
 		130C3ABE265795F000C7425D /* NetService+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetService+Rx.swift"; sourceTree = "<group>"; };
 		130C3AC0265795FD00C7425D /* NetServiceBrowser+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetServiceBrowser+Rx.swift"; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 		13E930F42658866D00C1EEF6 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		13F72AAA265E3DDB0013FE16 /* UIColor+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Custom.swift"; sourceTree = "<group>"; };
 		2C2C93A3AB069E9E71E954EC /* libPods-WLED Remote.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WLED Remote.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3EE0A58FF2B4B80906BC8031 /* Pods-WLED Hue.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WLED Hue.release.xcconfig"; path = "Target Support Files/Pods-WLED Hue/Pods-WLED Hue.release.xcconfig"; sourceTree = "<group>"; };
 		4B4616C391026848545E3CB6 /* Pods-WLED Remote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WLED Remote.release.xcconfig"; path = "Target Support Files/Pods-WLED Remote/Pods-WLED Remote.release.xcconfig"; sourceTree = "<group>"; };
 		4DB6FE4EE0193D0177D19A71 /* Pods-ErrorErrorErrorUIKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ErrorErrorErrorUIKit.debug.xcconfig"; path = "Target Support Files/Pods-ErrorErrorErrorUIKit/Pods-ErrorErrorErrorUIKit.debug.xcconfig"; sourceTree = "<group>"; };
 		547F9126CAD67604AAF15EEC /* Pods-WLED Remote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WLED Remote.debug.xcconfig"; path = "Target Support Files/Pods-WLED Remote/Pods-WLED Remote.debug.xcconfig"; sourceTree = "<group>"; };
@@ -223,6 +226,7 @@
 		8411C7EE1F6D383D10CC4CF5 /* Pods-WLEDKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WLEDKit.debug.xcconfig"; path = "Target Support Files/Pods-WLEDKit/Pods-WLEDKit.debug.xcconfig"; sourceTree = "<group>"; };
 		8BDBB47A2A6CB0C3385B4D6A /* Pods_WLEDKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WLEDKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		916B1F466EC12F01E1A646B1 /* libPods-ErrorErrorErrorUIKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ErrorErrorErrorUIKit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		96D83BEC3A9FAA289233EA50 /* Pods-WLED Hue.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WLED Hue.debug.xcconfig"; path = "Target Support Files/Pods-WLED Hue/Pods-WLED Hue.debug.xcconfig"; sourceTree = "<group>"; };
 		CE55A6A9B93BEB1C5673B8C6 /* Pods-WLEDKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WLEDKit.release.xcconfig"; path = "Target Support Files/Pods-WLEDKit/Pods-WLEDKit.release.xcconfig"; sourceTree = "<group>"; };
 		FEA6B6837944483B052AA0F6 /* Pods-ErrorErrorErrorUIKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ErrorErrorErrorUIKit.release.xcconfig"; path = "Target Support Files/Pods-ErrorErrorErrorUIKit/Pods-ErrorErrorErrorUIKit.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -233,6 +237,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1390519A26574041007CA620 /* ErrorErrorErrorUIKit.framework in Frameworks */,
+				EEAADD131EE63984578EE11B /* libPods-WLED Hue.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -636,6 +641,7 @@
 				8BDBB47A2A6CB0C3385B4D6A /* Pods_WLEDKit.framework */,
 				916B1F466EC12F01E1A646B1 /* libPods-ErrorErrorErrorUIKit.a */,
 				2C2C93A3AB069E9E71E954EC /* libPods-WLED Remote.a */,
+				00D5686858AC6BF8A7AD297E /* libPods-WLED Hue.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -649,6 +655,8 @@
 				FEA6B6837944483B052AA0F6 /* Pods-ErrorErrorErrorUIKit.release.xcconfig */,
 				8411C7EE1F6D383D10CC4CF5 /* Pods-WLEDKit.debug.xcconfig */,
 				CE55A6A9B93BEB1C5673B8C6 /* Pods-WLEDKit.release.xcconfig */,
+				96D83BEC3A9FAA289233EA50 /* Pods-WLED Hue.debug.xcconfig */,
+				3EE0A58FF2B4B80906BC8031 /* Pods-WLED Hue.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -799,7 +807,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-WLED Remote-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-WLED Hue-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1044,7 +1052,7 @@
 		};
 		135EE165264731A10027909B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 547F9126CAD67604AAF15EEC /* Pods-WLED Remote.debug.xcconfig */;
+			baseConfigurationReference = 96D83BEC3A9FAA289233EA50 /* Pods-WLED Hue.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1066,7 +1074,7 @@
 		};
 		135EE166264731A10027909B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4B4616C391026848545E3CB6 /* Pods-WLED Remote.release.xcconfig */;
+			baseConfigurationReference = 3EE0A58FF2B4B80906BC8031 /* Pods-WLED Hue.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;

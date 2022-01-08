@@ -16,9 +16,18 @@ struct SettingsOption {
 class SettingsViewController: UITableViewController {
 
     // MARK: View Model
-    var viewModel: SettingsViewModel!
+    let viewModel: SettingsViewModel
 
     var models: [SettingsOption] = []
+
+    init(viewModel: SettingsViewModel) {
+        self.viewModel = viewModel
+        super.init(style: .plain)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

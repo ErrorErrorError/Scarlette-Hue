@@ -17,7 +17,7 @@ class DiscoverDeviceViewController: UIViewController {
 
     // MARK: ViewModel
 
-    var viewModel: DiscoverDeviceViewModel!
+    let viewModel: DiscoverDeviceViewModel
 
     private let contentView: UIView = {
         let view = UIView(frame: .zero)
@@ -76,6 +76,15 @@ class DiscoverDeviceViewController: UIViewController {
         button.backgroundColor = .secondarySystemBackground
         return button
     }()
+
+    init(viewModel: DiscoverDeviceViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

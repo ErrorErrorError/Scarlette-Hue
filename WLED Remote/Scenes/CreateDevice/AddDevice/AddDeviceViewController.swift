@@ -13,7 +13,7 @@ class AddDeviceViewController: UIViewController {
 
     // MARK: ViewModel
 
-    var viewModel: AddDeviceViewModel!
+    let viewModel: AddDeviceViewModel
 
     // MARK: Rx
 
@@ -81,6 +81,15 @@ class AddDeviceViewController: UIViewController {
     }()
 
     private let buttonHeight: CGFloat = 48
+
+    init(viewModel: AddDeviceViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

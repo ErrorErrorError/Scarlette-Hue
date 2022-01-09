@@ -24,8 +24,8 @@
 		13233CAA265733F6005B1270 /* ContexScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13233C8F2656E336005B1270 /* ContexScheduler.swift */; };
 		13233CAB265733FB005B1270 /* NSManagedObjectContext+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138F328B2656463100379A0F /* NSManagedObjectContext+Ext.swift */; };
 		13233CAC265733FB005B1270 /* Observable+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13233C962656E448005B1270 /* Observable+Ext.swift */; };
-		13233CAD26573400005B1270 /* CDDevice+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134DF8D326545BB1005B7DFE /* CDDevice+Ext.swift */; };
-		13233CAE26573400005B1270 /* CDDevice+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132853B02652EDFF006F3692 /* CDDevice+CoreDataProperties.swift */; };
+		13233CAD26573400005B1270 /* WLEDDevice+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134DF8D326545BB1005B7DFE /* WLEDDevice+Ext.swift */; };
+		13233CAE26573400005B1270 /* WLEDDevice+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132853B02652EDFF006F3692 /* WLEDDevice+CoreDataProperties.swift */; };
 		13233CB026573403005B1270 /* DomainConvertibleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13233C9A2656E472005B1270 /* DomainConvertibleType.swift */; };
 		13233CB126573403005B1270 /* Persistable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13233C992656E472005B1270 /* Persistable.swift */; };
 		13233CB22657340B005B1270 /* UseCaseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13233C892656E23F005B1270 /* UseCaseProvider.swift */; };
@@ -40,7 +40,7 @@
 		13233CBF26573426005B1270 /* Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1380FFC32654A83F00FC692E /* Segment.swift */; };
 		13233CC026573426005B1270 /* Info.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130CEFC2264D1D5900BECFDF /* Info.swift */; };
 		132853B726530C9E006F3692 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132853B626530C9E006F3692 /* SettingsViewController.swift */; };
-		13512FE82658B1DF00C4040F /* CDDevice+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13512FE72658B1DF00C4040F /* CDDevice+CoreDataClass.swift */; };
+		13512FE82658B1DF00C4040F /* WLEDDevice+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13512FE72658B1DF00C4040F /* WLEDDevice+CoreDataClass.swift */; };
 		13512FE92659050F00C4040F /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 135CFDBD2656396600D05757 /* Model.xcdatamodeld */; };
 		1356002A2658362C00B16B59 /* AddDeviceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135600292658362C00B16B59 /* AddDeviceViewModel.swift */; };
 		1356002C2658363B00B16B59 /* AddDeviceNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1356002B2658363B00B16B59 /* AddDeviceNavigator.swift */; };
@@ -52,7 +52,7 @@
 		135EE153264731A00027909B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135EE152264731A00027909B /* SceneDelegate.swift */; };
 		135EE15D264731A10027909B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 135EE15C264731A10027909B /* Assets.xcassets */; };
 		135EE160264731A10027909B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 135EE15E264731A10027909B /* LaunchScreen.storyboard */; };
-		136841CE265CC51000C828BF /* DeviceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136841CD265CC51000C828BF /* DeviceData.swift */; };
+		136841CE265CC51000C828BF /* DeviceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136841CD265CC51000C828BF /* DeviceStore.swift */; };
 		136841D0265CD37500C828BF /* DeviceDataNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136841CF265CD37500C828BF /* DeviceDataNetwork.swift */; };
 		136841D2265CDEBA00C828BF /* Wifi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136841D1265CDEBA00C828BF /* Wifi.swift */; };
 		136841D4265CDEF400C828BF /* Leds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136841D3265CDEF400C828BF /* Leds.swift */; };
@@ -145,13 +145,13 @@
 		13233C9F265726F2005B1270 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		13233CA126572E71005B1270 /* DevicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesViewModel.swift; sourceTree = "<group>"; };
 		13233CA326572F06005B1270 /* DevicesNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesNavigator.swift; sourceTree = "<group>"; };
-		132853B02652EDFF006F3692 /* CDDevice+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDDevice+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		132853B02652EDFF006F3692 /* WLEDDevice+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WLEDDevice+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		132853B626530C9E006F3692 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		134DF8CB2654595A005B7DFE /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
-		134DF8D326545BB1005B7DFE /* CDDevice+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDDevice+Ext.swift"; sourceTree = "<group>"; };
+		134DF8D326545BB1005B7DFE /* WLEDDevice+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WLEDDevice+Ext.swift"; sourceTree = "<group>"; };
 		134DF8D526545C24005B7DFE /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		134DF8D82654609C005B7DFE /* DevicesUseCaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesUseCaseProtocol.swift; sourceTree = "<group>"; };
-		13512FE72658B1DF00C4040F /* CDDevice+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDDevice+CoreDataClass.swift"; sourceTree = "<group>"; };
+		13512FE72658B1DF00C4040F /* WLEDDevice+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WLEDDevice+CoreDataClass.swift"; sourceTree = "<group>"; };
 		135600292658362C00B16B59 /* AddDeviceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDeviceViewModel.swift; sourceTree = "<group>"; };
 		1356002B2658363B00B16B59 /* AddDeviceNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDeviceNavigator.swift; sourceTree = "<group>"; };
 		135704BB26562A6600B74344 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
@@ -165,7 +165,7 @@
 		135EE15C264731A10027909B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		135EE15F264731A10027909B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		135EE161264731A10027909B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		136841CD265CC51000C828BF /* DeviceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceData.swift; sourceTree = "<group>"; };
+		136841CD265CC51000C828BF /* DeviceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceStore.swift; sourceTree = "<group>"; };
 		136841CF265CD37500C828BF /* DeviceDataNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDataNetwork.swift; sourceTree = "<group>"; };
 		136841D1265CDEBA00C828BF /* Wifi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wifi.swift; sourceTree = "<group>"; };
 		136841D3265CDEF400C828BF /* Leds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Leds.swift; sourceTree = "<group>"; };
@@ -344,15 +344,16 @@
 		1357046C2654FA5600B74344 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				135704A62656275800B74344 /* AllSettings */,
-				135704A52656270500B74344 /* EditDevice */,
-				135704A4265626E800B74344 /* CreateDevice */,
-				1357046D2654FA5B00B74344 /* AllDevices */,
+				135704BA2656298D00B74344 /* App */,
+				135704A72656276B00B74344 /* Common */,
+				13C3A2CA278A686F00C97A60 /* Device */,
+				135704A62656275800B74344 /* Settings */,
+				1357046D2654FA5B00B74344 /* Devices */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
 		};
-		1357046D2654FA5B00B74344 /* AllDevices */ = {
+		1357046D2654FA5B00B74344 /* Devices */ = {
 			isa = PBXGroup;
 			children = (
 				130CEFC9264DBB9900BECFDF /* DeviceCollectionViewCell.swift */,
@@ -361,7 +362,7 @@
 				13233CA326572F06005B1270 /* DevicesNavigator.swift */,
 				1393CD0B2657508200BAAF44 /* DeviceItemViewModel.swift */,
 			);
-			path = AllDevices;
+			path = Devices;
 			sourceTree = "<group>";
 		};
 		135704A4265626E800B74344 /* CreateDevice */ = {
@@ -389,19 +390,20 @@
 			path = EditDevice;
 			sourceTree = "<group>";
 		};
-		135704A62656275800B74344 /* AllSettings */ = {
+		135704A62656275800B74344 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
 				132853B626530C9E006F3692 /* SettingsViewController.swift */,
 				130195F4265F329300FB8223 /* SettingsNavigator.swift */,
 				13BBEF35266302C400685C42 /* SettingsViewModel.swift */,
 			);
-			path = AllSettings;
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		135704A72656276B00B74344 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				13ADD4AD26B2756100E231A6 /* ChromaColorPicker */,
 				13B9D7122660B31D009BD4DD /* GradientView.swift */,
 				130CEFCB264DCA9300BECFDF /* BrightnessSlider.swift */,
 				135704BB26562A6600B74344 /* ViewModelType.swift */,
@@ -419,20 +421,20 @@
 			path = CardModal;
 			sourceTree = "<group>";
 		};
-		135704BA2656298D00B74344 /* Application */ = {
+		135704BA2656298D00B74344 /* App */ = {
 			isa = PBXGroup;
 			children = (
 				13233C9F265726F2005B1270 /* Application.swift */,
 			);
-			path = Application;
+			path = App;
 			sourceTree = "<group>";
 		};
 		135704D126562DBB00B74344 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				136841CD265CC51000C828BF /* DeviceData.swift */,
 				13209478264CA3FA007049D7 /* Palette.swift */,
 				134DF8D526545C24005B7DFE /* Device.swift */,
+				136841CD265CC51000C828BF /* DeviceStore.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -469,14 +471,10 @@
 		135EE14F264731A00027909B /* WLED Remote */ = {
 			isa = PBXGroup;
 			children = (
-				13ADD4AD26B2756100E231A6 /* ChromaColorPicker */,
-				134DF8CA2654594D005B7DFE /* CoreData */,
-				138FF658264C6E0400216D47 /* Network */,
+				13C3A2CB278A690300C97A60 /* Data */,
 				13233CA52657339B005B1270 /* Domain */,
-				135704BA2656298D00B74344 /* Application */,
-				135704A72656276B00B74344 /* Common */,
 				1357046C2654FA5600B74344 /* Scenes */,
-				139F9FCA2650C5890056FC57 /* Utility */,
+				139F9FCA2650C5890056FC57 /* Support */,
 				135EE150264731A00027909B /* AppDelegate.swift */,
 				135EE152264731A00027909B /* SceneDelegate.swift */,
 				135EE15C264731A10027909B /* Assets.xcassets */,
@@ -534,9 +532,9 @@
 			isa = PBXGroup;
 			children = (
 				13233C982656E461005B1270 /* Convertion */,
-				132853B02652EDFF006F3692 /* CDDevice+CoreDataProperties.swift */,
-				134DF8D326545BB1005B7DFE /* CDDevice+Ext.swift */,
-				13512FE72658B1DF00C4040F /* CDDevice+CoreDataClass.swift */,
+				132853B02652EDFF006F3692 /* WLEDDevice+CoreDataProperties.swift */,
+				134DF8D326545BB1005B7DFE /* WLEDDevice+Ext.swift */,
+				13512FE72658B1DF00C4040F /* WLEDDevice+CoreDataClass.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -563,7 +561,6 @@
 			isa = PBXGroup;
 			children = (
 				136841D5265CDEFC00C828BF /* Model */,
-				130C3ABB2657950800C7425D /* Bonjour */,
 				138F32902656477F00379A0F /* API */,
 				13E930F42658866D00C1EEF6 /* Network.swift */,
 			);
@@ -580,19 +577,14 @@
 			path = ErrorErrorErrorUIKit;
 			sourceTree = "<group>";
 		};
-		139F9FCA2650C5890056FC57 /* Utility */ = {
+		139F9FCA2650C5890056FC57 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				13C3A2C9278A680A00C97A60 /* Extensions */,
 				13233C892656E23F005B1270 /* UseCaseProvider.swift */,
-				13233C962656E448005B1270 /* Observable+Ext.swift */,
-				1380FFC52654AAEA00FC692E /* JSON+Utils.swift */,
-				139F9FCB2650C59B0056FC57 /* UIScreen+cornerRadiusDevice.swift */,
-				1357CD182653A85F009731D6 /* UIColor+Int.swift */,
-				13E930F0265867F500C1EEF6 /* Single+Ext.swift */,
 				136EE153265A360A0015C333 /* ActivityIndicator.swift */,
-				13F72AAA265E3DDB0013FE16 /* UIColor+Custom.swift */,
 			);
-			path = Utility;
+			path = Support;
 			sourceTree = "<group>";
 		};
 		13ADD4AD26B2756100E231A6 /* ChromaColorPicker */ = {
@@ -628,6 +620,38 @@
 				13ADD4BA26B2758200E231A6 /* UIView+DropShadow.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		13C3A2C9278A680A00C97A60 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1357CD182653A85F009731D6 /* UIColor+Int.swift */,
+				139F9FCB2650C59B0056FC57 /* UIScreen+cornerRadiusDevice.swift */,
+				13233C962656E448005B1270 /* Observable+Ext.swift */,
+				1380FFC52654AAEA00FC692E /* JSON+Utils.swift */,
+				13F72AAA265E3DDB0013FE16 /* UIColor+Custom.swift */,
+				13E930F0265867F500C1EEF6 /* Single+Ext.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		13C3A2CA278A686F00C97A60 /* Device */ = {
+			isa = PBXGroup;
+			children = (
+				135704A52656270500B74344 /* EditDevice */,
+				135704A4265626E800B74344 /* CreateDevice */,
+			);
+			path = Device;
+			sourceTree = "<group>";
+		};
+		13C3A2CB278A690300C97A60 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				130C3ABB2657950800C7425D /* Bonjour */,
+				138FF658264C6E0400216D47 /* Network */,
+				134DF8CA2654594D005B7DFE /* CoreData */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		89C8DE4967D0B33B586E7866 /* Frameworks */ = {
@@ -854,10 +878,10 @@
 				13233CA6265733C6005B1270 /* JSON+Utils.swift in Sources */,
 				130CEFCA264DBB9900BECFDF /* DeviceCollectionViewCell.swift in Sources */,
 				136EE14D2659B0760015C333 /* DeviceViewModel.swift in Sources */,
-				13512FE82658B1DF00C4040F /* CDDevice+CoreDataClass.swift in Sources */,
+				13512FE82658B1DF00C4040F /* WLEDDevice+CoreDataClass.swift in Sources */,
 				13E930F52658866D00C1EEF6 /* Network.swift in Sources */,
 				13912EA52651A3D400BD5095 /* ManuallyAddDeviceViewController.swift in Sources */,
-				136841CE265CC51000C828BF /* DeviceData.swift in Sources */,
+				136841CE265CC51000C828BF /* DeviceStore.swift in Sources */,
 				13B9D7152660EA66009BD4DD /* PaletteItemViewModel.swift in Sources */,
 				1356002C2658363B00B16B59 /* AddDeviceNavigator.swift in Sources */,
 				13F72AAB265E3DDB0013FE16 /* UIColor+Custom.swift in Sources */,
@@ -888,13 +912,13 @@
 				13ADD4BD26B2758200E231A6 /* SliderTrackView.swift in Sources */,
 				13E930F1265867F500C1EEF6 /* Single+Ext.swift in Sources */,
 				13233CBD26573426005B1270 /* Device.swift in Sources */,
-				13233CAE26573400005B1270 /* CDDevice+CoreDataProperties.swift in Sources */,
+				13233CAE26573400005B1270 /* WLEDDevice+CoreDataProperties.swift in Sources */,
 				13233CB52657340D005B1270 /* CoreDataStack.swift in Sources */,
 				13BBEF36266302C400685C42 /* SettingsViewModel.swift in Sources */,
 				1357CD192653A85F009731D6 /* UIColor+Int.swift in Sources */,
 				136841D2265CDEBA00C828BF /* Wifi.swift in Sources */,
 				130C3AC1265795FD00C7425D /* NetServiceBrowser+Rx.swift in Sources */,
-				13233CAD26573400005B1270 /* CDDevice+Ext.swift in Sources */,
+				13233CAD26573400005B1270 /* WLEDDevice+Ext.swift in Sources */,
 				136841D7265CDF6800C828BF /* FileSystem.swift in Sources */,
 				132853B726530C9E006F3692 /* SettingsViewController.swift in Sources */,
 				13ADD4BC26B2758200E231A6 /* ColorWheelView.swift in Sources */,

@@ -6,19 +6,16 @@
 //
 
 import UIKit
+import Then
 
 class ManuallyAddDeviceViewController: UIViewController {
 
-    let titleLabel: UILabel = {
-        let label = UILabel(frame: .zero)
-        label.text = "Set WLED Information"
-        label.font = UIFont.boldSystemFont(ofSize: 24)
-        return label
-    }()
+    let titleLabel = UILabel().then {
+        $0.text = "Set WLED Information"
+        $0.font = UIFont.boldSystemFont(ofSize: 24)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
     }
 }

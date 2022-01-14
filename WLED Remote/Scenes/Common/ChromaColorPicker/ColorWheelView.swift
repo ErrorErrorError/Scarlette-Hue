@@ -13,27 +13,27 @@ import UIKit
 private let defaultImageViewCurveInset: CGFloat = 1.0
 
 public class ColorWheelView: UIView {
-    
+
     public override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
     }
-    
+
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
     }
-    
+
     public override func layoutSubviews() {
         super.layoutSubviews()
         layer.masksToBounds = false
         layer.cornerRadius = radius
-        
+
         let screenScale: CGFloat = UIScreen.main.scale
         if let colorWheelImage: CIImage = makeColorWheelImage(radius: radius * screenScale) {
             imageView.image = UIImage(ciImage: colorWheelImage, scale: screenScale, orientation: .up)
         }
-        
+
         // Mask imageview so the generated colorwheel has smooth edges.
         // We mask the imageview instead of image so we get the benefits of using the CIImage
         // rendering directly on the GPU.
@@ -43,13 +43,13 @@ public class ColorWheelView: UIView {
     }
 
     public var radius: CGFloat {
-        return max(bounds.width, bounds.height) / 2.0
+        return min(bounds.width, bounds.height) / 2.0
     }
-    
+
     public var middlePoint: CGPoint {
         return CGPoint(x: bounds.midX, y: bounds.midY)
     }
-    
+
     /**
      Returns the (x,y) location of the color provided within the ColorWheelView.
      Disregards color's brightness component.
@@ -58,15 +58,15 @@ public class ColorWheelView: UIView {
         var hue: CGFloat = 0
         var saturation: CGFloat = 0
         color.getHue(&hue, saturation: &saturation, brightness: nil, alpha: nil)
-        
+
         let radianAngle = hue * (2 * .pi)
         let distance = saturation * radius
         let colorTranslation = CGPoint(x: distance * cos(radianAngle), y: -distance * sin(radianAngle))
         let colorPoint = CGPoint(x: bounds.midX + colorTranslation.x, y: bounds.midY + colorTranslation.y)
-        
+
         return colorPoint
     }
-    
+
     /**
      Returns the color on the wheel on a given point relative to the view. nil is returned if
      the point does not exist within the bounds of the color wheel.
@@ -168,7 +168,7 @@ public class ColorWheelView: UIView {
         ])
         return filter?.outputImage
     }
-    
+
     /**
      Returns a color for a provided radian angle on the color wheel.
      - Note: Adjusts angle for the local color space and returns a color of

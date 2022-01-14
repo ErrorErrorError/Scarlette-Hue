@@ -3,7 +3,7 @@
 //  WLED Remote
 //
 //  Created by Erik Bautista on 5/21/21.
-//
+//  https://github.com/katoemba/RxNetService
 
 import Foundation
 import RxSwift

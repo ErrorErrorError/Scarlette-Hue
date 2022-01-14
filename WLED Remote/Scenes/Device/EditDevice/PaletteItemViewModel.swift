@@ -6,29 +6,14 @@
 //
 
 import Foundation
+import RxSwift
 
-class PaletteItemViewModel: ViewModelType {
-    // MARK: Network Service
-
+public struct PaletteItemViewModel {
     let title: String
-    let palette: Palette
 
     // MARK: Rx
 
-    init(with palette: Palette) {
-        self.palette = palette
-        self.title = palette.title
-    }
-}
-
-extension PaletteItemViewModel {
-    struct Input {
-    }
-
-    struct Output {
-    }
-
-    func transform(input: Input) -> Output {
-        return Output()
+    init(title: String) {
+        self.title = title
     }
 }

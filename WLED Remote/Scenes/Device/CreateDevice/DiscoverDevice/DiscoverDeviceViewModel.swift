@@ -9,82 +9,87 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-final class DiscoverDeviceViewModel: ViewModelType {
-    private let devicesRepository: DevicesUseCaseProtocol
-    private let navigator: DiscoverDeviceNavigator
-    private let bonjourService: NetServiceBrowser
-    private let stateNetworkService: StateNetwork
-
-    private var services = BehaviorRelay<[NetService]>(value: [])
-
-    init(devicesRepository: DevicesUseCaseProtocol, bonjourService: NetServiceBrowser, stateNetworkService: StateNetwork, navigator: DiscoverDeviceNavigator) {
-        self.devicesRepository = devicesRepository
-        self.bonjourService = bonjourService
-        self.stateNetworkService = stateNetworkService
-        self.navigator = navigator
-    }
-
-    func transform(input: Input) -> Output {
-
-        let scanTrigger = input.scanDevicesTrigger
-            .do(onNext: { [weak self] in
-                self?.bonjourService.searchForServices(ofType: "_http._tcp", inDomain: "")
-            })
-
-        let devices = input.devicesTrigger.flatMapLatest {
-            return self.devicesRepository.devices()
-                .asDriverOnErrorJustComplete()
-        }
-
-        let newService = scanTrigger.flatMapLatest({ self.bonjourService.rx.serviceAdded.asDriverOnErrorJustComplete() })
-            .withLatestFrom(devices, resultSelector: { service, devices in
-                devices.contains(where: { $0.ip == service.firstIPv4Address! }) ? NetService() : service
-            })
-            .filter({ $0.firstIPv4Address != nil }) // Check if ip address is valid
-            .flatMapLatest({ service in
-                self.stateNetworkService.validateNetwork(ip: service.firstIPv4Address!, port: service.port)
-                    .asDriverOnErrorJustComplete()
-                    .withLatestFrom(Driver.just(service))
-            })
-            .do(onNext: {
-                var newArray = self.services.value
-                newArray.append($0)
-                self.services.accept(newArray)
-            })
-
-        let scannedDevices = newService.withLatestFrom(services.asDriverOnErrorJustComplete())
-            .map({ $0.map({ Device(name: $0.name, ip: $0.firstIPv4Address!, port: $0.port) }) })
-            .map({ $0.map({ DeviceInfoItemViewModel(with: $0) }) })
-
-        let next = input.nextTrigger.withLatestFrom(services.asDriver()) { (indexPath, services) -> NetService in
-            return services[indexPath.row]
-        }
-        .map({ Device(name: $0.name, ip: $0.firstIPv4Address!, port: $0.port) })
-        .do(onNext: navigator.toAddDevice)
-
-        let dismiss = Driver.of(input.dismissTrigger)
-            .merge()
-            .do(onNext: { [weak self] in
-                self?.bonjourService.stop()
-                self?.navigator.toDevices()
-            })
-
-        return Output(scannedDevices: scannedDevices, devices: devices, next: next, dismiss: dismiss)
-    }
+struct DiscoverDeviceViewModel {
+    let navigator: DiscoverDeviceNavigator
+    let devicesRepository: DevicesUseCaseProtocol
+    let bonjourService: NetServiceBrowser
+    let infoAPIService: InfoAPI
 }
 
-extension DiscoverDeviceViewModel {
+extension DiscoverDeviceViewModel: ViewModelType {
     struct Input {
         let scanDevicesTrigger: Driver<Void>
-        let devicesTrigger: Driver<Void>
+        let manualDeviceTrigger: Driver<Void>
         let dismissTrigger: Driver<Void>
-        let nextTrigger: Driver<IndexPath>
+        let selectedDevice: Driver<IndexPath>
     }
 
     struct Output {
-        let scannedDevices: Driver<[DeviceInfoItemViewModel]>
-        let devices: Driver<[Device]>
-        let next: Driver<Device>
-        let dismiss: Driver<Void>
+        @Relay var devices = [DeviceInfoItemViewModel]()
+    }
+
+    func transform(input: Input, disposeBag: DisposeBag) -> Output {
+        let output = Output()
+
+        let devices = devicesRepository.devices()
+            .asDriverOnErrorJustComplete()
+
+        let serviceAdded = bonjourService.rx.serviceAdded
+            .filter({ $0.firstIPv4Address != nil })
+            .asDriverOnErrorJustComplete()
+
+        serviceAdded
+            .withLatestFrom(devices) { service, devices in
+                devices.contains(where: { $0.ip == service.firstIPv4Address! }) ? nil : service
+            }
+            .compactMap({ $0 })
+            .flatMapLatest({ service in
+                // If it is unable to fetch info, handle error by returning nil
+                // since we are on Driver.
+                infoAPIService.validateNetwork(ip: service.firstIPv4Address!, port: service.port)
+                    .map({ nil ?? $0 }) // Mapped to accept nil
+                    .asDriver(onErrorRecover: { _ in Driver.just(nil) })
+                    .map({ $0 != nil ? service : nil })
+            })
+            .compactMap({ $0 })
+            .map({ Device(name: $0.name, ip: $0.firstIPv4Address!, port: $0.port) })
+            .map({ DeviceInfoItemViewModel(with: $0) })
+            .do(onNext: {
+                var newArray = output.devices
+                newArray.append($0)
+                output.$devices.accept(newArray)
+            })
+            .drive()
+            .disposed(by: disposeBag)
+
+        input.scanDevicesTrigger
+            .do(onNext: {
+                bonjourService.searchForServices(ofType: "_http._tcp", inDomain: "")
+            })
+            .drive()
+            .disposed(by: disposeBag)
+
+        input.manualDeviceTrigger
+            .drive(onNext: {
+                bonjourService.stop()
+                navigator.toManuallyAddDevice()
+            })
+            .disposed(by: disposeBag)
+
+        input.dismissTrigger
+            .drive(onNext: {
+                bonjourService.stop()
+                navigator.toDevices()
+            })
+            .disposed(by: disposeBag)
+
+        select(trigger: input.selectedDevice, items: output.$devices.asDriver())
+            .map({ $0.device })
+            .drive {
+                bonjourService.stop()
+                navigator.toConfigureDevice($0)
+            }
+            .disposed(by: disposeBag)
+        return output
     }
 }

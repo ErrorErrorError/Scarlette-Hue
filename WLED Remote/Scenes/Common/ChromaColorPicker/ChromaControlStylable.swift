@@ -9,8 +9,6 @@
 import UIKit
 
 internal protocol ChromaControlStylable {
-    var borderWidth: CGFloat { get set }
-    var borderColor: UIColor { get set }
     var showsShadow: Bool { get set }
     
     func updateShadowIfNeeded()

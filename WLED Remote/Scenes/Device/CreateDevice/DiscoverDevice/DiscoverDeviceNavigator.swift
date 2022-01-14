@@ -8,9 +8,9 @@
 import Foundation
 import UIKit
 
-protocol DiscoverDeviceNavigator {
+public protocol DiscoverDeviceNavigator {
     func toDevices()
-    func toAddDevice(_ device: Device)
+    func toConfigureDevice(_ device: Device)
     func toManuallyAddDevice()
 }
 
@@ -27,13 +27,13 @@ final class DefaultDiscoverDeviceNavigator: DiscoverDeviceNavigator {
         navigationController.dismiss(animated: true)
     }
 
-    func toAddDevice(_ device: Device) {
+    func toConfigureDevice(_ device: Device) {
         if let presentingViewController = navigationController.topViewController?.presentedViewController {
-            let navigator = AddDeviceNavigator(navigationController: navigationController)
-            let viewModel = AddDeviceViewModel(device: device,
-                                               devicesRepository: services.makeDevicesRepository(),
-                                               navigator: navigator)
-            let viewController = AddDeviceViewController(viewModel: viewModel)
+            let navigator = ConfigureDeviceNavigator(navigationController: navigationController)
+            let viewModel = ConfigureDeviceViewModel(devicesRepository: services.makeDevicesRepository(),
+                                                     navigator: navigator,
+                                                     device: device)
+            let viewController = ConfigureDeviceViewController(viewModel: viewModel)
 
             UIView.transition(with: presentingViewController.view, duration: 0.25, options: [.transitionCrossDissolve], animations: {
                 presentingViewController.view.subviews.forEach { $0.removeFromSuperview() }

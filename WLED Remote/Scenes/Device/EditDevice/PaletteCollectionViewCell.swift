@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Then
 
 class PaletteCollectionViewCell: UICollectionViewCell {
     static let identifier = "palette-cell"
@@ -22,15 +23,13 @@ class PaletteCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    let titleLabel: LabelInset = {
-        let label = LabelInset()
-        label.backgroundColor = .systemGroupedBackground
-        label.textEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
-        label.layer.cornerRadius = 16
-        label.font = .boldSystemFont(ofSize: 14)
-        label.clipsToBounds = true
-        return label
-    }()
+    let titleLabel = LabelInset().then {
+        $0.backgroundColor = .systemGroupedBackground
+        $0.textEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        $0.layer.cornerRadius = 16
+        $0.font = .boldSystemFont(ofSize: 14)
+        $0.clipsToBounds = true
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)

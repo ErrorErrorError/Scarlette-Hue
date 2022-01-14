@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RxSwift
 
 class SettingsViewModel: ViewModelType {
     let devicesRepository: DevicesUseCaseProtocol
@@ -26,7 +27,7 @@ extension SettingsViewModel {
 
     }
 
-    func transform(input: Input) -> Output {
+    func transform(input: Input, disposeBag: DisposeBag) -> Output {
         return Output()
     }
 }

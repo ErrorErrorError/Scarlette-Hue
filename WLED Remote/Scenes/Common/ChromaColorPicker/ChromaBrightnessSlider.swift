@@ -9,49 +9,53 @@
 import UIKit
 
 public class ChromaBrightnessSlider: UIControl, ChromaControlStylable {
-    
+
     /// The value of the slider between [0.0, 1.0].
     public var currentValue: CGFloat = 0.0 {
         didSet { updateControl(to: currentValue) }
     }
-    
+
     /// The base color the slider on the track.
     public var trackColor: UIColor = .white {
         didSet { updateTrackColor(to: trackColor) }
     }
-    
+
     /// The value of the color the handle is currently displaying.
     public var currentColor: UIColor {
         return handle.handleColor
     }
-    
+
     /// The handle control of the slider.
     public let handle = SliderHandleView()
-    
+
     public var borderWidth: CGFloat = 4.0 {
         didSet { layoutNow() }
     }
-    
+
     public var borderColor: UIColor = .white {
         didSet { layoutNow() }
     }
-    
+
     public var showsShadow: Bool = true {
         didSet { layoutNow() }
     }
-    
+
+    public override var intrinsicContentSize: CGSize {
+        CGSize(width: -1, height: 28)
+    }
+
     //MARK: - Initialization
-    
+
     public override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
     }
-    
+
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
     }
-    
+
     public override func layoutSubviews() {
         super.layoutSubviews()
         sliderTrackView.layer.cornerRadius = sliderTrackView.bounds.height / 2.0
@@ -61,7 +65,7 @@ public class ChromaBrightnessSlider: UIControl, ChromaControlStylable {
         moveHandle(to: currentValue)
         updateShadowIfNeeded()
     }
-    
+
     // MARK: - Public
     
     /// Attaches control to the provided color picker.
@@ -186,14 +190,14 @@ public class ChromaBrightnessSlider: UIControl, ChromaControlStylable {
         updateTrackViewGradient(for: colorWithMaxBrightness)
         currentValue = 1 - brightness
     }
-    
+
     private func updateTrackViewGradient(for color: UIColor) {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         sliderTrackView.gradientValues = (color, .black)
         CATransaction.commit()
     }
-    
+
     private func moveHandle(to value: CGFloat) {
         let clampedValue = max(0, min(1, value))
         let xPos = (clampedValue * confiningTrackFrame.width) + horizontalPadding

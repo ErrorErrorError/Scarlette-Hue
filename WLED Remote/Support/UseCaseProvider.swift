@@ -14,29 +14,33 @@ public final class UseCaseProvider {
 
     public init() {
         deviceRepository = Repository<Device>(context: coreDataStack.context)
-        apiEndpoint = "http://%@:%d/json"
+        apiEndpoint = "http://%@:%d"
     }
 
-    func makeDevicesRepository() -> DevicesUseCaseProtocol {
+    public func makeDevicesRepository() -> DevicesUseCaseProtocol {
         return DevicesUseCase(repository: deviceRepository)
     }
 
-    func makeDevicesBonjourService() -> NetServiceBrowser {
+    public func makeHeartbeatService() -> HeartbeatService {
+        return HeartbeatService.shared
+    }
+
+    public func makeBonjourService() -> NetServiceBrowser {
         return NetServiceBrowser()
     }
 
-    public func makeStateNetwork() -> StateNetwork {
+    public func makeStoreAPI() -> StoreAPI {
+        let network = Network<Store>(apiEndpoint)
+        return StoreAPI(network: network)
+    }
+
+    public func makeStateNetwork() -> StateAPI {
         let network = Network<State>(apiEndpoint)
-        return StateNetwork(network: network)
+        return StateAPI(network: network)
     }
 
-    public func makeInfoNetwork() -> InfoNetwork {
+    public func makeInfoNetwork() -> InfoAPI {
         let network = Network<Info>(apiEndpoint)
-        return InfoNetwork(network: network)
-    }
-
-    public func makeDeviceDataNetwork() -> DeviceDataNetwork {
-        let network = Network<DeviceStore>(apiEndpoint)
-        return DeviceDataNetwork(network: network)
+        return InfoAPI(network: network)
     }
 }

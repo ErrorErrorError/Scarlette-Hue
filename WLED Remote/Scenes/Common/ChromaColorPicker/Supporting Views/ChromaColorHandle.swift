@@ -9,12 +9,12 @@
 import UIKit
 
 public class ChromaColorHandle: UIView, ChromaControlStylable {
-    
+
     /// Current selected color of the handle.
     public var color: UIColor = .black {
         didSet { layoutNow() }
     }
-    
+
     /// An image to display in the handle. Updates `accessoryView` to be a UIImageView.
     public var accessoryImage: UIImage? {
         didSet {
@@ -23,7 +23,7 @@ public class ChromaColorHandle: UIView, ChromaControlStylable {
             accessoryView = imageView
         }
     }
-    
+
     /// A view to display in the handle. Overrides any previously set `accessoryImage`.
     public var accessoryView: UIView? {
         didSet {
@@ -33,16 +33,16 @@ public class ChromaColorHandle: UIView, ChromaControlStylable {
             }
         }
     }
-    
+
     /// The amount an accessory view's frame should be inset by.
     public var accessoryViewEdgeInsets: UIEdgeInsets = .zero {
         didSet { layoutNow() }
     }
-    
+
     public var borderWidth: CGFloat = 3.0 {
         didSet { layoutNow() }
     }
-    
+
     public var borderColor: UIColor = .white {
         didSet { layoutNow() }
     }

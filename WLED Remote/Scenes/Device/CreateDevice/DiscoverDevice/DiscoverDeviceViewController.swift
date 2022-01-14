@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxDataSources
+import Then
 
 class DiscoverDeviceViewController: UIViewController {
     // MARK: Rx
@@ -19,63 +20,51 @@ class DiscoverDeviceViewController: UIViewController {
 
     let viewModel: DiscoverDeviceViewModel
 
-    private let contentView: UIView = {
-        let view = UIView(frame: .zero)
-        view.backgroundColor = .systemBackground
-        view.layer.cornerRadius = UIScreen.main.displayCornerRadius
-        view.layer.cornerCurve = .continuous
-        return view
-    }()
+    private let contentView = UIView().then {
+        $0.backgroundColor = .systemBackground
+        $0.layer.cornerRadius = UIScreen.main.displayCornerRadius
+        $0.layer.cornerCurve = .continuous
+    }
 
-    private let titleLabel: UILabel = {
-        let label = UILabel(frame: .zero)
-        label.text = "Select a WLED Device to Add to Your Collection"
-        label.font = UIFont.boldSystemFont(ofSize: 26)
-        label.textColor = UIColor.label
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        return label
-    }()
+    private let titleLabel = UILabel().then {
+        $0.text = "Select a WLED Device to Add to Your Collection"
+        $0.font = UIFont.boldSystemFont(ofSize: 26)
+        $0.textColor = UIColor.label
+        $0.textAlignment = .center
+        $0.numberOfLines = 0
+    }
 
-    private let descriptionLabel: UILabel = {
-        let label = UILabel(frame: .zero)
-        label.text = "Make sure your WLED device is on and connected to the same network."
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = UIColor.secondaryLabel
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        return label
-    }()
+    private let descriptionLabel = UILabel().then {
+        $0.text = "Make sure your WLED device is on and connected to the same network."
+        $0.font = UIFont.systemFont(ofSize: 14)
+        $0.textColor = UIColor.secondaryLabel
+        $0.textAlignment = .center
+        $0.numberOfLines = 0
+    }
 
-    private lazy var exitButton: UIButton = {
-        let button = UIButton(type: .close)
-        return button
-    }()
+    private let exitButton = UIButton(type: .close)
 
-    private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collectionView.backgroundColor = .clear
-        collectionView.register(DeviceInfoCollectionViewCell.self, forCellWithReuseIdentifier: DeviceInfoCollectionViewCell.identifier)
-        return collectionView
-    }()
+    private let collectionView = UICollectionView(frame: .zero,
+                                                  collectionViewLayout: UICollectionViewFlowLayout()).then {
+        $0.backgroundColor = .clear
+        $0.register(DeviceInfoCollectionViewCell.self,
+                    forCellWithReuseIdentifier: DeviceInfoCollectionViewCell.identifier)
+    }
 
-    private let scanningSpinner: UIActivityIndicatorView = {
-        let spinner = UIActivityIndicatorView(style: .large)
-        spinner.startAnimating()
-        return spinner
-    }()
+    private let scanningSpinner = UIActivityIndicatorView().then {
+        $0.style = .large
+        $0.startAnimating()
+    }
 
     private let buttonHeight: CGFloat = 48
 
-    private lazy var primaryButton: UIButton = {
-        let button = UIButton(type: .roundedRect)
-        button.setTitle("Manually Add Device", for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        button.tintColor = .label
-        button.layer.cornerRadius = buttonHeight / 4
-        button.backgroundColor = .secondarySystemBackground
-        return button
-    }()
+    private lazy var secondaryButton = UIButton(type: .roundedRect).then {
+        $0.setTitle("Manually Add Device", for: .normal)
+        $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        $0.tintColor = .label
+        $0.layer.cornerRadius = buttonHeight / 4
+        $0.backgroundColor = .secondarySystemBackground
+    }
 
     init(viewModel: DiscoverDeviceViewModel) {
         self.viewModel = viewModel
@@ -89,16 +78,19 @@ class DiscoverDeviceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        contentView.addSubview(exitButton)
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(descriptionLabel)
-        contentView.addSubview(collectionView)
-        contentView.addSubview(scanningSpinner)
-        contentView.addSubview(primaryButton)
+        contentView.do {
+            $0.addSubview(exitButton)
+            $0.addSubview(titleLabel)
+            $0.addSubview(descriptionLabel)
+            $0.addSubview(collectionView)
+            $0.addSubview(scanningSpinner)
+            $0.addSubview(secondaryButton)
+        }
 
         view.addSubview(contentView)
 
         setupContraints()
+        collectionView.delegate = self
         bindViewController()
     }
 
@@ -135,27 +127,24 @@ class DiscoverDeviceViewController: UIViewController {
         scanningSpinner.leadingAnchor.constraint(equalTo: collectionView.leadingAnchor).isActive = true
         scanningSpinner.trailingAnchor.constraint(equalTo: collectionView.trailingAnchor).isActive = true
 
-        primaryButton.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: insetSpacing + 20).isActive = true
-        primaryButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: outerXAxisInset).isActive = true
-        primaryButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -outerXAxisInset).isActive = true
-        primaryButton.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
-        primaryButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -outerYAxisInset).isActive = true
+        secondaryButton.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: insetSpacing + 20).isActive = true
+        secondaryButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: outerXAxisInset).isActive = true
+        secondaryButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -outerXAxisInset).isActive = true
+        secondaryButton.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
+        secondaryButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -outerYAxisInset).isActive = true
     }
 
     private func bindViewController() {
-        assert(viewModel != nil)
         let viewWillAppear = rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
             .mapToVoid()
             .asDriverOnErrorJustComplete()
 
-        collectionView.delegate = self
-
         let input = DiscoverDeviceViewModel.Input(scanDevicesTrigger: viewWillAppear,
-                                                  devicesTrigger: viewWillAppear,
+                                                  manualDeviceTrigger: secondaryButton.rx.tap.asDriver(),
                                                   dismissTrigger: exitButton.rx.tap.asDriver(),
-                                                  nextTrigger: collectionView.rx.itemSelected.asDriver())
+                                                  selectedDevice: collectionView.rx.itemSelected.asDriver())
 
-        let output = viewModel.transform(input: input)
+        let output = viewModel.transform(input: input, disposeBag: disposeBag)
 
         let dataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, DeviceInfoItemViewModel>>(configureCell: { _, collectionView, indexPath, item in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DeviceInfoCollectionViewCell.identifier, for: indexPath)
@@ -165,17 +154,16 @@ class DiscoverDeviceViewController: UIViewController {
             return cell
         })
 
-        output.scannedDevices.compactMap({[SectionModel<String, DeviceInfoItemViewModel>(model: "Device", items: $0)]})
-            .drive(collectionView.rx.items(dataSource: dataSource)).disposed(by: disposeBag)
-
-        output.scannedDevices.map({ $0.isEmpty }).drive(scanningSpinner.rx.isAnimating).disposed(by: disposeBag)
-
-        output.devices.drive().disposed(by: disposeBag)
-
-        output.dismiss.drive()
+        output.$devices
+            .asDriver()
+            .compactMap({[SectionModel<String, DeviceInfoItemViewModel>(model: "Device", items: $0)]})
+            .drive(collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 
-        output.next.drive()
+        output.$devices
+            .asDriver()
+            .map({ $0.isEmpty })
+            .drive(scanningSpinner.rx.isAnimating)
             .disposed(by: disposeBag)
     }
 }

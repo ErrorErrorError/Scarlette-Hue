@@ -39,6 +39,16 @@
 		13233CBF26573426005B1270 /* Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1380FFC32654A83F00FC692E /* Segment.swift */; };
 		13233CC026573426005B1270 /* Info.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130CEFC2264D1D5900BECFDF /* Info.swift */; };
 		132853B726530C9E006F3692 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132853B626530C9E006F3692 /* SettingsViewController.swift */; };
+		132998672791759200FF8C6C /* DeviceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132998662791759200FF8C6C /* DeviceDetailViewController.swift */; };
+		13299869279175A100FF8C6C /* DeviceDetailNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13299868279175A100FF8C6C /* DeviceDetailNavigator.swift */; };
+		1329986B279175AC00FF8C6C /* DeviceDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1329986A279175AC00FF8C6C /* DeviceDetailViewModel.swift */; };
+		1329986D2791778200FF8C6C /* SegmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1329986C2791778200FF8C6C /* SegmentCell.swift */; };
+		1329986F279177BC00FF8C6C /* SegmentItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1329986E279177BC00FF8C6C /* SegmentItemViewModel.swift */; };
+		1329987127917B8B00FF8C6C /* CAGradientLayer+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1329987027917B8B00FF8C6C /* CAGradientLayer+Animation.swift */; };
+		1329987327917BBF00FF8C6C /* UICollectionViewCell+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1329987227917BBF00FF8C6C /* UICollectionViewCell+Animation.swift */; };
+		134925C827915746002B5A95 /* EditSegmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134925C727915746002B5A95 /* EditSegmentViewController.swift */; };
+		134925CA279157AE002B5A95 /* EditSegmentNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134925C9279157AE002B5A95 /* EditSegmentNavigator.swift */; };
+		134925CD279157FD002B5A95 /* EditSegmentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134925CC279157FD002B5A95 /* EditSegmentViewModel.swift */; };
 		13512FE82658B1DF00C4040F /* WLEDDevice+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13512FE72658B1DF00C4040F /* WLEDDevice+CoreDataClass.swift */; };
 		13512FE92659050F00C4040F /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 135CFDBD2656396600D05757 /* Model.xcdatamodeld */; };
 		1356002A2658362C00B16B59 /* ConfigureDeviceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135600292658362C00B16B59 /* ConfigureDeviceViewModel.swift */; };
@@ -51,14 +61,12 @@
 		135EE153264731A00027909B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135EE152264731A00027909B /* SceneDelegate.swift */; };
 		135EE15D264731A10027909B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 135EE15C264731A10027909B /* Assets.xcassets */; };
 		135EE160264731A10027909B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 135EE15E264731A10027909B /* LaunchScreen.storyboard */; };
+		1367385727916DF800305321 /* SegmentAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1367385627916DF800305321 /* SegmentAPI.swift */; };
 		136841CE265CC51000C828BF /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136841CD265CC51000C828BF /* Store.swift */; };
 		136841D0265CD37500C828BF /* StoreAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136841CF265CD37500C828BF /* StoreAPI.swift */; };
 		136841D2265CDEBA00C828BF /* Wifi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136841D1265CDEBA00C828BF /* Wifi.swift */; };
 		136841D4265CDEF400C828BF /* Leds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136841D3265CDEF400C828BF /* Leds.swift */; };
 		136841D7265CDF6800C828BF /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136841D6265CDF6800C828BF /* FileSystem.swift */; };
-		136A993C2662F05700F57931 /* DeviceEffectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136A993B2662F05700F57931 /* DeviceEffectsViewController.swift */; };
-		136EE14B2659B0630015C333 /* EditDeviceNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136EE14A2659B0630015C333 /* EditDeviceNavigator.swift */; };
-		136EE14D2659B0760015C333 /* EditDeviceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136EE14C2659B0760015C333 /* EditDeviceViewModel.swift */; };
 		136EE14F2659B6500015C333 /* InfoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136EE14E2659B6500015C333 /* InfoAPI.swift */; };
 		136EE154265A360A0015C333 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136EE153265A360A0015C333 /* ActivityIndicator.swift */; };
 		138AAD5D278F62A800CB4FC3 /* ChromaColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138AAD4E278F62A800CB4FC3 /* ChromaColorPicker.swift */; };
@@ -72,7 +80,6 @@
 		138AAD65278F62A800CB4FC3 /* SliderTrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138AAD59278F62A800CB4FC3 /* SliderTrackView.swift */; };
 		138AAD66278F62A900CB4FC3 /* ChromaColorHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138AAD5A278F62A800CB4FC3 /* ChromaColorHandle.swift */; };
 		138AAD67278F62A900CB4FC3 /* SliderHandleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138AAD5B278F62A800CB4FC3 /* SliderHandleView.swift */; };
-		138FF65A264C706900216D47 /* EditDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138FF659264C706900216D47 /* EditDeviceViewController.swift */; };
 		1390518F26573BCB007CA620 /* ErrorErrorErrorUIKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 1390518D26573BCB007CA620 /* ErrorErrorErrorUIKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1390519726573C6C007CA620 /* CardModalTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139F9FC1265083810056FC57 /* CardModalTransitioningDelegate.swift */; };
 		1390519826573C6C007CA620 /* CardModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139F9FC4265084520056FC57 /* CardModalPresentationController.swift */; };
@@ -92,10 +99,12 @@
 		13B3EEEF27902E4E00C4AC6F /* CollectionViewHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B3EEEE27902E4E00C4AC6F /* CollectionViewHeaderCell.swift */; };
 		13B9D7132660B31D009BD4DD /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B9D7122660B31D009BD4DD /* GradientView.swift */; };
 		13B9D7152660EA66009BD4DD /* PaletteItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B9D7142660EA66009BD4DD /* PaletteItemViewModel.swift */; };
-		13B9D7172660EABE009BD4DD /* PaletteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B9D7162660EABE009BD4DD /* PaletteCollectionViewCell.swift */; };
+		13B9D7172660EABE009BD4DD /* PaletteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B9D7162660EABE009BD4DD /* PaletteCell.swift */; };
 		13B9D7192660F63E009BD4DD /* LabelInset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B9D7182660F63E009BD4DD /* LabelInset.swift */; };
 		13BBEF36266302C400685C42 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBEF35266302C400685C42 /* SettingsViewModel.swift */; };
 		13BF24BF278D5C7500AD74A9 /* Encodable+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BF24BE278D5C7500AD74A9 /* Encodable+JSON.swift */; };
+		13C1B79A2792156D002CE7C1 /* EffectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C1B7992792156D002CE7C1 /* EffectCell.swift */; };
+		13C1B79C2792158C002CE7C1 /* EffectItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C1B79B2792158C002CE7C1 /* EffectItemViewModel.swift */; };
 		13C8A368278ADC3500875776 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 13C8A367278ADC3500875776 /* RxDataSources */; };
 		13C8A36B278ADC8100875776 /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = 13C8A36A278ADC8100875776 /* RxBlocking */; };
 		13C8A36D278ADC8100875776 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 13C8A36C278ADC8100875776 /* RxCocoa */; };
@@ -159,6 +168,16 @@
 		13233CA326572F06005B1270 /* DevicesNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesNavigator.swift; sourceTree = "<group>"; };
 		132853B02652EDFF006F3692 /* WLEDDevice+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WLEDDevice+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		132853B626530C9E006F3692 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		132998662791759200FF8C6C /* DeviceDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailViewController.swift; sourceTree = "<group>"; };
+		13299868279175A100FF8C6C /* DeviceDetailNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailNavigator.swift; sourceTree = "<group>"; };
+		1329986A279175AC00FF8C6C /* DeviceDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailViewModel.swift; sourceTree = "<group>"; };
+		1329986C2791778200FF8C6C /* SegmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentCell.swift; sourceTree = "<group>"; };
+		1329986E279177BC00FF8C6C /* SegmentItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentItemViewModel.swift; sourceTree = "<group>"; };
+		1329987027917B8B00FF8C6C /* CAGradientLayer+Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CAGradientLayer+Animation.swift"; sourceTree = "<group>"; };
+		1329987227917BBF00FF8C6C /* UICollectionViewCell+Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+Animation.swift"; sourceTree = "<group>"; };
+		134925C727915746002B5A95 /* EditSegmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSegmentViewController.swift; sourceTree = "<group>"; };
+		134925C9279157AE002B5A95 /* EditSegmentNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSegmentNavigator.swift; sourceTree = "<group>"; };
+		134925CC279157FD002B5A95 /* EditSegmentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSegmentViewModel.swift; sourceTree = "<group>"; };
 		134DF8CB2654595A005B7DFE /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		134DF8D326545BB1005B7DFE /* WLEDDevice+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WLEDDevice+Ext.swift"; sourceTree = "<group>"; };
 		134DF8D526545C24005B7DFE /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
@@ -177,14 +196,12 @@
 		135EE15C264731A10027909B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		135EE15F264731A10027909B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		135EE161264731A10027909B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1367385627916DF800305321 /* SegmentAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentAPI.swift; sourceTree = "<group>"; };
 		136841CD265CC51000C828BF /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		136841CF265CD37500C828BF /* StoreAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreAPI.swift; sourceTree = "<group>"; };
 		136841D1265CDEBA00C828BF /* Wifi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wifi.swift; sourceTree = "<group>"; };
 		136841D3265CDEF400C828BF /* Leds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Leds.swift; sourceTree = "<group>"; };
 		136841D6265CDF6800C828BF /* FileSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystem.swift; sourceTree = "<group>"; };
-		136A993B2662F05700F57931 /* DeviceEffectsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceEffectsViewController.swift; sourceTree = "<group>"; };
-		136EE14A2659B0630015C333 /* EditDeviceNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDeviceNavigator.swift; sourceTree = "<group>"; };
-		136EE14C2659B0760015C333 /* EditDeviceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDeviceViewModel.swift; sourceTree = "<group>"; };
 		136EE14E2659B6500015C333 /* InfoAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoAPI.swift; sourceTree = "<group>"; };
 		136EE153265A360A0015C333 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		137196BE265F568400A2269F /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -205,7 +222,6 @@
 		138AAD5B278F62A800CB4FC3 /* SliderHandleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SliderHandleView.swift; sourceTree = "<group>"; };
 		138F328B2656463100379A0F /* NSManagedObjectContext+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Ext.swift"; sourceTree = "<group>"; };
 		138F32912656479900379A0F /* StateAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateAPI.swift; sourceTree = "<group>"; };
-		138FF659264C706900216D47 /* EditDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDeviceViewController.swift; sourceTree = "<group>"; };
 		1390518B26573BCB007CA620 /* ErrorErrorErrorUIKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ErrorErrorErrorUIKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1390518D26573BCB007CA620 /* ErrorErrorErrorUIKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ErrorErrorErrorUIKit.h; sourceTree = "<group>"; };
 		1390518E26573BCB007CA620 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -225,13 +241,15 @@
 		13B3EEEE27902E4E00C4AC6F /* CollectionViewHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewHeaderCell.swift; sourceTree = "<group>"; };
 		13B9D7122660B31D009BD4DD /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		13B9D7142660EA66009BD4DD /* PaletteItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteItemViewModel.swift; sourceTree = "<group>"; };
-		13B9D7162660EABE009BD4DD /* PaletteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteCollectionViewCell.swift; sourceTree = "<group>"; };
+		13B9D7162660EABE009BD4DD /* PaletteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteCell.swift; sourceTree = "<group>"; };
 		13B9D7182660F63E009BD4DD /* LabelInset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelInset.swift; sourceTree = "<group>"; };
 		13BBEF35266302C400685C42 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		13BD1BD0265F402A00F6C640 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13BD1BD3265F403F00F6C640 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13BD1BD4265F403F00F6C640 /* RxMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13BF24BE278D5C7500AD74A9 /* Encodable+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+JSON.swift"; sourceTree = "<group>"; };
+		13C1B7992792156D002CE7C1 /* EffectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectCell.swift; sourceTree = "<group>"; };
+		13C1B79B2792158C002CE7C1 /* EffectItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectItemViewModel.swift; sourceTree = "<group>"; };
 		13E930F0265867F500C1EEF6 /* Single+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Single+Ext.swift"; sourceTree = "<group>"; };
 		13E930F42658866D00C1EEF6 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		13EA1B6F278A7F2100EE4DAC /* HeartbeatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartbeatService.swift; sourceTree = "<group>"; };
@@ -333,6 +351,32 @@
 			path = Domain;
 			sourceTree = "<group>";
 		};
+		132998652791755E00FF8C6C /* DeviceDetail */ = {
+			isa = PBXGroup;
+			children = (
+				132998662791759200FF8C6C /* DeviceDetailViewController.swift */,
+				13299868279175A100FF8C6C /* DeviceDetailNavigator.swift */,
+				1329986A279175AC00FF8C6C /* DeviceDetailViewModel.swift */,
+				1329986C2791778200FF8C6C /* SegmentCell.swift */,
+				1329986E279177BC00FF8C6C /* SegmentItemViewModel.swift */,
+			);
+			path = DeviceDetail;
+			sourceTree = "<group>";
+		};
+		134925C5279156CB002B5A95 /* EditSegment */ = {
+			isa = PBXGroup;
+			children = (
+				134925C727915746002B5A95 /* EditSegmentViewController.swift */,
+				134925C9279157AE002B5A95 /* EditSegmentNavigator.swift */,
+				134925CC279157FD002B5A95 /* EditSegmentViewModel.swift */,
+				13B9D7142660EA66009BD4DD /* PaletteItemViewModel.swift */,
+				13B9D7162660EABE009BD4DD /* PaletteCell.swift */,
+				13C1B7992792156D002CE7C1 /* EffectCell.swift */,
+				13C1B79B2792158C002CE7C1 /* EffectItemViewModel.swift */,
+			);
+			path = EditSegment;
+			sourceTree = "<group>";
+		};
 		134DF8CA2654594D005B7DFE /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
@@ -387,18 +431,6 @@
 				130C3AC22657A48800C7425D /* DiscoverDevice */,
 			);
 			path = CreateDevice;
-			sourceTree = "<group>";
-		};
-		135704A52656270500B74344 /* EditDevice */ = {
-			isa = PBXGroup;
-			children = (
-				138FF659264C706900216D47 /* EditDeviceViewController.swift */,
-				136EE14A2659B0630015C333 /* EditDeviceNavigator.swift */,
-				136EE14C2659B0760015C333 /* EditDeviceViewModel.swift */,
-				13B9D7142660EA66009BD4DD /* PaletteItemViewModel.swift */,
-				13B9D7162660EABE009BD4DD /* PaletteCollectionViewCell.swift */,
-			);
-			path = EditDevice;
 			sourceTree = "<group>";
 		};
 		135704A62656275800B74344 /* Settings */ = {
@@ -514,14 +546,6 @@
 			path = DeviceInfo;
 			sourceTree = "<group>";
 		};
-		136EE1522659C5450015C333 /* DeviceEffects */ = {
-			isa = PBXGroup;
-			children = (
-				136A993B2662F05700F57931 /* DeviceEffectsViewController.swift */,
-			);
-			path = DeviceEffects;
-			sourceTree = "<group>";
-		};
 		138AAD4C278F629800CB4FC3 /* ChromaColorPicker */ = {
 			isa = PBXGroup;
 			children = (
@@ -581,6 +605,7 @@
 				138F32912656479900379A0F /* StateAPI.swift */,
 				136EE14E2659B6500015C333 /* InfoAPI.swift */,
 				136841CF265CD37500C828BF /* StoreAPI.swift */,
+				1367385627916DF800305321 /* SegmentAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -627,6 +652,8 @@
 				13E930F0265867F500C1EEF6 /* Single+Ext.swift */,
 				13AC4873278C0FAD00375C1A /* ViewModelType+Ext.swift */,
 				13BF24BE278D5C7500AD74A9 /* Encodable+JSON.swift */,
+				1329987027917B8B00FF8C6C /* CAGradientLayer+Animation.swift */,
+				1329987227917BBF00FF8C6C /* UICollectionViewCell+Animation.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -634,11 +661,11 @@
 		13C3A2CA278A686F00C97A60 /* Device */ = {
 			isa = PBXGroup;
 			children = (
-				136EE1522659C5450015C333 /* DeviceEffects */,
+				134925C5279156CB002B5A95 /* EditSegment */,
 				136EE1512659C5320015C333 /* DeviceInfo */,
 				136EE1502659C5280015C333 /* DeviceSettings */,
 				1357046D2654FA5B00B74344 /* Devices */,
-				135704A52656270500B74344 /* EditDevice */,
+				132998652791755E00FF8C6C /* DeviceDetail */,
 				135704A4265626E800B74344 /* CreateDevice */,
 			);
 			path = Device;
@@ -816,6 +843,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1367385727916DF800305321 /* SegmentAPI.swift in Sources */,
 				136841D0265CD37500C828BF /* StoreAPI.swift in Sources */,
 				1356002A2658362C00B16B59 /* ConfigureDeviceViewModel.swift in Sources */,
 				13577F4726576E410074329C /* DiscoverDeviceNavigator.swift in Sources */,
@@ -823,10 +851,13 @@
 				138AAD63278F62A800CB4FC3 /* UIColor+Brightness.swift in Sources */,
 				13233CA0265726F2005B1270 /* Application.swift in Sources */,
 				13EA1B74278A83E900EE4DAC /* HeartbeatConnection.swift in Sources */,
+				13C1B79A2792156D002CE7C1 /* EffectCell.swift in Sources */,
 				136EE154265A360A0015C333 /* ActivityIndicator.swift in Sources */,
 				130C3ABF265795F000C7425D /* NetService+Rx.swift in Sources */,
+				1329987127917B8B00FF8C6C /* CAGradientLayer+Animation.swift in Sources */,
 				13233CC026573426005B1270 /* Info.swift in Sources */,
 				13577F4926576E670074329C /* DiscoverDeviceViewModel.swift in Sources */,
+				13299869279175A100FF8C6C /* DeviceDetailNavigator.swift in Sources */,
 				130195F5265F329300FB8223 /* SettingsNavigator.swift in Sources */,
 				13233CAB265733FB005B1270 /* NSManagedObjectContext+Ext.swift in Sources */,
 				13233CA226572E71005B1270 /* DevicesViewModel.swift in Sources */,
@@ -834,6 +865,7 @@
 				13233CBC26573426005B1270 /* State.swift in Sources */,
 				13209477264C9F1F007049D7 /* DevicesViewController.swift in Sources */,
 				13B3EEEF27902E4E00C4AC6F /* CollectionViewHeaderCell.swift in Sources */,
+				1329986D2791778200FF8C6C /* SegmentCell.swift in Sources */,
 				130CEFCC264DCA9300BECFDF /* BrightnessSlider.swift in Sources */,
 				13233CB22657340B005B1270 /* UseCaseProvider.swift in Sources */,
 				13233CA426572F06005B1270 /* DevicesNavigator.swift in Sources */,
@@ -841,15 +873,16 @@
 				13233CAC265733FB005B1270 /* Observable+Ext.swift in Sources */,
 				13233CA8265733F6005B1270 /* FetchedResultsControllerEntityObserver.swift in Sources */,
 				13233CA7265733F0005B1270 /* Repository.swift in Sources */,
+				132998672791759200FF8C6C /* DeviceDetailViewController.swift in Sources */,
 				1393CD0C2657508200BAAF44 /* DeviceItemViewModel.swift in Sources */,
 				13233CA6265733C6005B1270 /* JSON+Utils.swift in Sources */,
 				130CEFCA264DBB9900BECFDF /* DeviceCell.swift in Sources */,
-				136EE14D2659B0760015C333 /* EditDeviceViewModel.swift in Sources */,
 				13512FE82658B1DF00C4040F /* WLEDDevice+CoreDataClass.swift in Sources */,
 				138AAD65278F62A800CB4FC3 /* SliderTrackView.swift in Sources */,
 				13E930F52658866D00C1EEF6 /* Network.swift in Sources */,
 				13AC4872278C097300375C1A /* Relay.swift in Sources */,
 				13BF24BF278D5C7500AD74A9 /* Encodable+JSON.swift in Sources */,
+				134925CD279157FD002B5A95 /* EditSegmentViewModel.swift in Sources */,
 				13912EA52651A3D400BD5095 /* ManuallyAddDeviceViewController.swift in Sources */,
 				136841CE265CC51000C828BF /* Store.swift in Sources */,
 				13B9D7152660EA66009BD4DD /* PaletteItemViewModel.swift in Sources */,
@@ -860,32 +893,34 @@
 				13912EB62651D6F200BD5095 /* ConfigureDeviceViewController.swift in Sources */,
 				138AAD60278F62A800CB4FC3 /* ChromaBrightnessSlider.swift in Sources */,
 				136EE14F2659B6500015C333 /* InfoAPI.swift in Sources */,
+				134925C827915746002B5A95 /* EditSegmentViewController.swift in Sources */,
+				1329986B279175AC00FF8C6C /* DeviceDetailViewModel.swift in Sources */,
 				13AC4874278C0FAD00375C1A /* ViewModelType+Ext.swift in Sources */,
 				139F9FCC2650C59B0056FC57 /* UIScreen+cornerRadiusDevice.swift in Sources */,
 				13233CBE26573426005B1270 /* Nightlight.swift in Sources */,
 				13233CB62657341A005B1270 /* StateAPI.swift in Sources */,
-				136A993C2662F05700F57931 /* DeviceEffectsViewController.swift in Sources */,
 				139F9FC92650C09D0056FC57 /* DeviceInfoCollectionViewCell.swift in Sources */,
-				138FF65A264C706900216D47 /* EditDeviceViewController.swift in Sources */,
 				130C3AC62657A7BC00C7425D /* DeviceInfoItemViewModel.swift in Sources */,
 				13233CBF26573426005B1270 /* Segment.swift in Sources */,
 				138AAD5D278F62A800CB4FC3 /* ChromaColorPicker.swift in Sources */,
 				13233CB32657340B005B1270 /* DevicesUseCaseProtocol.swift in Sources */,
 				13B9D7192660F63E009BD4DD /* LabelInset.swift in Sources */,
+				1329987327917BBF00FF8C6C /* UICollectionViewCell+Animation.swift in Sources */,
 				139F9FBF26507F050056FC57 /* DiscoverDeviceViewController.swift in Sources */,
 				13233CA9265733F6005B1270 /* NSManagedObjectContext+Rx.swift in Sources */,
 				135EE151264731A00027909B /* AppDelegate.swift in Sources */,
 				136841D4265CDEF400C828BF /* Leds.swift in Sources */,
-				13B9D7172660EABE009BD4DD /* PaletteCollectionViewCell.swift in Sources */,
+				13B9D7172660EABE009BD4DD /* PaletteCell.swift in Sources */,
 				135EE153264731A00027909B /* SceneDelegate.swift in Sources */,
 				13233CB126573403005B1270 /* Persistable.swift in Sources */,
 				138AAD5E278F62A800CB4FC3 /* ColorWheelView.swift in Sources */,
 				138AAD67278F62A900CB4FC3 /* SliderHandleView.swift in Sources */,
 				13B3EEED278FA4C700C4AC6F /* ChromaColorPicker+Rx.swift in Sources */,
 				13512FE92659050F00C4040F /* Model.xcdatamodeld in Sources */,
-				136EE14B2659B0630015C333 /* EditDeviceNavigator.swift in Sources */,
 				13E930F1265867F500C1EEF6 /* Single+Ext.swift in Sources */,
 				138AAD5F278F62A800CB4FC3 /* ChromaControlStylable.swift in Sources */,
+				1329986F279177BC00FF8C6C /* SegmentItemViewModel.swift in Sources */,
+				13C1B79C2792158C002CE7C1 /* EffectItemViewModel.swift in Sources */,
 				13233CBD26573426005B1270 /* Device.swift in Sources */,
 				13233CAE26573400005B1270 /* WLEDDevice+CoreDataProperties.swift in Sources */,
 				13233CB52657340D005B1270 /* CoreDataStack.swift in Sources */,
@@ -902,6 +937,7 @@
 				132853B726530C9E006F3692 /* SettingsViewController.swift in Sources */,
 				13B9D7132660B31D009BD4DD /* GradientView.swift in Sources */,
 				13233CB026573403005B1270 /* DomainConvertibleType.swift in Sources */,
+				134925CA279157AE002B5A95 /* EditSegmentNavigator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

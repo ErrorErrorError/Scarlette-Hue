@@ -12,6 +12,7 @@ class CollectionViewHeaderCell: UICollectionReusableView {
     let label = UILabel().then {
         $0.numberOfLines = 0
         $0.font = UIFont.boldSystemFont(ofSize: 12)
+        $0.tintColor = .darkGray
     }
 
     var title = ""
@@ -22,10 +23,9 @@ class CollectionViewHeaderCell: UICollectionReusableView {
         label.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor, constant: 0),
-            label.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor, constant: 0),
-            label.topAnchor.constraint(equalTo: topAnchor, constant: 0),
-            label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
+            label.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
+            label.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
+            label.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
     

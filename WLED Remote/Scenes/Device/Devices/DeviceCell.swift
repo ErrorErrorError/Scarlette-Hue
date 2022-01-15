@@ -37,10 +37,10 @@ class DeviceCell: UICollectionViewCell {
         $0.isEnabled = false
     }
 
-    let brightnessSlider = BrightnessSlider().then {
-        $0.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        $0.isHidden = true
-    }
+//    let brightnessSlider = BrightnessSlider().then {
+//        $0.heightAnchor.constraint(equalToConstant: 30).isActive = true
+//        $0.isHidden = true
+//    }
 
     let animatableStackView = UIStackView().then {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -103,7 +103,7 @@ class DeviceCell: UICollectionViewCell {
 
         animatableStackView.do {
             $0.addArrangedSubview(deviceStateStackView)
-            $0.addArrangedSubview(brightnessSlider)
+//            $0.addArrangedSubview(brightnessSlider)
         }
 
         contentView.addSubview(animatableStackView)
@@ -129,7 +129,7 @@ class DeviceCell: UICollectionViewCell {
         self.nameLabel.text = viewModel.name
 
         let input = DeviceItemViewModel.Input(
-            heartbeatTrigger: Driver.empty(),
+            loadTrigger: Driver.empty(),
             on: lightSwitch.rx.isOn.changed.asDriver()
         )
 
@@ -150,18 +150,16 @@ class DeviceCell: UICollectionViewCell {
 
     private var stateBinding: Binder<State?> {
         return Binder(self) { cell, state in
-            var colors = [UIColor.clear.cgColor, UIColor.clear.cgColor]
+            var colors = [UIColor.clear.cgColor, UIColor.clear.cgColor, UIColor.clear.cgColor]
             var deviceNameTextColor = UIColor.label
             var connectionTextColor = UIColor.secondaryLabel
 
             // MARK: set state
 
-            if state?.on == true, let segment = state?.firstSegment {
-                let primary = segment.colors[0]
-                let secondary = segment.colors[1]
-                let tertiary = segment.colors[2]
-
-                var newColors = [primary, secondary, tertiary]
+            if state?.on == true, let segments = state?.segments {
+                var newColors = segments
+                    .filter { $0.on == true }
+                    .compactMap { $0.colorsTuple.first }
                     .filter({ $0.reduce(0, +) != 0 })
                     .map({ UIColor(red: $0[0], green: $0[1], blue: $0[2]).cgColor })
 
@@ -184,7 +182,7 @@ class DeviceCell: UICollectionViewCell {
                 let enabled = state.on == true
                 cell.lightSwitch.isEnabled = true
                 cell.lightSwitch.backgroundColor = !enabled ? nil : UIColor(red: 90/255, green: 90/255, blue: 90/255, alpha: 0.20)
-                cell.brightnessSlider.value = Float(state.bri ?? 127)
+//                cell.brightnessSlider.value = Float(state.bri ?? 1)
                 cell.lightSwitch.isOn = enabled
             } else {
                 cell.lightSwitch.isEnabled = false
@@ -192,7 +190,6 @@ class DeviceCell: UICollectionViewCell {
             }
             cell.nameLabel.textColor = deviceNameTextColor
             cell.connectionLabel.textColor = connectionTextColor
-            cell.resizeView()
 
             if let gradientLayer = cell.layer as? CAGradientLayer {
                 gradientLayer.changeGradients(colors, animate: true)
@@ -234,28 +231,5 @@ extension DeviceCell {
             options: [.allowUserInteraction, .beginFromCurrentState],
             animations: { self.transform = down ? CGAffineTransform(scaleX: 0.95, y: 0.95) : .identity },
             completion: nil)
-    }
-}
-
-extension CAGradientLayer {
-    func changeGradients(_ newColors: [CGColor]? = nil, _ location: [NSNumber]? = nil, animate: Bool) {
-        // MARK: Animate color changed
-
-        if colors == nil {
-            colors = [UIColor.clear.cgColor, UIColor.clear.cgColor]
-        }
-
-        if animate {
-            let gradientAnimation = CABasicAnimation(keyPath: "colors").then {
-                $0.fromValue = colors
-                $0.toValue = newColors
-                $0.duration = 0.25
-                $0.isRemovedOnCompletion = true
-                $0.fillMode = .forwards
-            }
-            add(gradientAnimation, forKey: nil)
-        }
-
-        colors = newColors
     }
 }

@@ -43,4 +43,9 @@ public final class UseCaseProvider {
         let network = Network<Info>(apiEndpoint)
         return InfoAPI(network: network)
     }
+
+    public func makeSegmentAPI() -> SegmentAPI {
+        let network = Network<Segment>(apiEndpoint)
+        return SegmentAPI(network: network)
+    }
 }

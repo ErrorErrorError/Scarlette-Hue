@@ -28,36 +28,27 @@ extension DevicesViewModel: ViewModelType {
     }
 
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
-        let output = Output()
+        var output = Output()
 
         input.loadTrigger
-            .flatMapLatest { _ in devicesRepository.devices().asDriverOnErrorJustComplete() }
-            .map({
-                $0.map({ device in
-                    DeviceItemViewModel(with: device,
+            .flatMapLatest {
+                devicesRepository.devices()
+                    .asDriverOnErrorJustComplete()
+            }
+            .map {
+                $0.map { device in
+                    DeviceItemViewModel(device: device,
                                         storeAPI: self.storeAPI,
                                         heartbeatService: self.heartbeatService)
-                })
-            })
-            .drive(output.$deviceList)
+                }
+            }
+            .do(onNext: { output.deviceList = $0 })
+            .drive()
             .disposed(by: disposeBag)
 
         select(trigger: input.selectedDevice, items: output.$deviceList.asDriver())
-            .filter({ $0.store != nil })
-            .flatMapLatest { device in
-                navigator.toDevice(device.device, device.store!)
-                    .map({ ($0, device) })
-            }
-            .drive(onNext: { tuple in
-                switch tuple.0 {
-                case .updatedState(_):
-                    let _ = output.deviceList
-//                    tuple.1.store?.state = state
-                    // TODO: Fix value change for data
-                case .updatedStore(let store):
-                    tuple.1.store = store
-                }
-            })
+            .filter({ $0.storeSubject.value != nil })
+            .drive(onNext: { navigator.toDeviceDetail($0.device, $0.storeSubject.value!) })
             .disposed(by: disposeBag)
 
         input.addDeviceTrigger

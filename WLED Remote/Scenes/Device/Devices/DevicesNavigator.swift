@@ -12,8 +12,8 @@ import RxCocoa
 
 protocol DevicesNavigator {
     func toDiscoverDevice()
-    func toDevice(_ device: Device, _ deviceStore: Store) -> Driver<EditDeviceDelegate>
     func toDevices()
+    func toDeviceDetail(_ device: Device, _ store: Store)
 }
 
 class DefaultDevicesNavigator: DevicesNavigator {
@@ -51,21 +51,20 @@ class DefaultDevicesNavigator: DevicesNavigator {
         topViewController.present(viewController, animated: true)
     }
 
-    func toDevice(_ device: Device, _ store: Store) -> Driver<EditDeviceDelegate> {
-        let delegate = PublishSubject<EditDeviceDelegate>()
+    func toDeviceDetail(_ device: Device, _ store: Store) {
+        let navigator = DefaultDeviceDetailNavigator(services: services,
+                                                     navigationController: navigationController
+        )
 
-        let navigator = DefaultDeviceNavigator(services: services,
-                                               navigationController: navigationController)
+        let viewModel = DeviceDetailViewModel(navigator: navigator,
+                                              deviceRepository: services.makeDevicesRepository(),
+                                              storeAPI: services.makeStoreAPI(),
+                                              segmentAPI: services.makeSegmentAPI(),
+                                              device: device,
+                                              store: store
+        )
 
-        let viewModel = EditDeviceViewModel(navigator: navigator,
-                                        deviceRepository: services.makeDevicesRepository(),
-                                        deviceStoreAPI: services.makeStoreAPI(),
-                                        device: device,
-                                        store: store,
-                                        delegate: delegate)
-        let viewController = EditDeviceViewController(viewModel: viewModel)
+        let viewController = DeviceDetailViewController(viewModel: viewModel)
         navigationController.pushViewController(viewController, animated: true)
-
-        return delegate.asDriverOnErrorJustComplete()
     }
 }

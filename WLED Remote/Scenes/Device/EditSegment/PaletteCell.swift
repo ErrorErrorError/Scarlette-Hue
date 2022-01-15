@@ -1,5 +1,5 @@
 //
-//  PaletteCollectionViewCell.swift
+//  PaletteCell.swift
 //  WLED Remote
 //
 //  Created by Erik Bautista on 5/28/21.
@@ -8,7 +8,7 @@
 import UIKit
 import Then
 
-class PaletteCollectionViewCell: UICollectionViewCell {
+class PaletteCell: UICollectionViewCell {
     static let identifier = "palette-cell"
 
     override class var layerClass: AnyClass {
@@ -54,7 +54,7 @@ class PaletteCollectionViewCell: UICollectionViewCell {
 }
 
 // MARK: Animation on highlight
-extension PaletteCollectionViewCell {
+extension PaletteCell {
     override var isHighlighted: Bool {
         didSet { shrink(down: isHighlighted) }
     }

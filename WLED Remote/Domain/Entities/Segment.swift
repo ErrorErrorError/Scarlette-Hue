@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Then
 
 // MARK: - Segment
 public struct Segment {
@@ -17,7 +18,7 @@ public struct Segment {
     var spacing: UInt8?
     var on: Bool?
     var brightness: Int?
-    var colors: [[Int]]
+    var colors: [[Int]]?
     var effect: Int?
     var speed: Int?
     var intensity: Int?
@@ -50,9 +51,15 @@ extension Segment: Codable {
 
 extension Segment: Hashable { }
 
+extension Segment: Then { }
+
 extension Segment {
     var colorsTuple: (first: [Int], second: [Int], third: [Int]) {
-        guard colors.count == 3 else { return (first: [0,0,0], second: [0,0,0], third: [0,0,0]) }
+        guard let colors = colors, colors.count == 3 else { return (first: [0,0,0], second: [0,0,0], third: [0,0,0]) }
         return (first: colors[0], second: colors[1], third: colors[2])
     }
+}
+
+struct SegmentRequest: Codable, Hashable {
+    let seg: Segment
 }

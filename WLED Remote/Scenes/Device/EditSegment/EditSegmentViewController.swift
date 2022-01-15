@@ -1,5 +1,5 @@
 //
-//  EditDeviceViewController.swift
+//  EditSegmentViewController.swift
 //  WLED Remote
 //
 //  Created by Erik Bautista on 5/12/21.
@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-class EditDeviceViewController: UIViewController {
+class EditSegmentViewController: UIViewController {
 
     // MARK: - Rx
 
@@ -18,7 +18,7 @@ class EditDeviceViewController: UIViewController {
 
     // MARK: View Model
 
-    let viewModel: EditDeviceViewModel
+    let viewModel: EditSegmentViewModel
 
     // MARK: - Views
 
@@ -33,50 +33,36 @@ class EditDeviceViewController: UIViewController {
         $0.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
     }
 
+    let exitButton = UIButton(type: .close)
+
     let moreButton = UIButton(type: .custom).then {
         let smallConfiguration = UIImage.SymbolConfiguration(scale: .large)
         let image = UIImage(systemName: "ellipsis", withConfiguration: smallConfiguration)
         $0.setImage(image, for: .normal)
         $0.backgroundColor = UIColor(red: 90/255, green: 90/255, blue: 90/255, alpha: 0.2)
-        $0.layer.cornerRadius = EditDeviceViewController.buttonSize / 2
+        $0.layer.cornerRadius = EditSegmentViewController.buttonSize / 2
     }
 
-    let switchButton = UISwitch().then {
+    let onSwitch = UISwitch().then {
         $0.onTintColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.20)
         $0.tintColor = UIColor(red: 90/255, green: 90/255, blue: 90/255, alpha: 0.2)
     }
 
-    let brightnessBar = BrightnessSlider().then {
+    let brightnessSlider = BrightnessSlider().then {
         $0.translatesAutoresizingMaskIntoConstraints = false
-    }
-
-    let settingsButton = UIButton().then {
-        $0.setImage(UIImage(systemName: "gearshape"), for: .normal)
-        $0.backgroundColor = .contentOverSystemBackground
-        $0.layer.cornerRadius = EditDeviceViewController.buttonSize / 2
     }
 
     let effectsButton = UIButton().then {
         $0.setImage(UIImage(systemName: "wand.and.stars.inverse"), for: .normal)
         $0.backgroundColor = .contentOverSystemBackground
-        $0.layer.cornerRadius = EditDeviceViewController.buttonSize / 2
+        $0.layer.cornerRadius = EditSegmentViewController.buttonSize / 2
     }
 
     let infoButton = UIButton().then {
         let image = UIImage(systemName: "info.circle")
         $0.setImage(image, for: .normal)
         $0.backgroundColor = .contentOverSystemBackground
-        $0.layer.cornerRadius = EditDeviceViewController.buttonSize / 2
-    }
-
-    lazy var actionButtonStackView = UIStackView().then {
-        $0.addArrangedSubview(UIView())
-        $0.addArrangedSubview(effectsButton)
-        $0.addArrangedSubview(infoButton)
-        $0.addArrangedSubview(settingsButton)
-        $0.axis = .horizontal
-        $0.alignment = .trailing
-        $0.spacing = 16
+        $0.layer.cornerRadius = EditSegmentViewController.buttonSize / 2
     }
 
     let colorPicker = ChromaColorPicker().then {
@@ -127,32 +113,9 @@ class EditDeviceViewController: UIViewController {
         $0.font = UIFont.boldSystemFont(ofSize: 12)
     }
 
-    let presetsCompositionalLayout: UICollectionViewCompositionalLayout = {
-        let fraction: CGFloat = 1 / 2
-        let insets = 4.0
-
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(fraction), heightDimension: .fractionalHeight(1))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = .init(top: insets, leading: insets, bottom: insets, trailing: insets)
-
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(fraction / 2))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(top: insets, leading: insets, bottom: insets, trailing: insets)
-        section.orthogonalScrollingBehavior = .continuous
-
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(fraction / 3))
-        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-
-        section.boundarySupplementaryItems = [header]
-        let configutationLayout = UICollectionViewCompositionalLayout(section: section)
-
-        return configutationLayout
-    }()
-
-    lazy var palettesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: presetsCompositionalLayout).then {
-        $0.register(PaletteCollectionViewCell.self, forCellWithReuseIdentifier: PaletteCollectionViewCell.identifier)
+    lazy var palettesCollectionView = UICollectionView(frame: .zero,
+                                                       collectionViewLayout: createCommonCompositionalLayout()).then {
+        $0.register(PaletteCell.self, forCellWithReuseIdentifier: PaletteCell.identifier)
         $0.register(CollectionViewHeaderCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
         $0.alwaysBounceHorizontal = true
         $0.alwaysBounceVertical = false
@@ -168,12 +131,30 @@ class EditDeviceViewController: UIViewController {
         $0.spacing = 8
     }
 
+    lazy var effectsCollectionView = UICollectionView(frame: .zero,
+                                                      collectionViewLayout: createCommonCompositionalLayout()).then {
+        $0.register(EffectCell.self, forCellWithReuseIdentifier: EffectCell.identifier)
+        $0.register(CollectionViewHeaderCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
+        $0.alwaysBounceHorizontal = true
+        $0.alwaysBounceVertical = false
+        $0.dataSource = nil
+        $0.isScrollEnabled = true
+        $0.backgroundColor = .clear
+        $0.allowsSelection = true
+    }
+
+    lazy var effectsStackView = UIStackView().then {
+        $0.addArrangedSubview(effectsCollectionView)
+        $0.axis = .vertical
+        $0.spacing = 8
+    }
+
     // MARK: - Properties
 
     static let buttonSize: CGFloat = 32
     private let backgroundBrightnessHeight: CGFloat = 42
 
-    init(viewModel: EditDeviceViewModel) {
+    init(viewModel: EditSegmentViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -185,7 +166,7 @@ class EditDeviceViewController: UIViewController {
 
 // MARK: - Lifecycle
 
-extension EditDeviceViewController {
+extension EditSegmentViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
@@ -196,35 +177,36 @@ extension EditDeviceViewController {
 
 // MARK: - Setup
 
-extension EditDeviceViewController {
+extension EditSegmentViewController {
     private func setupNavigationBar() {
-        let switchBarButton = UIBarButtonItem(customView: switchButton)
-        let moreBarButton = UIBarButtonItem(customView: moreButton).then {
-            $0.customView?.translatesAutoresizingMaskIntoConstraints = false
-            $0.customView?.heightAnchor.constraint(equalToConstant: switchButton.frame.height).isActive = true
-            $0.customView?.widthAnchor.constraint(equalToConstant: switchButton.frame.height).isActive = true
-        }
-
-        navigationItem.rightBarButtonItems = [switchBarButton, moreBarButton]
-
-        let titleAppearance = UINavigationBarAppearance().then {
-            $0.configureWithTransparentBackground()
-            $0.shadowImage = nil
-            $0.backgroundImage = nil
-        }
-
-        navigationItem.do {
-            $0.standardAppearance = titleAppearance
-            $0.compactAppearance = titleAppearance
-            $0.scrollEdgeAppearance = titleAppearance
-        }
+//        let switchBarButton = UIBarButtonItem(customView: onSwitch)
+//        let moreBarButton = UIBarButtonItem(customView: moreButton).then {
+//            $0.customView?.translatesAutoresizingMaskIntoConstraints = false
+//            $0.customView?.heightAnchor.constraint(equalToConstant: onSwitch.frame.height).isActive = true
+//            $0.customView?.widthAnchor.constraint(equalToConstant: onSwitch.frame.height).isActive = true
+//        }
+//
+//        navigationItem.rightBarButtonItems = [switchBarButton, moreBarButton]
+//
+//        let titleAppearance = UINavigationBarAppearance().then {
+//            $0.configureWithTransparentBackground()
+//            $0.shadowImage = nil
+//            $0.backgroundImage = nil
+//        }
+//
+//        navigationItem.do {
+//            $0.largeTitleDisplayMode = .never
+//            $0.standardAppearance = titleAppearance
+//            $0.compactAppearance = titleAppearance
+//            $0.scrollEdgeAppearance = titleAppearance
+//        }
     }
 
     private func setupViewsAndConstraints() {
         view.backgroundColor = .mainSystemBackground
         colorPicker.delegate = self
 
-        backgroundNavigationView.addSubview(brightnessBar)
+//        backgroundNavigationView.addSubview(brightnessSlider)
 
         colorPicker.do {
             $0.addHandle(colorHandlerPrimary)
@@ -235,9 +217,12 @@ extension EditDeviceViewController {
 
         view.do {
             $0.addSubview(backgroundNavigationView)
-            $0.addSubview(actionButtonStackView)
+            $0.addSubview(exitButton)
+            $0.addSubview(onSwitch)
+            $0.addSubview(brightnessSlider)
             $0.addSubview(colorPickerStackView)
             $0.addSubview(palettesStackView)
+            $0.addSubview(effectsStackView)
             $0.subviews.forEach({ $0.translatesAutoresizingMaskIntoConstraints = false })
         }
 
@@ -245,31 +230,40 @@ extension EditDeviceViewController {
             $0.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
             $0.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
             $0.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-            $0.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: backgroundBrightnessHeight).isActive = true
+            $0.bottomAnchor.constraint(equalTo: brightnessSlider.bottomAnchor, constant: 8).isActive = true
         }
 
-        brightnessBar.do {
+        exitButton.do {
+            $0.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor).isActive = true
             $0.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
-            $0.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor).isActive = true
-            $0.bottomAnchor.constraint(equalTo: backgroundNavigationView.bottomAnchor, constant: -12).isActive = true
         }
 
-        actionButtonStackView.do {
-            $0.topAnchor.constraint(equalTo: backgroundNavigationView.bottomAnchor, constant: 8).isActive = true
+        onSwitch.do {
+            $0.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor).isActive = true
+            $0.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor).isActive = true
+        }
+
+        brightnessSlider.do {
+            $0.topAnchor.constraint(equalTo: onSwitch.bottomAnchor, constant: 8).isActive = true
             $0.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
             $0.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor).isActive = true
-            $0.heightAnchor.constraint(equalToConstant: EditDeviceViewController.buttonSize).isActive = true
         }
 
         colorPickerStackView.do {
-            $0.topAnchor.constraint(equalTo: actionButtonStackView.bottomAnchor, constant: 8).isActive = true
+            $0.topAnchor.constraint(equalTo: backgroundNavigationView.bottomAnchor, constant: 64).isActive = true
             $0.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor).isActive = true
             $0.heightAnchor.constraint(equalTo: $0.widthAnchor).isActive = true
             $0.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor).isActive = true
         }
-
+ 
         palettesStackView.do {
             $0.topAnchor.constraint(equalTo: colorPickerStackView.bottomAnchor, constant: 8).isActive = true
+            $0.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+            $0.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        }
+
+        effectsStackView.do {
+            $0.topAnchor.constraint(equalTo: palettesStackView.bottomAnchor, constant: 8).isActive = true
             $0.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
             $0.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
             $0.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
@@ -279,7 +273,7 @@ extension EditDeviceViewController {
 
 // MARK: - Rx Binding
 
-extension EditDeviceViewController: ChromaColorPickerDelegate {
+extension EditSegmentViewController: ChromaColorPickerDelegate {
     func colorPickerHandleDidChange(_ colorPicker: ChromaColorPicker, handle: ChromaColorHandle, to color: UIColor) {
         // Just fix the text color so that it doesnt blend in with the color
         if let label = handle.accessoryView as? UILabel {
@@ -288,30 +282,31 @@ extension EditDeviceViewController: ChromaColorPickerDelegate {
     }
 }
 
-extension EditDeviceViewController {
+extension EditSegmentViewController {
     private func bindViewController() {
         let colorsChanged = colorPicker.rx.handleDidChange
             .asDriver()
-            .map({
+            .map {
                 (first: self.colorHandlerPrimary.color.intArray,
                  second: self.colorHandlerSecondary.color.intArray,
                  third: self.colorHandlerTertiary.color.intArray)
-            })
+            }
 
-        let input = EditDeviceViewModel.Input(loadTrigger: Driver.just(()),
-                                          effectTrigger: effectsButton.rx.tap.asDriver(),
-                                          infoTrigger: infoButton.rx.tap.asDriver(),
-                                          settingsTrigger: settingsButton.rx.tap.asDriver(),
-                                          colors: colorsChanged,
-                                          brightness: brightnessBar.rx.value.changed.asDriver(),
-                                          on: switchButton.rx.value.changed.asDriver(),
-                                          selectedPalette: palettesCollectionView.rx.itemSelected.asDriver())
+        let input = EditSegmentViewModel.Input(loadTrigger: Driver.just(()),
+                                               exitTrigger: exitButton.rx.tap.asDriver(),
+                                               settingsTrigger: moreButton.rx.tap.asDriver(),
+                                               on: onSwitch.rx.value.changed.asDriver(),
+                                               brightness: brightnessSlider.rx.value.changed.asDriver(),
+                                               colors: colorsChanged,
+                                               selectedPalette: palettesCollectionView.rx.itemSelected.asDriver(),
+                                               selectedEffect: palettesCollectionView.rx.itemSelected.asDriver()
+        )
 
         let output = viewModel.transform(input: input, disposeBag: disposeBag)
 
-        let dataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, PaletteItemViewModel>>.init {  _, collectionView, indexPath, item in
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PaletteCollectionViewCell.identifier, for: indexPath)
-            if let cell = cell as? PaletteCollectionViewCell {
+        let paletteDataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, PaletteItemViewModel>>.init {  _, collectionView, indexPath, item in
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PaletteCell.identifier, for: indexPath)
+            if let cell = cell as? PaletteCell {
                 cell.bind(item)
             }
             return cell
@@ -323,16 +318,53 @@ extension EditDeviceViewController {
             return cell
         }
 
-        output.$deviceName
+        let effectsDataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, EffectItemViewModel>>.init {  _, collectionView, indexPath, item in
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EffectCell.identifier, for: indexPath)
+            if let cell = cell as? EffectCell {
+                cell.bind(item)
+            }
+            return cell
+        } configureSupplementaryView: { data, collectionView, kind, indexPath in
+            let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath)
+            if let cell = cell as? CollectionViewHeaderCell {
+                cell.bind(text: data.sectionModels[indexPath.row].model)
+            }
+            return cell
+        }
+
+        output.$palettes
+            .asDriver()
+            .map { [SectionModel<String, PaletteItemViewModel>(model: "Palettes", items: $0)] }
+            .drive(palettesCollectionView.rx.items(dataSource: paletteDataSource))
+            .disposed(by: disposeBag)
+
+        output.$effects
+            .asDriver()
+            .map { [SectionModel<String, EffectItemViewModel>(model: "Effects", items: $0)] }
+            .drive(effectsCollectionView.rx.items(dataSource: effectsDataSource))
+            .disposed(by: disposeBag)
+
+        output.$name
             .asDriver()
             .drive(rx.title)
             .disposed(by: disposeBag)
 
-        output.$palettes
-            .asDriver()
-            .map({ $0.map({ PaletteItemViewModel(title: $0) }) })
-            .compactMap({[SectionModel<String, PaletteItemViewModel>(model: "Palettes", items: $0)]})
-            .drive(palettesCollectionView.rx.items(dataSource: dataSource))
+        output.$on
+            .take(1)
+            .asDriverOnErrorJustComplete()
+            .drive(onSwitch.rx.value)
+            .disposed(by: disposeBag)
+
+        output.$brightness
+            .take(1)
+            .asDriverOnErrorJustComplete()
+            .drive(brightnessSlider.rx.value)
+            .disposed(by: disposeBag)
+
+        output.$colors
+            .take(1)
+            .asDriverOnErrorJustComplete()
+            .drive(colorsBinding)
             .disposed(by: disposeBag)
 
         output.$selectedPalette
@@ -343,22 +375,12 @@ extension EditDeviceViewController {
             })
             .disposed(by: disposeBag)
 
-        output.$on
+        output.$selectedEffect
             .take(1)
             .asDriverOnErrorJustComplete()
-            .drive(switchButton.rx.value)
-            .disposed(by: disposeBag)
-
-        output.$brightness
-            .take(1)
-            .asDriverOnErrorJustComplete()
-            .drive(brightnessBar.rx.value)
-            .disposed(by: disposeBag)
-
-        output.$colors
-            .take(1)
-            .asDriverOnErrorJustComplete()
-            .drive(colorsBinding)
+            .drive(onNext: { [weak self] selected in
+                self?.effectsCollectionView.selectItem(at: selected, animated: true, scrollPosition: .centeredHorizontally)
+            })
             .disposed(by: disposeBag)
 
         Driver.combineLatest(output.$colors.asDriver(), output.$on.asDriver())
@@ -367,12 +389,6 @@ extension EditDeviceViewController {
             }
             .drive(animationBinding)
             .disposed(by: disposeBag)
-
-//        output.$store
-//            .map({ $0.state })
-//            .asDriverOnErrorJustComplete()
-//            .drive(stateBinding)
-//            .disposed(by: disposeBag)
     }
 
     var colorsBinding: Binder<(first: [Int], second: [Int], third: [Int])> {
@@ -396,10 +412,10 @@ extension EditDeviceViewController {
             if state.on {
                 // Set background color
                 let primary = state.first
-                let secondary = state.second
-                let tertiary = state.third
+//                let secondary = state.second
+//                let tertiary = state.third
 
-                var newColors = [primary, secondary, tertiary]
+                var newColors = [primary]
                     .filter({ $0.reduce(0, +) != 0 })
                     .map({ UIColor(red: $0[0], green: $0[1], blue: $0[2]).cgColor })
 
@@ -433,86 +449,35 @@ extension EditDeviceViewController {
             }
         }
     }
+}
 
-    var stateBinding: Binder<State> {
-        return Binder(self, binding: { (vc, state) in
-            var colors = [UIColor.clear.cgColor, UIColor.clear.cgColor]
-            var deviceNameTextColor = UIColor.label
+extension EditSegmentViewController {
+    func createCommonCompositionalLayout() -> UICollectionViewCompositionalLayout {
+        let fraction: CGFloat = 1 / 2
+        let insets = 4.0
 
-            vc.switchButton.isOn = state.on == true
-            vc.brightnessBar.value = Float(state.bri ?? 1)
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(fraction), heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = .init(top: insets, leading: insets, bottom: insets, trailing: insets)
 
-            if let segment = state.firstSegment {
-                let firstColor = segment.colors[0]
-                let firstColorUI = UIColor(red: firstColor[0], green: firstColor[1], blue: firstColor[2])
-                
-                vc.updateHandlerColor(vc.colorHandlerPrimary, to: firstColorUI)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(fraction / 2))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = .init(top: insets, leading: insets, bottom: insets, trailing: insets)
+        section.orthogonalScrollingBehavior = .continuous
 
-                let secondColor = segment.colors[1]
-                let secondColorUI = UIColor(red: secondColor[0], green: secondColor[1], blue: secondColor[2])
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(fraction / 3))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
 
-                vc.updateHandlerColor(vc.colorHandlerSecondary, to: secondColorUI)
+        section.boundarySupplementaryItems = [header]
+        let configutationLayout = UICollectionViewCompositionalLayout(section: section)
 
-                let thirdColor = segment.colors[2]
-                let thirdColorUI = UIColor(red: thirdColor[0], green: thirdColor[1], blue: thirdColor[2])
-
-                vc.updateHandlerColor(vc.colorHandlerTertiary, to: thirdColorUI)
-
-                if let paletteIndex = segment.palette, paletteIndex != -1 {
-                    let indexPath = IndexPath(row: paletteIndex, section: 0)
-                    vc.palettesCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: [])
-                }
-            } else {
-                vc.updateHandlerColor(vc.colorHandlerPrimary, to: .black)
-                vc.updateHandlerColor(vc.colorHandlerSecondary, to: .black)
-                vc.updateHandlerColor(vc.colorHandlerTertiary, to: .black)
-            }
-
-            // Get colors
-
-            if state.on == true, let segment = state.firstSegment {
-                // Set background color
-                let primary = segment.colors[0]
-                let secondary = segment.colors[1]
-                let tertiary = segment.colors[2]
-
-                var newColors = [primary, secondary, tertiary]
-                    .filter({ $0.reduce(0, +) != 0 })
-                    .map({ UIColor(red: $0[0], green: $0[1], blue: $0[2]).cgColor })
-
-                if newColors.count == 1 {
-                    newColors.append(newColors[0])
-                }
-
-                colors = newColors
-
-                if let first = newColors.first {
-                    let color = UIColor(cgColor: first)
-                    deviceNameTextColor = color.isLight ? .black : .white
-                }
-            }
-
-            // Set colors to background navigation
-
-            if let gradientLayer = vc.backgroundNavigationView.layer as? CAGradientLayer {
-                gradientLayer.changeGradients(colors, animate: true)
-            }
-
-            // Animate colors on changed
-
-            UIView.animate(withDuration: 0.2) {
-                vc.setNeedsStatusBarAppearanceUpdate()
-
-                vc.navigationItem.standardAppearance?.titleTextAttributes = [.foregroundColor: deviceNameTextColor]
-                vc.navigationItem.scrollEdgeAppearance?.largeTitleTextAttributes = [.foregroundColor: deviceNameTextColor]
-                vc.navigationItem.compactAppearance?.titleTextAttributes = [.foregroundColor: deviceNameTextColor]
-                vc.navigationController?.navigationBar.tintColor = deviceNameTextColor
-            }
-        })
+        return configutationLayout
     }
 }
 
-extension EditDeviceViewController {
+extension EditSegmentViewController {
     internal func updateHandlerColor(_ handle: ChromaColorHandle, to color: UIColor) {
         colorPicker.positionHandle(handle, with: color)
 

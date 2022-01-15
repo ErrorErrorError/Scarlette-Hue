@@ -10,34 +10,22 @@ import RxSwift
 import RxCocoa
 import Then
 
-final class DeviceItemViewModel {
-
-    // MARK: Network Service
-
-    private let deviceStoreAPI: StoreAPI
-    private let heartbeatService: HeartbeatService
+struct DeviceItemViewModel {
+    let device: Device
+    let storeAPI: StoreAPI
+    let heartbeatService: HeartbeatService
+    let storeSubject = BehaviorRelay<Store?>(value: nil)
 
     // Properties
 
     var name: String {
         return device.name
     }
-
-    private(set) var device: Device
-    var store: Store?
-
-    // MARK: Rx
-
-    init(with device: Device, storeAPI: StoreAPI, heartbeatService: HeartbeatService) {
-        self.deviceStoreAPI = storeAPI
-        self.heartbeatService = heartbeatService
-        self.device = device
-    }
 }
 
 extension DeviceItemViewModel: ViewModelType {
     struct Input {
-        let heartbeatTrigger: Driver<Void>
+        let loadTrigger: Driver<Void>
         let on: Driver<Bool>
     }
 
@@ -66,37 +54,37 @@ extension DeviceItemViewModel: ViewModelType {
         connectionState
             .flatMapLatest { state -> Observable<Store?> in
                 if state == .connected {
-                    return self.deviceStoreAPI.fetchStore(for: self.device)
+                    return self.storeAPI.fetchStore(for: self.device)
                         .map { store -> Store? in store }
                 } else {
                     return Observable.just(nil)
                 }
             }
             .asDriver(onErrorJustReturn: nil)
-            .drive(output.$store)
+            .drive(onNext: { storeSubject.accept($0) })
             .disposed(by: disposeBag)
 
         // Set store property to the view model so that we pass down to other view models
 
-        output.$store
-            .do(onNext: { self.store = $0 })
-            .subscribe()
-            .disposed(by: disposeBag)
-
         input.on
             .do(onNext: { newOn in
-                let updatedStore = output.store?.with({
+                let updatedStore = storeSubject.value?.with {
                     $0.state.on = newOn
-                })
-                output.$store.accept(updatedStore)
+                }
+
+                storeSubject.accept(updatedStore)
             })
             .map({ State(on: $0) })
             .flatMapLatest({
-                self.deviceStoreAPI.updateState(device: self.device, state: $0)
-                    .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
+                self.storeAPI.updateState(device: self.device, state: $0)
                     .asDriverOnErrorJustComplete()
             })
             .drive()
+            .disposed(by: disposeBag)
+
+        storeSubject
+            .asDriver()
+            .drive(output.$store)
             .disposed(by: disposeBag)
 
         return output

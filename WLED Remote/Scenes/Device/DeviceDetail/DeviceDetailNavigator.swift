@@ -30,7 +30,6 @@ public struct DefaultDeviceDetailNavigator: DeviceDetailNavigator {
                                                     navigationController: navigationController)
 
         let viewModel = EditSegmentViewModel(navigator: navigator,
-                                             deviceRepository: services.makeDevicesRepository(),
                                              segmentAPI: services.makeSegmentAPI(),
                                              device: device,
                                              segment: segment,

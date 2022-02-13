@@ -9,12 +9,16 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+
+public enum SegmentSettingsDelegate {
+    case updatedSettings(SegmentSettings)
+}
+
 struct SegmentSettingsViewModel {
     let navigator: SegmentSettingsNavigator
-    let device: Device
     let info: Info
-    let segment: Segment
-    let delegate: PublishSubject<EditSegmentDelegate>
+    let segmentSettings: SegmentSettings
+    let delegate: PublishSubject<SegmentSettingsDelegate>
 }
 
 extension SegmentSettingsViewModel: ViewModelType {
@@ -41,12 +45,12 @@ extension SegmentSettingsViewModel: ViewModelType {
     }
 
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
-        var output = Output(start: String(segment.start ?? 0),
-                            stop: String(segment.stop ?? 0),
-                            grouping: String(segment.group ?? 0),
-                            spacing: String(segment.spacing ?? 0),
-                            reverse: segment.reverse ?? false,
-                            mirror: segment.mirror ?? false
+        var output = Output(start: String(segmentSettings.start ?? 0),
+                            stop: String(segmentSettings.stop ?? 0),
+                            grouping: String(segmentSettings.group ?? 0),
+                            spacing: String(segmentSettings.spacing ?? 0),
+                            reverse: segmentSettings.reverse ?? false,
+                            mirror: segmentSettings.mirror ?? false
         )
 
         let start = Driver.merge(
@@ -119,18 +123,18 @@ extension SegmentSettingsViewModel: ViewModelType {
         input.saveTrigger
             .withLatestFrom(valid)
             .filter { $0 }
-            .withLatestFrom(Driver.combineLatest(Driver.just(segment.id), start, stop, grouping, spacing, reverse, mirror))
-            .do(onNext: { id, start, stop, grouping, spacing, reverse, mirror in
-                let segment = Segment(id: id,
-                                      start: Int(start),
-                                      stop: Int(stop),
-                                      len: stop - start,
-                                      group: UInt8(grouping),
-                                      spacing: UInt8(spacing),
-                                      reverse: reverse,
-                                      mirror: mirror
+            .withLatestFrom(Driver.combineLatest(start, stop, grouping, spacing, reverse, mirror))
+            .do(onNext: { start, stop, grouping, spacing, reverse, mirror in
+                let settings = SegmentSettings(
+                    start: Int(start),
+                    stop: Int(stop),
+                    len: stop - start,
+                    group: UInt8(grouping),
+                    spacing: UInt8(spacing),
+                    reverse: reverse,
+                    mirror: mirror
                 )
-                delegate.onNext(.updatedSegment(segment))
+                delegate.onNext(.updatedSettings(settings))
             })
             .drive(onNext: { _ in navigator.toEditSegment() })
             .disposed(by: disposeBag)

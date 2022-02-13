@@ -57,6 +57,8 @@ class SegmentSettingsViewController: CardModalViewController<UITableView> {
             $0.allowsSelection = false
             $0.separatorStyle = .none
             $0.contentInset = .zero
+            $0.backgroundColor = .secondarySystemBackground
+            $0.layer.cornerRadius = 20
         }
         super.init(buttonView: .primary, contentView: tableView)
     }
@@ -84,7 +86,8 @@ class SegmentSettingsViewController: CardModalViewController<UITableView> {
         super.setupViewsAndContraints()
 
         titleLabel.text = "Segment Settings"
-        descriptionLabel.isHidden = true
+        descriptionLabel.isHidden = false
+        descriptionLabel.text = " "
         primaryButton.setTitle("Save", for: .normal)
 
         startLEDsTextField.delegate = self
@@ -205,8 +208,8 @@ extension SegmentSettingsViewController: UITableViewDataSource {
             cell.accessoryView = accessory
         }
 
-        cell.backgroundColor = .secondarySystemBackground
-        cell.layer.cornerRadius = cell.bounds.height / 4
+        cell.backgroundColor = .clear
+//        cell.backgroundColor = .secondarySystemBackground
         return cell
     }
 }

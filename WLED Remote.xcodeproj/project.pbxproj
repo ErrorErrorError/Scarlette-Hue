@@ -13,6 +13,7 @@
 		130C3AC62657A7BC00C7425D /* DeviceInfoItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130C3AC52657A7BC00C7425D /* DeviceInfoItemViewModel.swift */; };
 		130CEFCA264DBB9900BECFDF /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130CEFC9264DBB9900BECFDF /* DeviceCell.swift */; };
 		130CEFCC264DCA9300BECFDF /* BrightnessSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130CEFCB264DCA9300BECFDF /* BrightnessSlider.swift */; };
+		131C4E3E27B9050F00EBAFC8 /* SegmentSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131C4E3D27B9050F00EBAFC8 /* SegmentSettings.swift */; };
 		13209477264C9F1F007049D7 /* DevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13209476264C9F1F007049D7 /* DevicesViewController.swift */; };
 		13233CA0265726F2005B1270 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13233C9F265726F2005B1270 /* Application.swift */; };
 		13233CA226572E71005B1270 /* DevicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13233CA126572E71005B1270 /* DevicesViewModel.swift */; };
@@ -160,6 +161,7 @@
 		130CEFC2264D1D5900BECFDF /* Info.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Info.swift; sourceTree = "<group>"; };
 		130CEFC9264DBB9900BECFDF /* DeviceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCell.swift; sourceTree = "<group>"; };
 		130CEFCB264DCA9300BECFDF /* BrightnessSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrightnessSlider.swift; sourceTree = "<group>"; };
+		131C4E3D27B9050F00EBAFC8 /* SegmentSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentSettings.swift; sourceTree = "<group>"; };
 		13209476264C9F1F007049D7 /* DevicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesViewController.swift; sourceTree = "<group>"; };
 		13209481264D1534007049D7 /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 		13233C892656E23F005B1270 /* UseCaseProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCaseProvider.swift; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 				136841D1265CDEBA00C828BF /* Wifi.swift */,
 				136841D3265CDEF400C828BF /* Leds.swift */,
 				136841D6265CDF6800C828BF /* FileSystem.swift */,
+				131C4E3D27B9050F00EBAFC8 /* SegmentSettings.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -958,6 +961,7 @@
 				13BBEF36266302C400685C42 /* SettingsViewModel.swift in Sources */,
 				138AAD64278F62A800CB4FC3 /* UIView+DropShadow.swift in Sources */,
 				138AAD62278F62A800CB4FC3 /* UIColor+Utils.swift in Sources */,
+				131C4E3E27B9050F00EBAFC8 /* SegmentSettings.swift in Sources */,
 				1357CD192653A85F009731D6 /* UIColor+Int.swift in Sources */,
 				136841D2265CDEBA00C828BF /* Wifi.swift in Sources */,
 				130C3AC1265795FD00C7425D /* NetServiceBrowser+Rx.swift in Sources */,

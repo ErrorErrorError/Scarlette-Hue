@@ -11,7 +11,7 @@ import RxSwift
 
 protocol EditSegmentNavigator {
     func toDeviceDetail()
-    func toSegmentSettings(delegate: PublishSubject<EditSegmentDelegate>, device: Device, info: Info, segment: Segment)
+    func toSegmentSettings(delegate: PublishSubject<SegmentSettingsDelegate>, info: Info, settings: SegmentSettings)
 }
 
 struct DefaultEditSegmentNavigator: EditSegmentNavigator {
@@ -22,15 +22,14 @@ struct DefaultEditSegmentNavigator: EditSegmentNavigator {
         navigationController.dismiss(animated: true)
     }
 
-    func toSegmentSettings(delegate: PublishSubject<EditSegmentDelegate>, device: Device, info: Info, segment: Segment) {
+    func toSegmentSettings(delegate: PublishSubject<SegmentSettingsDelegate>, info: Info, settings: SegmentSettings) {
         if let topViewController = navigationController.topViewController?.presentedViewController {
             let navigator = DefaultSegmentSettingsNavigator(services: services,
                                                             viewController: topViewController)
 
             let viewModel = SegmentSettingsViewModel(navigator: navigator,
-                                                     device: device,
                                                      info: info,
-                                                     segment: segment,
+                                                     segmentSettings: settings,
                                                      delegate: delegate)
 
             let viewController = SegmentSettingsViewController(viewModel: viewModel)

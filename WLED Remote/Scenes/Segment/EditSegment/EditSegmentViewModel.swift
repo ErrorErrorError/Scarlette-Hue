@@ -18,7 +18,6 @@ public enum EditSegmentDelegate {
 
 public struct EditSegmentViewModel {
     let navigator: EditSegmentNavigator
-    let deviceRepository: DevicesUseCaseProtocol
     let segmentAPI: SegmentAPI
     let device: Device
     var segment: Segment
@@ -47,6 +46,7 @@ extension EditSegmentViewModel: ViewModelType {
         @Relay var effects: [EffectItemViewModel] = []
         @Relay var selectedPalette = IndexPath(row: 0, section: 0)
         @Relay var selectedEffect = IndexPath(row: 0, section: 0)
+        @Relay var settings: SegmentSettings
     }
 
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
@@ -57,10 +57,9 @@ extension EditSegmentViewModel: ViewModelType {
                             palettes: store.palettes.compactMap { PaletteItemViewModel(title: $0) },
                             effects: store.effects.compactMap { EffectItemViewModel(title: $0) },
                             selectedPalette: IndexPath(row: segment.palette ?? -1, section: 0),
-                            selectedEffect: IndexPath(row: segment.effect ?? -1, section: 0)
+                            selectedEffect: IndexPath(row: segment.effect ?? -1, section: 0),
+                            settings: .init(from: segment)
         )
-
-        let segmentId = Driver.just(segment.id)
 
         let updatedOn = Driver.merge(
             input.on,
@@ -94,7 +93,23 @@ extension EditSegmentViewModel: ViewModelType {
         )
         .do(onNext: { output.selectedEffect = $0 } )
 
+
+        let segmentSettingsDelegate = PublishSubject<SegmentSettingsDelegate>()
+
+        let updatedSegmentSettings = Driver.merge(
+            segmentSettingsDelegate.asDriverOnErrorJustComplete().map({ t in
+                switch t {
+                case .updatedSettings(let settings):
+                    return settings
+                }
+            }),
+            input.loadTrigger.map { output.settings }
+        )
+        .do(onNext: { output.settings = $0 })
+
         // Update state with values
+
+        let segmentId = Driver.just(segment.id)
 
         Driver.combineLatest(
             segmentId,
@@ -102,17 +117,25 @@ extension EditSegmentViewModel: ViewModelType {
             updatedBrightness,
             updatedColors,
             updatedSelectedPalette,
-            updatedSelectedEffect
+            updatedSelectedEffect,
+            updatedSegmentSettings
         )
         .skip(1)
-        .map { (id, on, brightness, colors, palette, effect) in
+        .map { (id, on, brightness, colors, palette, effect, settings) in
             Segment(
                 id: id,
+                start: settings.start,
+                stop: settings.stop,
+                len: settings.len,
+                group: settings.group,
+                spacing: settings.spacing,
                 on: on,
                 brightness: Int(brightness),
                 colors: [colors.first, colors.second, colors.third],
                 effect: effect.row,
-                palette: palette.row
+                palette: palette.row,
+                reverse: settings.reverse,
+                mirror: settings.mirror
             )
         }
         .do(onNext: { newSegment in
@@ -127,13 +150,15 @@ extension EditSegmentViewModel: ViewModelType {
             .disposed(by: disposeBag)
 
         input.settingsTrigger
-                .do(onNext: { navigator.toSegmentSettings(delegate: delegate,
-                                                          device: device,
-                                                          info: store.info,
-                                                          segment: segment)
-                })
-                .drive()
-                .disposed(by: disposeBag)
+            .do(onNext: {
+                navigator.toSegmentSettings(
+                    delegate: segmentSettingsDelegate,
+                    info: store.info,
+                    settings: output.settings
+                )
+            })
+            .drive()
+            .disposed(by: disposeBag)
 
         return output
     }

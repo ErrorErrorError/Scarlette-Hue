@@ -10,7 +10,7 @@ import UIKit
 public final class CardModalTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
     var interactiveDismiss = true
 
-    public init(from presented: UIViewController, to presenting: UIViewController) {
+    public override init() {
         super.init()
     }
 

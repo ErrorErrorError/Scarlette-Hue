@@ -21,7 +21,6 @@ final class Network<T: Decodable> {
         let absolutePath = "\(endPoint)/\(path)"
         return RxAlamofire
             .data(.get, absolutePath)
-            .debug()
             .observe(on: scheduler)
             .map({ data -> [T] in
                 return try JSONDecoder().decode([T].self, from: data)

@@ -37,6 +37,8 @@ final class Application {
 
         tabBarViewController.setViewControllers([devicesNavigationController, settingsNavigationController], animated: true)
 
+        tabBarViewController.tabBar.isHidden = true
+
         window.rootViewController = tabBarViewController
         window.backgroundColor = UIColor.mainSystemBackground
         window.makeKeyAndVisible()

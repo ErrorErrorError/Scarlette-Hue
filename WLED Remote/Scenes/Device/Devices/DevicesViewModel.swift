@@ -21,6 +21,8 @@ extension DevicesViewModel: ViewModelType {
         let loadTrigger: Driver<Void>
         let addDeviceTrigger: Driver<Void>
         let selectedDevice: Driver<IndexPath>
+        let editDevice: Driver<IndexPath>
+        let deleteDevice: Driver<IndexPath>
     }
 
     struct Output {
@@ -46,13 +48,40 @@ extension DevicesViewModel: ViewModelType {
             .drive()
             .disposed(by: disposeBag)
 
+        // Add
+
+        input.addDeviceTrigger
+            .drive(onNext: navigator.toDiscoverDevice)
+            .disposed(by: disposeBag)
+
+        // Select
+
         select(trigger: input.selectedDevice, items: output.$deviceList.asDriver())
             .filter({ $0.storeSubject.value != nil })
             .drive(onNext: { navigator.toDeviceDetail($0.device, $0.storeSubject.value!) })
             .disposed(by: disposeBag)
 
-        input.addDeviceTrigger
-            .drive(onNext: navigator.toDiscoverDevice)
+        // Edit
+
+        select(trigger: input.editDevice, items: output.$deviceList.asDriver())
+            .map { $0.device }
+            .drive(onNext: { navigator.toEditDevice($0) })
+            .disposed(by: disposeBag)
+
+        // Delete
+
+        select(trigger: input.deleteDevice, items: output.$deviceList.asDriver())
+            .map { $0.device }
+            .flatMapLatest { device -> Driver<Device> in
+                return navigator.confirmDeleteDevice(device)
+                    .map { _ in device }
+            }
+            .flatMapLatest { device -> Driver<Device> in
+                return devicesRepository.delete(device: device)
+                    .map { _ in device }
+                    .asDriverOnErrorJustComplete()
+            }
+            .drive()
             .disposed(by: disposeBag)
 
         return output

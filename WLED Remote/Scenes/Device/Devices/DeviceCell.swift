@@ -29,7 +29,7 @@ class DeviceCell: UICollectionViewCell {
         $0.text = "Connecting"
     }
 
-    let lightSwitch = UISwitch().then {
+    let onSwitch = UISwitch().then {
         $0.onTintColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.20)
         $0.tintColor = UIColor(red: 90/255, green: 90/255, blue: 90/255, alpha: 0.2)
         $0.layer.cornerRadius = 16
@@ -93,7 +93,7 @@ class DeviceCell: UICollectionViewCell {
             $0.spacing = 2
         }
 
-        let deviceStateStackView = UIStackView(arrangedSubviews: [deviceInfoStackView, lightSwitch]).then {
+        let deviceStateStackView = UIStackView(arrangedSubviews: [deviceInfoStackView, onSwitch]).then {
             $0.spacing = inset
             $0.distribution = .fill
             $0.alignment = .center
@@ -118,22 +118,25 @@ class DeviceCell: UICollectionViewCell {
 
     override func prepareForReuse() {
         dispose = DisposeBag()
-        lightSwitch.isOn = false
-        lightSwitch.isEnabled = false
+        onSwitch.isOn = false
+        onSwitch.isEnabled = false
         nameLabel.textColor = .label
         connectionLabel.textColor = .secondaryLabel
         resizeView()
     }
 
     func bind(_ viewModel: DeviceItemViewModel) {
-        self.nameLabel.text = viewModel.name
-
         let input = DeviceItemViewModel.Input(
-            loadTrigger: Driver.empty(),
-            on: lightSwitch.rx.isOn.changed.asDriver()
+            loadTrigger: Driver.just(()),
+            on: onSwitch.rx.isOn.changed.asDriver()
         )
 
         let output = viewModel.transform(input: input, disposeBag: dispose)
+
+        output.$name
+            .asDriver()
+            .drive(nameLabel.rx.text)
+            .disposed(by: dispose)
 
         output.$connection
             .asDriver()
@@ -150,49 +153,35 @@ class DeviceCell: UICollectionViewCell {
 
     private var stateBinding: Binder<State?> {
         return Binder(self) { cell, state in
-            var colors = [UIColor.clear.cgColor, UIColor.clear.cgColor, UIColor.clear.cgColor]
-            var deviceNameTextColor = UIColor.label
+            let colors = ColorGradientAnimation.backgroundGradient(from: state)
+            let deviceNameTextColor = ColorGradientAnimation
+                .textColorForBackgroundGradient(from: state)
             var connectionTextColor = UIColor.secondaryLabel
 
-            // MARK: set state
-
-            if state?.on == true, let segments = state?.segments {
-                var newColors = segments
-                    .filter { $0.on == true }
-                    .compactMap { $0.colorsTuple.first }
-                    .filter({ $0.reduce(0, +) != 0 })
-                    .map({ UIColor(red: $0[0], green: $0[1], blue: $0[2]).cgColor })
-
-                if newColors.count == 1 {
-                    newColors.append(newColors[0])
-                }
-
-                colors = newColors
-
-                if let first = newColors.first {
-                    let color = UIColor(cgColor: first)
-                    let darkerColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1.0)
-                    let ligherColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0)
-                    deviceNameTextColor = color.isLight ? .black : .white
-                    connectionTextColor = color.isLight ? darkerColor : ligherColor
-                }
+            if let color = colors.first {
+                let darkerColor = UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1.0)
+                let ligherColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0)
+                connectionTextColor = color.isLight ? darkerColor : ligherColor
             }
 
             if let state = state {
                 let enabled = state.on == true
-                cell.lightSwitch.isEnabled = true
-                cell.lightSwitch.backgroundColor = !enabled ? nil : UIColor(red: 90/255, green: 90/255, blue: 90/255, alpha: 0.20)
+                cell.onSwitch.isEnabled = true
+                cell.onSwitch.backgroundColor = !enabled ? nil : UIColor(red: 90/255,
+                                                                         green: 90/255,
+                                                                         blue: 90/255,
+                                                                         alpha: 0.20)
 //                cell.brightnessSlider.value = Float(state.bri ?? 1)
-                cell.lightSwitch.isOn = enabled
+                cell.onSwitch.isOn = enabled
             } else {
-                cell.lightSwitch.isEnabled = false
-                cell.lightSwitch.isOn = false
+                cell.onSwitch.isEnabled = false
+                cell.onSwitch.isOn = false
             }
             cell.nameLabel.textColor = deviceNameTextColor
             cell.connectionLabel.textColor = connectionTextColor
 
             if let gradientLayer = cell.layer as? CAGradientLayer {
-                gradientLayer.changeGradients(colors, animate: true)
+                gradientLayer.gradientChangeAnimation(colors.map { $0.cgColor }, animate: true)
             }
         }
     }

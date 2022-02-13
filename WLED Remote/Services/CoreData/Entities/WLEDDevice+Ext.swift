@@ -28,7 +28,7 @@ extension WLEDDevice: DomainConvertibleType {
 
 extension WLEDDevice: Persistable {
     static func createFetchRequest() -> NSFetchRequest<WLEDDevice> {
-        return NSFetchRequest<WLEDDevice>(entityName: "WLEDDevice")
+        return NSFetchRequest<WLEDDevice>(entityName: WLEDDevice.entityName)
     }
 
     static var entityName: String {
@@ -37,7 +37,6 @@ extension WLEDDevice: Persistable {
 }
 
 extension Device: CoreDataRepresentable {
-    typealias CoreDataType = WLEDDevice
 
     func update(entity: WLEDDevice) {
         entity.id = id

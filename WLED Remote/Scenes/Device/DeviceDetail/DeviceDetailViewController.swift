@@ -57,27 +57,32 @@ class DeviceDetailViewController: UIViewController {
 
     let commonCompositionalLayout: UICollectionViewCompositionalLayout = {
         let fraction = 1.0 / 2.0
-        let insets = 4.0
+        let insets = 8.0
+        let itemHeight = 100.0
 
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = .init(top: insets,
-                                   leading: insets,
-                                   bottom: insets,
-                                   trailing: insets)
+        item.contentInsets = .init(top: insets, leading: insets, bottom: insets, trailing: insets)
 
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),heightDimension: .fractionalWidth(fraction / 2))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(itemHeight))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
 
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(top: insets, leading: insets, bottom: insets, trailing: insets)
+        section.contentInsets = .init(top: 0, leading: insets, bottom: 0, trailing: insets)
 
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(28))
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(28))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
                                                                  elementKind: UICollectionView.elementKindSectionHeader,
                                                                  alignment: .top)
 
-        section.boundarySupplementaryItems = [header]
+        let footerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(itemHeight))
+        let footer = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: footerSize,
+                                                                 elementKind: UICollectionView.elementKindSectionFooter,
+                                                                 alignment: .bottom)
+
+        footer.contentInsets = .init(top: insets, leading: insets, bottom: insets, trailing: insets)
+
+        section.boundarySupplementaryItems = [header, footer]
         let configutationLayout = UICollectionViewCompositionalLayout(section: section)
 
         return configutationLayout
@@ -86,9 +91,11 @@ class DeviceDetailViewController: UIViewController {
     lazy var segmentsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: commonCompositionalLayout).then {
         $0.register(SegmentCell.self, forCellWithReuseIdentifier: SegmentCell.identifier)
         $0.register(CollectionViewHeaderCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
+        $0.register(AddSegmentFooterCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "footer")
         $0.alwaysBounceHorizontal = false
         $0.alwaysBounceVertical = true
         $0.dataSource = nil
+        $0.delegate = self
         $0.isScrollEnabled = true
         $0.backgroundColor = .clear
         $0.allowsSelection = true
@@ -100,6 +107,7 @@ class DeviceDetailViewController: UIViewController {
         $0.alwaysBounceHorizontal = true
         $0.alwaysBounceVertical = false
         $0.dataSource = nil
+        $0.delegate = self
         $0.isScrollEnabled = true
         $0.backgroundColor = .clear
         $0.allowsSelection = true
@@ -115,6 +123,12 @@ class DeviceDetailViewController: UIViewController {
 
     static let buttonSize: CGFloat = 32
     private let backgroundBrightnessHeight: CGFloat = 42
+    private let addSegmentFooterTapGesture = UITapGestureRecognizer()
+    private let addSceneFooterTapGesture = UITapGestureRecognizer()
+    private let deleteSegmentSubject = PublishSubject<IndexPath>()
+    private let deleteSceneSubject = PublishSubject<IndexPath>()
+
+    //MARK: - Constructors
 
     init(viewModel: DeviceDetailViewModel) {
         self.viewModel = viewModel
@@ -133,7 +147,7 @@ extension DeviceDetailViewController {
         super.viewDidLoad()
         setupNavigationBar()
         setupViewsAndConstraints()
-        bindViewController()
+        bindViewModel()
     }
 }
 
@@ -179,13 +193,13 @@ extension DeviceDetailViewController {
             $0.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
             $0.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
             $0.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-            $0.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: backgroundBrightnessHeight).isActive = true
+            $0.bottomAnchor.constraint(equalTo: brightnessSlider.bottomAnchor, constant: 8).isActive = true
         }
 
         brightnessSlider.do {
+            $0.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
             $0.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
             $0.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor).isActive = true
-            $0.bottomAnchor.constraint(equalTo: backgroundNavigationView.bottomAnchor, constant: -12).isActive = true
         }
 
         segmentsCollectionView.do {
@@ -200,27 +214,39 @@ extension DeviceDetailViewController {
 // MARK: - Rx Binding
 
 extension DeviceDetailViewController {
-    private func bindViewController() {
+    private func bindViewModel() {
         let input = DeviceDetailViewModel.Input(loadTrigger: Driver.just(()),
                                                 moreTrigger: moreButton.rx.tap.asDriver(),
                                                 on: onSwitch.rx.value.changed.asDriver(),
                                                 brightness: brightnessSlider.rx.value.changed.asDriver(),
-                                                selectedSegment: segmentsCollectionView.rx.itemSelected.asDriver())
+                                                addSegmentTrigger: addSegmentFooterTapGesture.rx.event.asDriver().mapToVoid(),
+                                                selectedSegment: segmentsCollectionView.rx.itemSelected.asDriver(),
+                                                deleteSegment: deleteSegmentSubject.asDriverOnErrorJustComplete())
 
         let output = viewModel.transform(input: input, disposeBag: disposeBag)
 
-        let dataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, SegmentItemViewModel>> {  _, collectionView, indexPath, item in
+        let segmentsDataSource = RxCollectionViewSectionedAnimatedDataSource<AnimatableSectionModel<String, SegmentItemViewModel>> {  _, collectionView, indexPath, item in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SegmentCell.identifier, for: indexPath)
             if let cell = cell as? SegmentCell {
                 cell.bind(item)
             }
             return cell
-        } configureSupplementaryView: { uhh, collectionView, kind, indexPath in
-            let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath)
-            if let cell = cell as? CollectionViewHeaderCell {
-                cell.bind(text: uhh.sectionModels[indexPath.row].model)
+        } configureSupplementaryView: { data, collectionView, kind, indexPath in
+            switch kind {
+            case UICollectionView.elementKindSectionHeader:
+                let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath)
+                if let cell = cell as? CollectionViewHeaderCell {
+                    cell.bind(text: data.sectionModels[indexPath.row].model)
+                }
+                return cell
+            case UICollectionView.elementKindSectionFooter:
+                let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "footer", for: indexPath)
+                cell.removeGestureRecognizer(self.addSegmentFooterTapGesture)
+                cell.addGestureRecognizer(self.addSegmentFooterTapGesture)
+                    return cell
+            default:
+                return UICollectionReusableView()
             }
-            return cell
         }
 
         output.$deviceName
@@ -240,58 +266,65 @@ extension DeviceDetailViewController {
 
         output.$segments
             .asDriver()
-            .compactMap { [SectionModel<String, SegmentItemViewModel>(model: "Segments", items: $0)] }
-            .drive(segmentsCollectionView.rx.items(dataSource: dataSource))
+            .compactMap { [AnimatableSectionModel<String, SegmentItemViewModel>(model: "Segments", items: $0)] }
+            .drive(segmentsCollectionView.rx.items(dataSource: segmentsDataSource))
             .disposed(by: disposeBag)
 
         Driver.combineLatest(output.$segments.asDriver(), output.$on.asDriver())
-            .map {
-                (segments: $0.0.compactMap({ $0.segment }), on: $0.1)
-            }
+            .map { State(on: $0.1, segments: $0.0.map({ $0.segment })) }
+            .distinctUntilChanged()
             .drive(animationBinding)
             .disposed(by: disposeBag)
     }
 
-    var animationBinding: Binder<(segments: [Segment], on: Bool)> {
+    var animationBinding: Binder<State> {
         Binder(self) { vc, state in
-            var backgroundColors = [UIColor.clear.cgColor, UIColor.clear.cgColor]
-            var deviceNameTextColor = UIColor.label
-
-            if state.on {
-                var newColors = state.segments
-                    .filter { $0.on == true }
-                    .compactMap { $0.colorsTuple.first }
-                    .filter({ $0.reduce(0, +) != 0 })
-                    .map({ UIColor(red: $0[0], green: $0[1], blue: $0[2]).cgColor })
-
-                if newColors.count == 1 {
-                    newColors.append(newColors[0])
-                }
-
-                backgroundColors = newColors
-
-                if let first = newColors.first {
-                    let color = UIColor(cgColor: first)
-                    deviceNameTextColor = color.isLight ? .black : .white
-                }
-            }
+            let backgroundGradient = ColorGradientAnimation.nextBackgroundGradient(from: state.segments, on: state.on ?? false)
+            let deviceNameTextColor = ColorGradientAnimation.textColorForBackgroundGradient(from: state.segments, on: state.on ?? false)
 
             // Set colors to background navigation
 
             if let gradientLayer = vc.backgroundNavigationView.layer as? CAGradientLayer {
-                gradientLayer.changeGradients(backgroundColors, animate: true)
+                gradientLayer.gradientChangeAnimation(backgroundGradient.map { $0.cgColor }, animate: true)
             }
 
             // Animate colors on changed
 
             UIView.animate(withDuration: 0.2) {
-                vc.setNeedsStatusBarAppearanceUpdate()
-
                 vc.navigationItem.standardAppearance?.titleTextAttributes = [.foregroundColor: deviceNameTextColor]
                 vc.navigationItem.scrollEdgeAppearance?.largeTitleTextAttributes = [.foregroundColor: deviceNameTextColor]
                 vc.navigationItem.compactAppearance?.titleTextAttributes = [.foregroundColor: deviceNameTextColor]
                 vc.navigationController?.navigationBar.tintColor = deviceNameTextColor
+                vc.setNeedsStatusBarAppearanceUpdate()
             }
         }
+    }
+}
+
+extension DeviceDetailViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        if collectionView == segmentsCollectionView && collectionView.numberOfItems(inSection: 0) > 1 || collectionView == scenesCollectionView {
+            let context = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (action) -> UIMenu? in
+                let delete = UIAction(title: "Delete",
+                                      image: UIImage(systemName: "trash"),
+                                      identifier: nil,
+                                      discoverabilityTitle: nil,
+                                      attributes: .destructive,
+                                      state: .off) { [weak self] _ in
+                    guard let `self` = self else { return }
+                    let subject = collectionView == self.segmentsCollectionView ? self.deleteSegmentSubject : self.deleteSceneSubject
+                    subject.onNext(indexPath)
+                }
+                return UIMenu(title: "Options",
+                              image: nil,
+                              identifier: nil,
+                              options: .destructive,
+                              children: [delete])
+            }
+            return context
+        } else if collectionView == segmentsCollectionView {
+            return UIContextMenuConfiguration()
+        }
+        return nil
     }
 }

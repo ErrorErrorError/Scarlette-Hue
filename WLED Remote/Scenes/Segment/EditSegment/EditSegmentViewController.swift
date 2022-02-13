@@ -33,11 +33,18 @@ class EditSegmentViewController: UIViewController {
         $0.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
     }
 
-    let exitButton = UIButton(type: .close)
+    let exitButton = UIButton(type: .custom).then {
+        let configuration = UIImage.SymbolConfiguration.init(pointSize: 13, weight: .bold)
+        
+        let image = UIImage(systemName: "xmark", withConfiguration: configuration)
+        $0.setImage(image, for: .normal)
+        $0.backgroundColor = UIColor(red: 90/255, green: 90/255, blue: 90/255, alpha: 0.2)
+        $0.layer.cornerRadius = EditSegmentViewController.buttonSize / 2
+    }
 
     let moreButton = UIButton(type: .custom).then {
-        let smallConfiguration = UIImage.SymbolConfiguration(scale: .large)
-        let image = UIImage(systemName: "ellipsis", withConfiguration: smallConfiguration)
+        let largeConfiguration = UIImage.SymbolConfiguration(scale: .large)
+        let image = UIImage(systemName: "ellipsis", withConfiguration: largeConfiguration)
         $0.setImage(image, for: .normal)
         $0.backgroundColor = UIColor(red: 90/255, green: 90/255, blue: 90/255, alpha: 0.2)
         $0.layer.cornerRadius = EditSegmentViewController.buttonSize / 2
@@ -71,14 +78,6 @@ class EditSegmentViewController: UIViewController {
 
     let colorPickerBrightness = ChromaBrightnessSlider().then {
         $0.setContentHuggingPriority(.defaultHigh, for: .vertical)
-    }
-
-    lazy var colorPickerStackView = UIStackView().then {
-        $0.addArrangedSubview(colorPicker)
-        $0.addArrangedSubview(colorPickerBrightness)
-        $0.axis = .vertical
-        $0.spacing = 16
-        $0.distribution = .fill
     }
 
     let colorHandlerPrimary = ChromaColorHandle().then {
@@ -179,34 +178,39 @@ extension EditSegmentViewController {
 
 extension EditSegmentViewController {
     private func setupNavigationBar() {
-//        let switchBarButton = UIBarButtonItem(customView: onSwitch)
-//        let moreBarButton = UIBarButtonItem(customView: moreButton).then {
-//            $0.customView?.translatesAutoresizingMaskIntoConstraints = false
-//            $0.customView?.heightAnchor.constraint(equalToConstant: onSwitch.frame.height).isActive = true
-//            $0.customView?.widthAnchor.constraint(equalToConstant: onSwitch.frame.height).isActive = true
-//        }
-//
-//        navigationItem.rightBarButtonItems = [switchBarButton, moreBarButton]
-//
-//        let titleAppearance = UINavigationBarAppearance().then {
-//            $0.configureWithTransparentBackground()
-//            $0.shadowImage = nil
-//            $0.backgroundImage = nil
-//        }
-//
-//        navigationItem.do {
-//            $0.largeTitleDisplayMode = .never
-//            $0.standardAppearance = titleAppearance
-//            $0.compactAppearance = titleAppearance
-//            $0.scrollEdgeAppearance = titleAppearance
-//        }
+        let exitBarButton = UIBarButtonItem(customView: exitButton).then {
+            $0.customView?.translatesAutoresizingMaskIntoConstraints = false
+            $0.customView?.heightAnchor.constraint(equalToConstant: onSwitch.frame.height).isActive = true
+            $0.customView?.widthAnchor.constraint(equalToConstant: onSwitch.frame.height).isActive = true
+        }
+
+        let moreBarButton = UIBarButtonItem(customView: moreButton).then {
+            $0.customView?.translatesAutoresizingMaskIntoConstraints = false
+            $0.customView?.heightAnchor.constraint(equalToConstant: onSwitch.frame.height).isActive = true
+            $0.customView?.widthAnchor.constraint(equalToConstant: onSwitch.frame.height).isActive = true
+        }
+        let switchBarButton = UIBarButtonItem(customView: onSwitch)
+
+        navigationItem.rightBarButtonItems = [switchBarButton, moreBarButton]
+        navigationItem.leftBarButtonItem = exitBarButton
+
+        let titleAppearance = UINavigationBarAppearance().then {
+            $0.configureWithTransparentBackground()
+            $0.shadowImage = nil
+            $0.backgroundImage = nil
+        }
+
+        navigationItem.do {
+            $0.largeTitleDisplayMode = .never
+            $0.standardAppearance = titleAppearance
+            $0.compactAppearance = titleAppearance
+            $0.scrollEdgeAppearance = titleAppearance
+        }
     }
 
     private func setupViewsAndConstraints() {
         view.backgroundColor = .mainSystemBackground
         colorPicker.delegate = self
-
-//        backgroundNavigationView.addSubview(brightnessSlider)
 
         colorPicker.do {
             $0.addHandle(colorHandlerPrimary)
@@ -217,10 +221,8 @@ extension EditSegmentViewController {
 
         view.do {
             $0.addSubview(backgroundNavigationView)
-            $0.addSubview(exitButton)
-            $0.addSubview(onSwitch)
             $0.addSubview(brightnessSlider)
-            $0.addSubview(colorPickerStackView)
+            $0.addSubview(colorPicker)
             $0.addSubview(palettesStackView)
             $0.addSubview(effectsStackView)
             $0.subviews.forEach({ $0.translatesAutoresizingMaskIntoConstraints = false })
@@ -233,31 +235,21 @@ extension EditSegmentViewController {
             $0.bottomAnchor.constraint(equalTo: brightnessSlider.bottomAnchor, constant: 8).isActive = true
         }
 
-        exitButton.do {
-            $0.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor).isActive = true
-            $0.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
-        }
-
-        onSwitch.do {
-            $0.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor).isActive = true
-            $0.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor).isActive = true
-        }
-
         brightnessSlider.do {
-            $0.topAnchor.constraint(equalTo: onSwitch.bottomAnchor, constant: 8).isActive = true
+            $0.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
             $0.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
             $0.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor).isActive = true
         }
 
-        colorPickerStackView.do {
-            $0.topAnchor.constraint(equalTo: backgroundNavigationView.bottomAnchor, constant: 64).isActive = true
+        colorPicker.do {
+            $0.topAnchor.constraint(equalTo: backgroundNavigationView.bottomAnchor, constant: 8 + colorPicker.handleSize.height).isActive = true
             $0.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor).isActive = true
             $0.heightAnchor.constraint(equalTo: $0.widthAnchor).isActive = true
             $0.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor).isActive = true
         }
  
         palettesStackView.do {
-            $0.topAnchor.constraint(equalTo: colorPickerStackView.bottomAnchor, constant: 8).isActive = true
+            $0.topAnchor.constraint(equalTo: colorPicker.bottomAnchor, constant: 8).isActive = true
             $0.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
             $0.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         }
@@ -368,7 +360,6 @@ extension EditSegmentViewController {
             .disposed(by: disposeBag)
 
         output.$selectedPalette
-            .take(1)
             .asDriverOnErrorJustComplete()
             .drive(onNext: { [weak self] selected in
                 self?.palettesCollectionView.selectItem(at: selected, animated: true, scrollPosition: .centeredHorizontally)
@@ -376,7 +367,6 @@ extension EditSegmentViewController {
             .disposed(by: disposeBag)
 
         output.$selectedEffect
-            .take(1)
             .asDriverOnErrorJustComplete()
             .drive(onNext: { [weak self] selected in
                 self?.effectsCollectionView.selectItem(at: selected, animated: true, scrollPosition: .centeredHorizontally)
@@ -407,7 +397,7 @@ extension EditSegmentViewController {
     var animationBinding: Binder<(first: [Int], second: [Int], third: [Int], on: Bool)> {
         Binder(self) { vc, state in
             var colors = [UIColor.clear.cgColor, UIColor.clear.cgColor]
-            var deviceNameTextColor = UIColor.label
+            var textColor = UIColor.label
 
             if state.on {
                 // Set background color
@@ -427,25 +417,26 @@ extension EditSegmentViewController {
 
                 if let first = newColors.first {
                     let color = UIColor(cgColor: first)
-                    deviceNameTextColor = color.isLight ? .black : .white
+                    textColor = color.isLight ? .black : .white
                 }
             }
 
             // Set colors to background navigation
 
             if let gradientLayer = vc.backgroundNavigationView.layer as? CAGradientLayer {
-                gradientLayer.changeGradients(colors, animate: true)
+                gradientLayer.gradientChangeAnimation(colors, animate: true)
             }
 
             // Animate colors on changed
 
             UIView.animate(withDuration: 0.2) {
                 vc.setNeedsStatusBarAppearanceUpdate()
-
-                vc.navigationItem.standardAppearance?.titleTextAttributes = [.foregroundColor: deviceNameTextColor]
-                vc.navigationItem.scrollEdgeAppearance?.largeTitleTextAttributes = [.foregroundColor: deviceNameTextColor]
-                vc.navigationItem.compactAppearance?.titleTextAttributes = [.foregroundColor: deviceNameTextColor]
-                vc.navigationController?.navigationBar.tintColor = deviceNameTextColor
+                vc.navigationItem.standardAppearance?.titleTextAttributes = [.foregroundColor: textColor]
+                vc.navigationItem.scrollEdgeAppearance?.largeTitleTextAttributes = [.foregroundColor: textColor]
+                vc.navigationItem.compactAppearance?.titleTextAttributes = [.foregroundColor: textColor]
+                vc.navigationController?.navigationBar.tintColor = textColor
+                vc.moreButton.tintColor = textColor
+                vc.exitButton.tintColor = textColor
             }
         }
     }
@@ -479,7 +470,7 @@ extension EditSegmentViewController {
 
 extension EditSegmentViewController {
     internal func updateHandlerColor(_ handle: ChromaColorHandle, to color: UIColor) {
-        colorPicker.positionHandle(handle, with: color)
+        colorPicker.setColor(handle, with: color)
 
         if let label = handle.accessoryView as? UILabel {
             label.textColor = color.isLight ? .black : .white

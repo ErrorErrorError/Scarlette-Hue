@@ -67,7 +67,7 @@ extension Reactive where Base: NSManagedObjectContext {
             }
         }
     }
-    
+
     func sync<C: CoreDataRepresentable, P>(entity: C,
                 update: @escaping (P) -> Void) -> Observable<P> where C.CoreDataType == P {
         let predicate: NSPredicate = P.primaryAttribute == entity.id

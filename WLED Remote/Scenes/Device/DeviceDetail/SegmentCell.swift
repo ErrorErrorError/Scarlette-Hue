@@ -95,10 +95,9 @@ class SegmentCell: UICollectionViewCell {
         contentView.addSubview(animatableStackView)
 
         animatableStackView.do {
-            $0.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-            $0.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-            $0.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-            $0.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+            $0.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+            $0.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+            $0.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         }
     }
 
@@ -110,7 +109,7 @@ class SegmentCell: UICollectionViewCell {
 
     func bind(_ viewModel: SegmentItemViewModel) {
         let input = SegmentItemViewModel.Input(
-            loadTrigger: Driver.empty(),
+            loadTrigger: Driver.just(()),
             on: onSwitch.rx.value.changed.asDriver()
         )
 
@@ -129,11 +128,11 @@ class SegmentCell: UICollectionViewCell {
 
         Driver.combineLatest(output.$on.asDriver(), output.$color.asDriver())
             .map { (on: $0.0, color: $0.1) }
-            .drive(animateColor)
+            .drive(animateGradient)
             .disposed(by: dispose)
     }
 
-    private var animateColor: Binder<(on: Bool, color: [Int])> {
+    private var animateGradient: Binder<(on: Bool, color: [Int])> {
         Binder(self) { cell, state in
             var backgroundColors = [UIColor.clear.cgColor, UIColor.clear.cgColor]
             var tintColor = UIColor.label
@@ -158,7 +157,7 @@ class SegmentCell: UICollectionViewCell {
             // Set colors to background navigation
 
             if let gradientLayer = cell.layer as? CAGradientLayer {
-                gradientLayer.changeGradients(backgroundColors, animate: true)
+                gradientLayer.gradientChangeAnimation(backgroundColors, animate: true)
             }
 
             // Animate colors on changed
@@ -166,7 +165,6 @@ class SegmentCell: UICollectionViewCell {
             UIView.animate(withDuration: 0.2) {
                 cell.nameLabel.textColor = tintColor
             }
-
         }
     }
 

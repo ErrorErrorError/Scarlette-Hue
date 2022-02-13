@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RxDataSources
 import Then
 
 class DevicesViewController: UICollectionViewController {
@@ -16,22 +17,9 @@ class DevicesViewController: UICollectionViewController {
 
     let viewModel: DevicesViewModel
     private var disposeBag = DisposeBag()
-
-    // MARK: - Views
-
-    private let largeStateButtonSize: CGFloat = 30
-    private let smallStateButtonSize: CGFloat = 24
-    private let smallStateBottomMargin: CGFloat = 8
-
-    // MARK: - Lifecycle
-
-    private lazy var addNewDeviceButton = UIButton().then {
-        let config = UIImage.SymbolConfiguration(pointSize: largeStateButtonSize)
-        let image = UIImage(systemName: "plus.circle.fill",
-                            withConfiguration: config)
-        $0.setImage(image, for: .normal)
-        $0.tintColor = .label
-    }
+    private let deleteDeviceSubject = PublishSubject<IndexPath>()
+    private let editDeviceSubject = PublishSubject<IndexPath>()
+    private let addDeviceSubject = PublishSubject<Void>()
 
     // MARK: Constructors
 
@@ -56,16 +44,6 @@ class DevicesViewController: UICollectionViewController {
         bindViewModel()
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        addDeviceButtonAnimation(show: false)
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        addDeviceButtonAnimation(show: true)
-    }
-
     // MARK: Setups
 
     private func bindViewModel() {
@@ -76,21 +54,26 @@ class DevicesViewController: UICollectionViewController {
 
         let input = DevicesViewModel.Input(
             loadTrigger: viewWillAppear,
-            addDeviceTrigger: addNewDeviceButton.rx.tap.asDriver(),
-            selectedDevice: collectionView.rx.itemSelected.asDriver()
+            addDeviceTrigger: addDeviceSubject.asDriverOnErrorJustComplete(),
+            selectedDevice: collectionView.rx.itemSelected.asDriver(),
+            editDevice: editDeviceSubject.asDriverOnErrorJustComplete(),
+            deleteDevice: deleteDeviceSubject.asDriverOnErrorJustComplete()
         )
 
         let output = viewModel.transform(input: input, disposeBag: disposeBag)
 
+        let dataSource = RxCollectionViewSectionedAnimatedDataSource<AnimatableSectionModel<String, DeviceItemViewModel>> {  _, collectionView, indexPath, item in
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DeviceCell.identifier, for: indexPath)
+            if let cell = cell as? DeviceCell {
+                cell.bind(item)
+            }
+            return cell
+        }
+
         output.$deviceList
             .asDriver()
-            .drive(collectionView.rx.items) { (collectionView, index, element) in
-                collectionView.dequeueReusableCell(withReuseIdentifier: DeviceCell.identifier,
-                                                   for: IndexPath(row: index, section: 0))
-                    .then {
-                        ($0 as? DeviceCell)?.bind(element)
-                    }
-             }
+            .compactMap { [AnimatableSectionModel<String, DeviceItemViewModel>(model: "Devices", items: $0)] }
+            .drive(collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
 
@@ -110,14 +93,16 @@ class DevicesViewController: UICollectionViewController {
 
         guard let navigationBar = self.navigationController?.navigationBar else { return }
         navigationBar.prefersLargeTitles = true
-        navigationBar.addSubview(addNewDeviceButton)
 
-        addNewDeviceButton.do {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.rightAnchor.constraint(equalTo: navigationBar.layoutMarginsGuide.rightAnchor, constant: -8).isActive = true
-            $0.bottomAnchor.constraint(equalTo: navigationBar.layoutMarginsGuide.bottomAnchor).isActive = true
-            $0.widthAnchor.constraint(equalTo: $0.heightAnchor).isActive = true
-        }
+        let plusConfig = UIImage.SymbolConfiguration.init(pointSize: 20, weight: .semibold)
+        let plusSymbol = UIImage(systemName: "plus", withConfiguration: plusConfig)
+        let addButton = UIBarButtonItem(title: "", image: plusSymbol, primaryAction: UIAction(handler: { [weak self] _ in
+            self?.addDeviceSubject.onNext(())
+        }), menu: nil)
+
+        addButton.tintColor = .label
+
+        navigationItem.setRightBarButton(addButton, animated: true)
     }
 
     private func setupCollectionView() {
@@ -134,51 +119,6 @@ class DevicesViewController: UICollectionViewController {
     }
 }
 
-// MARK: - Add Device Button Custom
-
-extension DevicesViewController {
-    private func addDeviceButtonAnimation(show: Bool) {
-        UIView.animate(withDuration: 0.2) {
-            self.addNewDeviceButton.alpha = show ? 1.0 : 0.0
-        }
-    }
-
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard let height = navigationController?.navigationBar.frame.height else { return }
-        resizeButtonOnScroll(for: height)
-    }
-
-    private func resizeButtonOnScroll(for height: CGFloat) {
-        let smallNavHeight: CGFloat = 44.0
-        let largeNavHeight: CGFloat = 96.0
-        let coeff: CGFloat = {
-            let delta = height - smallNavHeight
-            let heightDifferenceBetweenStates = (largeNavHeight - smallNavHeight)
-            return delta / heightDifferenceBetweenStates
-        }()
-
-        let factor = smallStateButtonSize / largeStateButtonSize
-
-        let scale: CGFloat = {
-            let sizeAddendumFactor = coeff * (1.0 - factor)
-            return min(1.0, sizeAddendumFactor + factor)
-        }()
-
-        let sizeDiff = largeStateButtonSize * (1.0 - factor) // 8.0
-        let yTranslation: CGFloat = {
-            let maxYTranslation = navigationController!.navigationBar.layoutMargins.bottom - smallStateBottomMargin + sizeDiff
-            return max(0, min(maxYTranslation, (maxYTranslation - coeff * (6 + sizeDiff))))
-        }()
-
-        let xTranslation = max(0, sizeDiff - coeff * sizeDiff)
-
-        addNewDeviceButton.transform = CGAffineTransform.identity
-            .scaledBy(x: scale, y: scale)
-            .translatedBy(x: xTranslation, y: yTranslation)
-
-    }
-}
-
 // MARK: - Flow layout
 extension DevicesViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
@@ -187,5 +127,37 @@ extension DevicesViewController: UICollectionViewDelegateFlowLayout {
         guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return .zero }
         let availableWidth = collectionView.frame.width - collectionView.safeAreaInsets.left - collectionView.safeAreaInsets.right - flowLayout.sectionInset.left - flowLayout.sectionInset.right
         return CGSize(width: availableWidth, height: 80)
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        configureContextMenu(indexPath: indexPath)
+    }
+
+    func configureContextMenu(indexPath: IndexPath) -> UIContextMenuConfiguration {
+        let context = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (action) -> UIMenu? in
+
+            let edit = UIAction(title: "Edit",
+                                image: .init(systemName: "square.and.pencil"),
+                                identifier: nil,
+                                discoverabilityTitle: nil,
+                                state: .off) { [weak self] _ in
+                self?.editDeviceSubject.onNext(indexPath)
+            }
+
+            let delete = UIAction(title: "Delete",
+                                  image: UIImage(systemName: "trash"),
+                                  identifier: nil,
+                                  discoverabilityTitle: nil,
+                                  attributes: .destructive,
+                                  state: .off) { [weak self] _ in
+                self?.deleteDeviceSubject.onNext(indexPath)
+            }
+            return UIMenu(title: "Options",
+                          image: nil,
+                          identifier: nil,
+                          options: .displayInline,
+                          children: [edit,delete])
+        }
+        return context
     }
 }

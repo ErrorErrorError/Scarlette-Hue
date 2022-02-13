@@ -9,18 +9,13 @@ import Foundation
 import RxSwift
 import RxCocoa
 import Then
+import Differentiator
 
 struct DeviceItemViewModel {
     let device: Device
     let storeAPI: StoreAPI
     let heartbeatService: HeartbeatService
     let storeSubject = BehaviorRelay<Store?>(value: nil)
-
-    // Properties
-
-    var name: String {
-        return device.name
-    }
 }
 
 extension DeviceItemViewModel: ViewModelType {
@@ -30,34 +25,38 @@ extension DeviceItemViewModel: ViewModelType {
     }
 
     struct Output {
+        @Relay var name = ""
         @Relay var store: Store?
         @Relay var connection = HeartbeatConnection.ConnectionState.connecting
     }
 
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
-        let output = Output()
+        let output = Output(name: device.name)
 
         let heartbeat = heartbeatService.getHeartbeat(device: device)
 
-        let connectionState = heartbeat.connection
-            .distinctUntilChanged()
+        let updatedState = input.loadTrigger.flatMapLatest {
+            heartbeat.connection.asDriver()
+        }
+        .distinctUntilChanged()
 
         // Connection State
 
-        connectionState
-            .asDriver(onErrorJustReturn: .unknown)
+        updatedState
+            .asDriver()
             .drive(output.$connection)
             .disposed(by: disposeBag)
 
         // Fetch Store on connection = .connected
 
-        connectionState
-            .flatMapLatest { state -> Observable<Store?> in
+        updatedState
+            .flatMapLatest { state -> Driver<Store?> in
                 if state == .connected {
                     return self.storeAPI.fetchStore(for: self.device)
-                        .map { store -> Store? in store }
+                        .map { $0 }
+                        .asDriverOnErrorJustComplete()
                 } else {
-                    return Observable.just(nil)
+                    return Driver.just(nil)
                 }
             }
             .asDriver(onErrorJustReturn: nil)
@@ -88,5 +87,18 @@ extension DeviceItemViewModel: ViewModelType {
             .disposed(by: disposeBag)
 
         return output
+    }
+}
+
+extension DeviceItemViewModel: IdentifiableType, Equatable {
+    static func == (lhs: DeviceItemViewModel, rhs: DeviceItemViewModel) -> Bool {
+        lhs.device == rhs.device && lhs.storeSubject.value == rhs.storeSubject.value
+//        lhs.device == rhs.device
+    }
+
+    typealias Identity = UUID
+
+    var identity: UUID {
+        return device.id
     }
 }

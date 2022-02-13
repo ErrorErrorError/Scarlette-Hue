@@ -6,16 +6,10 @@
 //
 //
 
-import Foundation
 import CoreData
 
 
 extension WLEDDevice {
-
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<WLEDDevice> {
-        return NSFetchRequest<WLEDDevice>(entityName: "WLEDDevice")
-    }
-
     @NSManaged public var id: UUID
     @NSManaged public var ip: String
     @NSManaged public var name: String
@@ -23,6 +17,4 @@ extension WLEDDevice {
     @NSManaged public var created: Date
 }
 
-extension WLEDDevice : Identifiable {
-
-}
+extension WLEDDevice : Identifiable {}

@@ -11,7 +11,7 @@ import UIKit
 class CollectionViewHeaderCell: UICollectionReusableView {
     let label = UILabel().then {
         $0.numberOfLines = 0
-        $0.font = UIFont.boldSystemFont(ofSize: 12)
+        $0.font = UIFont.boldSystemFont(ofSize: 14)
         $0.tintColor = .darkGray
     }
 

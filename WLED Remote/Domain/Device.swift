@@ -16,7 +16,7 @@ public struct Device {
     public let ip: String
     public let port: Int
     public var created: Date?
-    
+
     public init(id: UUID = UUID(),
                 name: String,
                 ip: String,

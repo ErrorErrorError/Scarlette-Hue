@@ -12,16 +12,18 @@ import UIKit
 
 public enum EditSegmentDelegate {
     case updatedSegment(Segment)
+    case addSegment(Segment)
+    case deleteSegment(Segment)
 }
 
 public struct EditSegmentViewModel {
-    public let navigator: EditSegmentNavigator
-    public let deviceRepository: DevicesUseCaseProtocol
-    public let segmentAPI: SegmentAPI
-    public let device: Device
-    public var segment: Segment
-    public var store: Store
-    public let delegate: PublishSubject<EditSegmentDelegate>
+    let navigator: EditSegmentNavigator
+    let deviceRepository: DevicesUseCaseProtocol
+    let segmentAPI: SegmentAPI
+    let device: Device
+    var segment: Segment
+    var store: Store
+    let delegate: PublishSubject<EditSegmentDelegate>
 }
 
 extension EditSegmentViewModel: ViewModelType {
@@ -48,7 +50,7 @@ extension EditSegmentViewModel: ViewModelType {
     }
 
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
-        var output = Output(name: "Segment \(segment.id ?? -1)",
+        var output = Output(name: "Segment \(segment.id )",
                             on: segment.on ?? false,
                             brightness: Float(segment.brightness ?? 1),
                             colors: segment.colorsTuple,
@@ -92,7 +94,9 @@ extension EditSegmentViewModel: ViewModelType {
         )
         .do(onNext: { output.selectedEffect = $0 } )
 
-        let updateState = Driver.combineLatest(
+        // Update state with values
+
+        Driver.combineLatest(
             segmentId,
             updatedOn,
             updatedBrightness,
@@ -100,6 +104,7 @@ extension EditSegmentViewModel: ViewModelType {
             updatedSelectedPalette,
             updatedSelectedEffect
         )
+        .skip(1)
         .map { (id, on, brightness, colors, palette, effect) in
             Segment(
                 id: id,
@@ -113,10 +118,8 @@ extension EditSegmentViewModel: ViewModelType {
         .do(onNext: { newSegment in
             delegate.onNext(.updatedSegment(newSegment))
         })
-
-        updateState
-            .drive()
-            .disposed(by: disposeBag)
+        .drive()
+        .disposed(by: disposeBag)
 
         input.exitTrigger
             .do(onNext: navigator.toDeviceDetail)
@@ -124,9 +127,13 @@ extension EditSegmentViewModel: ViewModelType {
             .disposed(by: disposeBag)
 
         input.settingsTrigger
-            .do(onNext: navigator.toSegmentSettings)
-            .drive()
-            .disposed(by: disposeBag)
+                .do(onNext: { navigator.toSegmentSettings(delegate: delegate,
+                                                          device: device,
+                                                          info: store.info,
+                                                          segment: segment)
+                })
+                .drive()
+                .disposed(by: disposeBag)
 
         return output
     }

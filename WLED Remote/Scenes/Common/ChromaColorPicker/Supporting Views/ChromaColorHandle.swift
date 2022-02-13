@@ -96,7 +96,7 @@ public class ChromaColorHandle: UIView, ChromaControlStylable {
             removeDropShadow()
         }
     }
-    
+
     internal func makeHandlePath(frame: CGRect) -> CGPath {
         let path = UIBezierPath()
         path.move(to: CGPoint(x: frame.minX + 0.5 * frame.width, y: frame.minY + 1 * frame.height))
@@ -117,7 +117,7 @@ public class ChromaColorHandle: UIView, ChromaControlStylable {
         handleShape.strokeColor = borderColor.cgColor
         handleShape.lineWidth = borderWidth
     }
-    
+
     internal func layoutAccessoryViewIfNeeded() {
         if let accessoryLayer = accessoryView?.layer {
             let width = bounds.width - borderWidth * 2
@@ -129,7 +129,7 @@ public class ChromaColorHandle: UIView, ChromaControlStylable {
             accessoryLayer.masksToBounds = true
         }
     }
-    
+
     internal func addAccessoryView(_ view: UIView) {
         let accessoryLayer = view.layer
         handleShape.addSublayer(accessoryLayer)

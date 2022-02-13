@@ -6,16 +6,9 @@
 //
 
 import UIKit
+import ErrorErrorErrorUIKit
 import Then
 
-class ManuallyAddDeviceViewController: UIViewController {
+class ManuallyAddDeviceViewController: CardModalViewController<UIView> {
 
-    let titleLabel = UILabel().then {
-        $0.text = "Set WLED Information"
-        $0.font = UIFont.boldSystemFont(ofSize: 24)
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
 }

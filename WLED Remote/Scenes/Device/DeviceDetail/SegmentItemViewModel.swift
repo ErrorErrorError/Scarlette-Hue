@@ -9,6 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 import Then
+import Differentiator
 
 struct SegmentItemViewModel {
     let segment: Segment
@@ -28,7 +29,7 @@ extension SegmentItemViewModel: ViewModelType {
     }
 
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
-        var output = Output(id: segment.id ?? 0, on: segment.on ?? false, color: segment.colorsTuple.first)
+        var output = Output(id: segment.id, on: segment.on ?? false, color: segment.colorsTuple.first)
 
         let updateOn = Driver.merge(
             input.on,
@@ -37,6 +38,7 @@ extension SegmentItemViewModel: ViewModelType {
         .do(onNext: { output.on = $0 })
 
         updateOn
+            .skip(1)
             .map {
                 Segment(id: output.id, on: $0)
             }
@@ -47,4 +49,16 @@ extension SegmentItemViewModel: ViewModelType {
 
         return output
     }
+}
+
+extension SegmentItemViewModel: IdentifiableType, Equatable {
+    static func == (lhs: SegmentItemViewModel, rhs: SegmentItemViewModel) -> Bool {
+        lhs.identity == rhs.identity
+    }
+
+    var identity: Int {
+        return segment.id
+    }
+    
+    typealias Identity = Int
 }

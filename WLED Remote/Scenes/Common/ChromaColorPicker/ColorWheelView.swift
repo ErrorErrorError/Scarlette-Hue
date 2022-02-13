@@ -116,12 +116,12 @@ public class ColorWheelView: UIView {
     */
     public func pointIsInColorWheel(_ point: CGPoint) -> Bool {
         guard bounds.insetBy(dx: -1, dy: -1).contains(point) else { return false }
-        
+
         let distanceFromCenter: CGFloat = hypot(middlePoint.x - point.x, middlePoint.y - point.y)
         let pointExistsInRadius: Bool = distanceFromCenter <= (radius - layer.borderWidth)
         return pointExistsInRadius
     }
-    
+
     public func pointIsOnColorWheelEdge(_ point: CGPoint) -> Bool {
         let distanceToCenter = hypot(middlePoint.x - point.x, middlePoint.y - point.y)
         let isPointOnEdge = distanceToCenter >= radius - 1.0

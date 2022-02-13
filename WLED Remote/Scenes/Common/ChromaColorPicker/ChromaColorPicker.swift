@@ -66,7 +66,7 @@ public class ChromaColorPicker: UIControl, ChromaControlStylable {
         updateShadowIfNeeded()
 
         handles.forEach { handle in
-            positionHandle(handle, with: handle.color)
+            setColor(handle, with: handle.color)
         }
     }
     
@@ -90,7 +90,7 @@ public class ChromaColorPicker: UIControl, ChromaControlStylable {
         }
     }
 
-    public func positionHandle(_ handle: ChromaColorHandle, with color: UIColor) {
+    public func setColor(_ handle: ChromaColorHandle, with color: UIColor) {
         handle.color = color
         let location = colorWheelView.location(of: handle.color)
         handle.frame.size = handleSize
@@ -101,9 +101,9 @@ public class ChromaColorPicker: UIControl, ChromaControlStylable {
         slider.addTarget(self, action: #selector(brightnessSliderDidValueChange(_:)), for: .valueChanged)
         brightnessSlider = slider
     }
-    
+
     // MARK: - Control
-    
+
     public override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
         let location = touch.location(in: colorWheelView)
 
@@ -196,7 +196,7 @@ public class ChromaColorPicker: UIControl, ChromaControlStylable {
             removeDropShadow()
         }
     }
-    
+
     // MARK: Actions
 
     @objc

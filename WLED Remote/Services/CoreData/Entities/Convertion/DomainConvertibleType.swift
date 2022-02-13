@@ -9,13 +9,11 @@ protocol DomainConvertibleType {
     func asDomain() -> DomainType
 }
 
-
-
 protocol CoreDataRepresentable {
     associatedtype CoreDataType: Persistable
-    
+
     var id: UUID {get}
-    
+
     func update(entity: CoreDataType)
 }
 

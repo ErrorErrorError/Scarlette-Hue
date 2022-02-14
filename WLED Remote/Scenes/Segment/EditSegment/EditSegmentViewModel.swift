@@ -26,6 +26,18 @@ public struct EditSegmentViewModel {
 }
 
 extension EditSegmentViewModel: ViewModelType {
+    struct PalettesSection: Hashable {
+        typealias Palette = String
+        let sectionTitle = "Palettes"
+        var items: [Palette]
+    }
+
+    struct EffectsSection: Hashable {
+        typealias Effect = String
+        let sectionTitle = "Effects"
+        var items: [Effect]
+    }
+
     struct Input {
         let loadTrigger: Driver<Void>
         let exitTrigger: Driver<Void>
@@ -42,10 +54,10 @@ extension EditSegmentViewModel: ViewModelType {
         @Relay var on = false
         @Relay var brightness: Float = 0.0
         @Relay var colors: (first: [Int], second: [Int], third: [Int])
-        @Relay var palettes: [PaletteItemViewModel] = []
-        @Relay var effects: [EffectItemViewModel] = []
+        @Relay var palettes: PalettesSection
+        @Relay var effects: EffectsSection
         @Relay var selectedPalette = IndexPath(row: 0, section: 0)
-        @Relay var selectedEffect = IndexPath(row: 0, section: 0)
+        @Relay var selectedEffect = IndexPath(row: 0, section: 1)
         @Relay var settings: SegmentSettings
     }
 
@@ -54,10 +66,10 @@ extension EditSegmentViewModel: ViewModelType {
                             on: segment.on ?? false,
                             brightness: Float(segment.brightness ?? 1),
                             colors: segment.colorsTuple,
-                            palettes: store.palettes.compactMap { PaletteItemViewModel(title: $0) },
-                            effects: store.effects.compactMap { EffectItemViewModel(title: $0) },
+                            palettes: PalettesSection(items: store.palettes),
+                            effects: EffectsSection(items: store.effects),
                             selectedPalette: IndexPath(row: segment.palette ?? -1, section: 0),
-                            selectedEffect: IndexPath(row: segment.effect ?? -1, section: 0),
+                            selectedEffect: IndexPath(row: segment.effect ?? -1, section: 1),
                             settings: .init(from: segment)
         )
 
@@ -85,12 +97,14 @@ extension EditSegmentViewModel: ViewModelType {
             input.selectedPalette,
             input.loadTrigger.map { output.selectedPalette }
         )
+        .filter({ $0.section == 0 })
         .do(onNext: { output.selectedPalette = $0 } )
 
         let updatedSelectedEffect = Driver.merge(
             input.selectedEffect,
             input.loadTrigger.map { output.selectedEffect }
         )
+        .filter({ $0.section == 1 })
         .do(onNext: { output.selectedEffect = $0 } )
 
 

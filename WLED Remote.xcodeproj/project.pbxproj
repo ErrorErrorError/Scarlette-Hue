@@ -122,6 +122,7 @@
 		13C8A376278ADCA700875776 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 13C8A375278ADCA700875776 /* Alamofire */; };
 		13C8A37A278ADD2D00875776 /* RxAlamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 13C8A379278ADD2D00875776 /* RxAlamofire */; };
 		13D3413F278C1410008D4762 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 13D3413E278C1410008D4762 /* Then */; };
+		13E33D0E27B9C92E0072E767 /* CommonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E33D0D27B9C92E0072E767 /* CommonCell.swift */; };
 		13E930F1265867F500C1EEF6 /* Single+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E930F0265867F500C1EEF6 /* Single+Ext.swift */; };
 		13E930F52658866D00C1EEF6 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E930F42658866D00C1EEF6 /* Network.swift */; };
 		13EA1B70278A7F2100EE4DAC /* HeartbeatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EA1B6F278A7F2100EE4DAC /* HeartbeatService.swift */; };
@@ -267,6 +268,7 @@
 		13BF24BE278D5C7500AD74A9 /* Encodable+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+JSON.swift"; sourceTree = "<group>"; };
 		13C1B7992792156D002CE7C1 /* EffectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectCell.swift; sourceTree = "<group>"; };
 		13C1B79B2792158C002CE7C1 /* EffectItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectItemViewModel.swift; sourceTree = "<group>"; };
+		13E33D0D27B9C92E0072E767 /* CommonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonCell.swift; sourceTree = "<group>"; };
 		13E930F0265867F500C1EEF6 /* Single+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Single+Ext.swift"; sourceTree = "<group>"; };
 		13E930F42658866D00C1EEF6 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		13EA1B6F278A7F2100EE4DAC /* HeartbeatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartbeatService.swift; sourceTree = "<group>"; };
@@ -401,6 +403,7 @@
 				13B9D7162660EABE009BD4DD /* PaletteCell.swift */,
 				13C1B7992792156D002CE7C1 /* EffectCell.swift */,
 				13C1B79B2792158C002CE7C1 /* EffectItemViewModel.swift */,
+				13E33D0D27B9C92E0072E767 /* CommonCell.swift */,
 			);
 			path = EditSegment;
 			sourceTree = "<group>";
@@ -910,6 +913,7 @@
 				130CEFCA264DBB9900BECFDF /* DeviceCell.swift in Sources */,
 				13512FE82658B1DF00C4040F /* WLEDDevice+CoreDataClass.swift in Sources */,
 				138AAD65278F62A800CB4FC3 /* SliderTrackView.swift in Sources */,
+				13E33D0E27B9C92E0072E767 /* CommonCell.swift in Sources */,
 				13E930F52658866D00C1EEF6 /* Network.swift in Sources */,
 				13AC4872278C097300375C1A /* Relay.swift in Sources */,
 				138536022797F63A00AB9915 /* SegmentSettingsNavigator.swift in Sources */,

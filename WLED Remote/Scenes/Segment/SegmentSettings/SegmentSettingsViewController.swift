@@ -119,7 +119,7 @@ class SegmentSettingsViewController: CardModalViewController<UITableView> {
             mirror: mirrorSwitch.rx.value.changed.asDriver()
         )
 
-        let output = viewModel.transform(input: input, disposeBag: disposeBag)
+        let output = viewModel.transform(input, disposeBag: disposeBag)
 
         output.$start
             .asDriver()

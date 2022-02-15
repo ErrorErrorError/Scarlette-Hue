@@ -25,7 +25,7 @@ public struct EditSegmentViewModel {
     let delegate: PublishSubject<EditSegmentDelegate>
 }
 
-extension EditSegmentViewModel: ViewModelType {
+extension EditSegmentViewModel: ViewModel {
     struct PalettesSection: Hashable {
         typealias Palette = String
         let sectionTitle = "Palettes"
@@ -61,7 +61,7 @@ extension EditSegmentViewModel: ViewModelType {
         @Relay var settings: SegmentSettings
     }
 
-    func transform(input: Input, disposeBag: DisposeBag) -> Output {
+    func transform(_ input: Input, disposeBag: DisposeBag) -> Output {
         var output = Output(name: "Segment \(segment.id )",
                             on: segment.on ?? false,
                             brightness: Float(segment.brightness ?? 1),

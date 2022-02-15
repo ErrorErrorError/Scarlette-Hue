@@ -120,7 +120,7 @@ class AddSegmentViewController: CardModalViewController<UIView> {
             stop: stopLEDsTextField.rx.text.orEmpty.changed.asDriver()
         )
 
-        let output = viewModel.transform(input: input, disposeBag: disposeBag)
+        let output = viewModel.transform(input, disposeBag: disposeBag)
 
         output.$start
             .asDriver()

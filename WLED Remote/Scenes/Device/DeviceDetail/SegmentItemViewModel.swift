@@ -16,7 +16,7 @@ struct SegmentItemViewModel {
     let delegate: PublishSubject<EditSegmentDelegate>
 }
 
-extension SegmentItemViewModel: ViewModelType {
+extension SegmentItemViewModel: ViewModel {
     struct Input {
         let loadTrigger: Driver<()>
         let on: Driver<Bool>
@@ -28,7 +28,7 @@ extension SegmentItemViewModel: ViewModelType {
         @Relay var color: [Int]
     }
 
-    func transform(input: Input, disposeBag: DisposeBag) -> Output {
+    func transform(_ input: Input, disposeBag: DisposeBag) -> Output {
         var output = Output(id: segment.id, on: segment.on ?? false, color: segment.colorsTuple.first)
 
         let updateOn = Driver.merge(

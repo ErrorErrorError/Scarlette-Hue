@@ -15,7 +15,6 @@
 		130CEFCC264DCA9300BECFDF /* BrightnessSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130CEFCB264DCA9300BECFDF /* BrightnessSlider.swift */; };
 		131C4E3E27B9050F00EBAFC8 /* SegmentSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131C4E3D27B9050F00EBAFC8 /* SegmentSettings.swift */; };
 		13209477264C9F1F007049D7 /* DevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13209476264C9F1F007049D7 /* DevicesViewController.swift */; };
-		13233CA0265726F2005B1270 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13233C9F265726F2005B1270 /* Application.swift */; };
 		13233CA226572E71005B1270 /* DevicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13233CA126572E71005B1270 /* DevicesViewModel.swift */; };
 		13233CA426572F06005B1270 /* DevicesNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13233CA326572F06005B1270 /* DevicesNavigator.swift */; };
 		13233CA6265733C6005B1270 /* JSON+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1380FFC52654AAEA00FC692E /* JSON+Utils.swift */; };
@@ -45,6 +44,12 @@
 		1329986B279175AC00FF8C6C /* DeviceDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1329986A279175AC00FF8C6C /* DeviceDetailViewModel.swift */; };
 		1329986D2791778200FF8C6C /* SegmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1329986C2791778200FF8C6C /* SegmentCell.swift */; };
 		1329986F279177BC00FF8C6C /* SegmentItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1329986E279177BC00FF8C6C /* SegmentItemViewModel.swift */; };
+		132E49AC27BC4E9100912583 /* Assembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132E49AB27BC4E9100912583 /* Assembler.swift */; };
+		132E49AE27BC4ED800912583 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132E49AD27BC4ED800912583 /* Bindable.swift */; };
+		132E49B427BC4F1800912583 /* AppAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132E49AF27BC4F1800912583 /* AppAssembler.swift */; };
+		132E49B527BC4F1800912583 /* AppNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132E49B027BC4F1800912583 /* AppNavigator.swift */; };
+		132E49B627BC4F1800912583 /* AppUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132E49B127BC4F1800912583 /* AppUseCase.swift */; };
+		132E49B827BC4F1800912583 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132E49B327BC4F1800912583 /* AppViewModel.swift */; };
 		134925C827915746002B5A95 /* EditSegmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134925C727915746002B5A95 /* EditSegmentViewController.swift */; };
 		134925CA279157AE002B5A95 /* EditSegmentNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134925C9279157AE002B5A95 /* EditSegmentNavigator.swift */; };
 		134925CD279157FD002B5A95 /* EditSegmentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134925CC279157FD002B5A95 /* EditSegmentViewModel.swift */; };
@@ -53,7 +58,7 @@
 		13512FE92659050F00C4040F /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 135CFDBD2656396600D05757 /* Model.xcdatamodeld */; };
 		1356002A2658362C00B16B59 /* ConfigureDeviceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135600292658362C00B16B59 /* ConfigureDeviceViewModel.swift */; };
 		1356002C2658363B00B16B59 /* ConfigureDeviceNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1356002B2658363B00B16B59 /* ConfigureDeviceNavigator.swift */; };
-		135704BC26562A6600B74344 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135704BB26562A6600B74344 /* ViewModelType.swift */; };
+		135704BC26562A6600B74344 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135704BB26562A6600B74344 /* ViewModel.swift */; };
 		13577F4726576E410074329C /* DiscoverDeviceNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13577F4626576E410074329C /* DiscoverDeviceNavigator.swift */; };
 		13577F4926576E670074329C /* DiscoverDeviceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13577F4826576E670074329C /* DiscoverDeviceViewModel.swift */; };
 		1357CD192653A85F009731D6 /* UIColor+Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1357CD182653A85F009731D6 /* UIColor+Int.swift */; };
@@ -170,7 +175,6 @@
 		13233C992656E472005B1270 /* Persistable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistable.swift; sourceTree = "<group>"; };
 		13233C9A2656E472005B1270 /* DomainConvertibleType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainConvertibleType.swift; sourceTree = "<group>"; };
 		13233C9D2656FFB2005B1270 /* DevicesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesUseCase.swift; sourceTree = "<group>"; };
-		13233C9F265726F2005B1270 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		13233CA126572E71005B1270 /* DevicesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesViewModel.swift; sourceTree = "<group>"; };
 		13233CA326572F06005B1270 /* DevicesNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesNavigator.swift; sourceTree = "<group>"; };
 		132853B02652EDFF006F3692 /* WLEDDevice+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WLEDDevice+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -180,6 +184,12 @@
 		1329986A279175AC00FF8C6C /* DeviceDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailViewModel.swift; sourceTree = "<group>"; };
 		1329986C2791778200FF8C6C /* SegmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentCell.swift; sourceTree = "<group>"; };
 		1329986E279177BC00FF8C6C /* SegmentItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentItemViewModel.swift; sourceTree = "<group>"; };
+		132E49AB27BC4E9100912583 /* Assembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assembler.swift; sourceTree = "<group>"; };
+		132E49AD27BC4ED800912583 /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
+		132E49AF27BC4F1800912583 /* AppAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAssembler.swift; sourceTree = "<group>"; };
+		132E49B027BC4F1800912583 /* AppNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNavigator.swift; sourceTree = "<group>"; };
+		132E49B127BC4F1800912583 /* AppUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUseCase.swift; sourceTree = "<group>"; };
+		132E49B327BC4F1800912583 /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 		134925C727915746002B5A95 /* EditSegmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSegmentViewController.swift; sourceTree = "<group>"; };
 		134925C9279157AE002B5A95 /* EditSegmentNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSegmentNavigator.swift; sourceTree = "<group>"; };
 		134925CC279157FD002B5A95 /* EditSegmentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSegmentViewModel.swift; sourceTree = "<group>"; };
@@ -191,7 +201,7 @@
 		13512FE72658B1DF00C4040F /* WLEDDevice+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WLEDDevice+CoreDataClass.swift"; sourceTree = "<group>"; };
 		135600292658362C00B16B59 /* ConfigureDeviceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureDeviceViewModel.swift; sourceTree = "<group>"; };
 		1356002B2658363B00B16B59 /* ConfigureDeviceNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureDeviceNavigator.swift; sourceTree = "<group>"; };
-		135704BB26562A6600B74344 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		135704BB26562A6600B74344 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		13577F4626576E410074329C /* DiscoverDeviceNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverDeviceNavigator.swift; sourceTree = "<group>"; };
 		13577F4826576E670074329C /* DiscoverDeviceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverDeviceViewModel.swift; sourceTree = "<group>"; };
 		1357CD182653A85F009731D6 /* UIColor+Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Int.swift"; sourceTree = "<group>"; };
@@ -489,7 +499,10 @@
 		135704BA2656298D00B74344 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				13233C9F265726F2005B1270 /* Application.swift */,
+				132E49AF27BC4F1800912583 /* AppAssembler.swift */,
+				132E49B027BC4F1800912583 /* AppNavigator.swift */,
+				132E49B127BC4F1800912583 /* AppUseCase.swift */,
+				132E49B327BC4F1800912583 /* AppViewModel.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -531,6 +544,7 @@
 				13C3A2CC278A69A100C97A60 /* Resources */,
 				135EE150264731A00027909B /* AppDelegate.swift */,
 				135EE152264731A00027909B /* SceneDelegate.swift */,
+				132E49AB27BC4E9100912583 /* Assembler.swift */,
 				135EE161264731A10027909B /* Info.plist */,
 			);
 			path = "WLED Remote";
@@ -655,11 +669,12 @@
 			isa = PBXGroup;
 			children = (
 				13C3A2C9278A680A00C97A60 /* Extensions */,
-				135704BB26562A6600B74344 /* ViewModelType.swift */,
+				13AC4871278C097300375C1A /* Relay.swift */,
+				135704BB26562A6600B74344 /* ViewModel.swift */,
 				13233C892656E23F005B1270 /* UseCaseProvider.swift */,
 				136EE153265A360A0015C333 /* ActivityIndicator.swift */,
-				13AC4871278C097300375C1A /* Relay.swift */,
 				134A2B2A27963B0100CF45C8 /* ColorGradientAnimation.swift */,
+				132E49AD27BC4ED800912583 /* Bindable.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -869,7 +884,6 @@
 				13577F4726576E410074329C /* DiscoverDeviceNavigator.swift in Sources */,
 				13233CB42657340B005B1270 /* DevicesUseCase.swift in Sources */,
 				138AAD63278F62A800CB4FC3 /* UIColor+Brightness.swift in Sources */,
-				13233CA0265726F2005B1270 /* Application.swift in Sources */,
 				13EA1B74278A83E900EE4DAC /* HeartbeatConnection.swift in Sources */,
 				136EE154265A360A0015C333 /* ActivityIndicator.swift in Sources */,
 				130C3ABF265795F000C7425D /* NetService+Rx.swift in Sources */,
@@ -889,7 +903,7 @@
 				13233CB22657340B005B1270 /* UseCaseProvider.swift in Sources */,
 				138535FE2797ED3500AB9915 /* SegmentSettingsViewController.swift in Sources */,
 				13233CA426572F06005B1270 /* DevicesNavigator.swift in Sources */,
-				135704BC26562A6600B74344 /* ViewModelType.swift in Sources */,
+				135704BC26562A6600B74344 /* ViewModel.swift in Sources */,
 				13233CAC265733FB005B1270 /* Observable+Ext.swift in Sources */,
 				13233CA8265733F6005B1270 /* FetchedResultsControllerEntityObserver.swift in Sources */,
 				13233CA7265733F0005B1270 /* Repository.swift in Sources */,
@@ -910,8 +924,10 @@
 				136841CE265CC51000C828BF /* Store.swift in Sources */,
 				138AAD61278F62A800CB4FC3 /* UIView+Utils.swift in Sources */,
 				1356002C2658363B00B16B59 /* ConfigureDeviceNavigator.swift in Sources */,
+				132E49B527BC4F1800912583 /* AppNavigator.swift in Sources */,
 				138AAD66278F62A900CB4FC3 /* ChromaColorHandle.swift in Sources */,
 				13F72AAB265E3DDB0013FE16 /* UIColor+Custom.swift in Sources */,
+				132E49AC27BC4E9100912583 /* Assembler.swift in Sources */,
 				13912EB62651D6F200BD5095 /* ConfigureDeviceViewController.swift in Sources */,
 				138AAD60278F62A800CB4FC3 /* ChromaBrightnessSlider.swift in Sources */,
 				136EE14F2659B6500015C333 /* InfoAPI.swift in Sources */,
@@ -925,6 +941,7 @@
 				139F9FC92650C09D0056FC57 /* DeviceInfoCollectionViewCell.swift in Sources */,
 				130C3AC62657A7BC00C7425D /* DeviceInfoItemViewModel.swift in Sources */,
 				13233CBF26573426005B1270 /* Segment.swift in Sources */,
+				132E49B827BC4F1800912583 /* AppViewModel.swift in Sources */,
 				138AAD5D278F62A800CB4FC3 /* ChromaColorPicker.swift in Sources */,
 				13935DBC2793539D005BD65A /* AddSegmentNavigator.swift in Sources */,
 				13233CB32657340B005B1270 /* DevicesUseCaseProtocol.swift in Sources */,
@@ -932,9 +949,11 @@
 				139F9FBF26507F050056FC57 /* DiscoverDeviceViewController.swift in Sources */,
 				13233CA9265733F6005B1270 /* NSManagedObjectContext+Rx.swift in Sources */,
 				135EE151264731A00027909B /* AppDelegate.swift in Sources */,
+				132E49AE27BC4ED800912583 /* Bindable.swift in Sources */,
 				136841D4265CDEF400C828BF /* Leds.swift in Sources */,
 				135EE153264731A00027909B /* SceneDelegate.swift in Sources */,
 				13233CB126573403005B1270 /* Persistable.swift in Sources */,
+				132E49B427BC4F1800912583 /* AppAssembler.swift in Sources */,
 				138AAD5E278F62A800CB4FC3 /* ColorWheelView.swift in Sources */,
 				138AAD67278F62A900CB4FC3 /* SliderHandleView.swift in Sources */,
 				134A2B2B27963B0100CF45C8 /* ColorGradientAnimation.swift in Sources */,
@@ -949,6 +968,7 @@
 				13BBEF36266302C400685C42 /* SettingsViewModel.swift in Sources */,
 				138AAD64278F62A800CB4FC3 /* UIView+DropShadow.swift in Sources */,
 				138AAD62278F62A800CB4FC3 /* UIColor+Utils.swift in Sources */,
+				132E49B627BC4F1800912583 /* AppUseCase.swift in Sources */,
 				131C4E3E27B9050F00EBAFC8 /* SegmentSettings.swift in Sources */,
 				1357CD192653A85F009731D6 /* UIColor+Int.swift in Sources */,
 				136841D2265CDEBA00C828BF /* Wifi.swift in Sources */,

@@ -19,7 +19,7 @@ public struct DeviceDetailViewModel {
     let store: Store
 }
 
-extension DeviceDetailViewModel: ViewModelType {
+extension DeviceDetailViewModel: ViewModel {
     struct Input {
         let loadTrigger: Driver<Void>
         let moreTrigger: Driver<Void>
@@ -37,7 +37,7 @@ extension DeviceDetailViewModel: ViewModelType {
         @Relay var segments = [SegmentItemViewModel]()
     }
 
-    func transform(input: Input, disposeBag: DisposeBag) -> Output {
+    func transform(_ input: Input, disposeBag: DisposeBag) -> Output {
         let output = Output(deviceName: device.name)
 
         // MARK: Latest Store Data

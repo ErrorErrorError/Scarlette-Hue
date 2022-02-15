@@ -16,7 +16,7 @@ struct DevicesViewModel {
     let navigator: DevicesNavigator
 }
 
-extension DevicesViewModel: ViewModelType {
+extension DevicesViewModel: ViewModel {
     struct Input {
         let loadTrigger: Driver<Void>
         let addDeviceTrigger: Driver<Void>
@@ -29,7 +29,7 @@ extension DevicesViewModel: ViewModelType {
         @Relay var deviceList = [DeviceItemViewModel]()
     }
 
-    func transform(input: Input, disposeBag: DisposeBag) -> Output {
+    func transform(_ input: Input, disposeBag: DisposeBag) -> Output {
         var output = Output()
 
         input.loadTrigger

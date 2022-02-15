@@ -262,7 +262,7 @@ extension EditSegmentViewController {
                                                selectedEffect: containerCollectionView.rx.itemSelected.asDriver()
         )
 
-        let output = viewModel.transform(input: input, disposeBag: disposeBag)
+        let output = viewModel.transform(input, disposeBag: disposeBag)
 
         let commonDataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<AnyHashable, String>> { _, collectionView, indexPath, item in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CommonCell.identifier, for: indexPath)

@@ -8,7 +8,7 @@
 import Foundation
 import RxSwift
 
-class SettingsViewModel: ViewModelType {
+class SettingsViewModel: ViewModel {
     let devicesRepository: DevicesUseCaseProtocol
     let navigator: SettingsNavigator
 
@@ -27,7 +27,7 @@ extension SettingsViewModel {
 
     }
 
-    func transform(input: Input, disposeBag: DisposeBag) -> Output {
+    func transform(_ input: Input, disposeBag: DisposeBag) -> Output {
         return Output()
     }
 }

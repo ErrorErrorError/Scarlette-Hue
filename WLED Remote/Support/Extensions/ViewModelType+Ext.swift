@@ -1,5 +1,5 @@
 //
-//  ViewModelType+Ext.swift
+//  ViewModel+Ext.swift
 //  WLED Hue
 //
 //  Created by Erik Bautista on 1/10/22.
@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-extension ViewModelType {
+extension ViewModel {
     public func select<T>(trigger: Driver<IndexPath>, items: Driver<[T]>) -> Driver<T> {
         return trigger
             .withLatestFrom(items) {

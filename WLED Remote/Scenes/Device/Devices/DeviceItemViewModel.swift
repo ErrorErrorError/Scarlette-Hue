@@ -18,7 +18,7 @@ struct DeviceItemViewModel {
     let storeSubject = BehaviorRelay<Store?>(value: nil)
 }
 
-extension DeviceItemViewModel: ViewModelType {
+extension DeviceItemViewModel: ViewModel {
     struct Input {
         let loadTrigger: Driver<Void>
         let on: Driver<Bool>
@@ -30,7 +30,7 @@ extension DeviceItemViewModel: ViewModelType {
         @Relay var connection = HeartbeatConnection.ConnectionState.connecting
     }
 
-    func transform(input: Input, disposeBag: DisposeBag) -> Output {
+    func transform(_ input: Input, disposeBag: DisposeBag) -> Output {
         let output = Output(name: device.name)
 
         let heartbeat = heartbeatService.getHeartbeat(device: device)

@@ -98,7 +98,7 @@ class ConfigureDeviceViewController: CardModalViewController<UIView> {
             name: nameTextField.rx.text.orEmpty.changed.asDriver()
         )
 
-        let output = viewModel.transform(input: input, disposeBag: disposeBag)
+        let output = viewModel.transform(input, disposeBag: disposeBag)
 
         output.$canSave
             .asDriver()

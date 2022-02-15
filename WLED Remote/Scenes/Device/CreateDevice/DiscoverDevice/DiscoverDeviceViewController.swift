@@ -95,7 +95,7 @@ extension DiscoverDeviceViewController {
                                                   dismissTrigger: exitButton.rx.tap.asDriver(),
                                                   selectedDevice: collectionView.rx.itemSelected.asDriver())
 
-        let output = viewModel.transform(input: input, disposeBag: disposeBag)
+        let output = viewModel.transform(input, disposeBag: disposeBag)
 
         let dataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, DeviceInfoItemViewModel>>(configureCell: { _, collectionView, indexPath, item in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DeviceInfoCollectionViewCell.identifier, for: indexPath)

@@ -16,7 +16,7 @@ struct AddSegmentViewModel {
     let delegate: PublishSubject<EditSegmentDelegate>
 }
 
-extension AddSegmentViewModel: ViewModelType {
+extension AddSegmentViewModel: ViewModel {
     struct Input {
         let loadTrigger: Driver<Void>
         let dismissTrigger: Driver<Void>
@@ -31,7 +31,7 @@ extension AddSegmentViewModel: ViewModelType {
         @Relay var isValid = false
     }
 
-    func transform(input: Input, disposeBag: DisposeBag) -> Output {
+    func transform(_ input: Input, disposeBag: DisposeBag) -> Output {
         var output = Output(start: "0", stop: String(store.info.leds?.count ?? 0))
 
         let start = Driver.merge(

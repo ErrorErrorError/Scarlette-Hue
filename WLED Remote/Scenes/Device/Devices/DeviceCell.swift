@@ -131,7 +131,7 @@ class DeviceCell: UICollectionViewCell {
             on: onSwitch.rx.isOn.changed.asDriver()
         )
 
-        let output = viewModel.transform(input: input, disposeBag: dispose)
+        let output = viewModel.transform(input, disposeBag: dispose)
 
         output.$name
             .asDriver()

@@ -16,7 +16,7 @@ struct ConfigureDeviceViewModel {
     let device: Device
 }
 
-extension ConfigureDeviceViewModel: ViewModelType {
+extension ConfigureDeviceViewModel: ViewModel {
     struct Input {
         let loadTrigger: Driver<Void>
         let saveTrigger: Driver<Void>
@@ -29,7 +29,7 @@ extension ConfigureDeviceViewModel: ViewModelType {
         @Relay var name: String
     }
 
-    func transform(input: Input, disposeBag: DisposeBag) -> Output {
+    func transform(_ input: Input, disposeBag: DisposeBag) -> Output {
         var output = Output(name: device.name)
 
         let name = Driver.merge(

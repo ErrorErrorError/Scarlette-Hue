@@ -16,7 +16,7 @@ struct DiscoverDeviceViewModel {
     let infoAPIService: InfoAPI
 }
 
-extension DiscoverDeviceViewModel: ViewModelType {
+extension DiscoverDeviceViewModel: ViewModel {
     struct Input {
         let scanDevicesTrigger: Driver<Void>
         let manualDeviceTrigger: Driver<Void>
@@ -28,7 +28,7 @@ extension DiscoverDeviceViewModel: ViewModelType {
         @Relay var devices = [DeviceInfoItemViewModel]()
     }
 
-    func transform(input: Input, disposeBag: DisposeBag) -> Output {
+    func transform(_ input: Input, disposeBag: DisposeBag) -> Output {
         let output = Output()
 
         let devices = devicesRepository.devices()

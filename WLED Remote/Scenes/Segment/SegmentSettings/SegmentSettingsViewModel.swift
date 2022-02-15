@@ -21,7 +21,7 @@ struct SegmentSettingsViewModel {
     let delegate: PublishSubject<SegmentSettingsDelegate>
 }
 
-extension SegmentSettingsViewModel: ViewModelType {
+extension SegmentSettingsViewModel: ViewModel {
     struct Input {
         let loadTrigger: Driver<Void>
         let dismissTrigger: Driver<Void>
@@ -44,7 +44,7 @@ extension SegmentSettingsViewModel: ViewModelType {
         @Relay var isValid = false
     }
 
-    func transform(input: Input, disposeBag: DisposeBag) -> Output {
+    func transform(_ input: Input, disposeBag: DisposeBag) -> Output {
         var output = Output(start: String(segmentSettings.start ?? 0),
                             stop: String(segmentSettings.stop ?? 0),
                             grouping: String(segmentSettings.group ?? 0),

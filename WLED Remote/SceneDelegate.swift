@@ -6,18 +6,27 @@
 //
 
 import UIKit
+import RxSwift
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    var assembler: Assembler = DefaultAssembler()
+    var disposeBag = DisposeBag()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
-        Application.shared.configureMainInterface(in: window)
         self.window = window
-        window.makeKeyAndVisible()
+        bindViewModel()
+    }
+
+    private func bindViewModel() {
+        guard let window = window else { return }
+
+        let viewModel: AppViewModel = assembler.resolve(window: window)
+        let input = AppViewModel.Input(loadTrigger: .just(()))
+        _ = viewModel.transform(input, disposeBag: disposeBag)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

@@ -113,7 +113,7 @@ class SegmentCell: UICollectionViewCell {
             on: onSwitch.rx.value.changed.asDriver()
         )
 
-        let output = viewModel.transform(input: input, disposeBag: dispose)
+        let output = viewModel.transform(input, disposeBag: dispose)
 
         output.$id
             .asDriver()

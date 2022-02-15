@@ -60,7 +60,7 @@ class DevicesViewController: UICollectionViewController {
             deleteDevice: deleteDeviceSubject.asDriverOnErrorJustComplete()
         )
 
-        let output = viewModel.transform(input: input, disposeBag: disposeBag)
+        let output = viewModel.transform(input, disposeBag: disposeBag)
 
         let dataSource = RxCollectionViewSectionedAnimatedDataSource<AnimatableSectionModel<String, DeviceItemViewModel>> {  _, collectionView, indexPath, item in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DeviceCell.identifier, for: indexPath)

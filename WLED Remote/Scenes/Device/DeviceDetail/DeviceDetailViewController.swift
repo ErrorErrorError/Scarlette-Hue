@@ -222,7 +222,7 @@ extension DeviceDetailViewController {
                                                 selectedSegment: segmentsCollectionView.rx.itemSelected.asDriver(),
                                                 deleteSegment: deleteSegmentSubject.asDriverOnErrorJustComplete())
 
-        let output = viewModel.transform(input: input, disposeBag: disposeBag)
+        let output = viewModel.transform(input, disposeBag: disposeBag)
 
         let segmentsDataSource = RxCollectionViewSectionedAnimatedDataSource<AnimatableSectionModel<String, SegmentItemViewModel>> {  _, collectionView, indexPath, item in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SegmentCell.identifier, for: indexPath)

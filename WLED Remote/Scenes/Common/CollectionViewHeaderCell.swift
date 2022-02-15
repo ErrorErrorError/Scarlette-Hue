@@ -28,12 +28,23 @@ class CollectionViewHeaderCell: UICollectionReusableView {
             label.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(text: String) {
+    func bind(text: String, accessory: UIView? = nil) {
         label.text = text
+
+        if let view = accessory {
+            addSubview(view)
+            view.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                view.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
+                view.widthAnchor.constraint(equalTo: heightAnchor),
+                view.heightAnchor.constraint(equalTo: view.widthAnchor),
+                view.centerYAnchor.constraint(equalTo: centerYAnchor)
+            ])
+        }
     }
 }

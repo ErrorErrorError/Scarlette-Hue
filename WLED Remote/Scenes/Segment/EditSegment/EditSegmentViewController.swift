@@ -58,6 +58,16 @@ class EditSegmentViewController: UIViewController {
         $0.layer.cornerRadius = EditSegmentViewController.buttonSize / 2
     }
 
+    let effectSettingsButton = UIButton(type: .custom).then {
+        let largeConfiguration = UIImage.SymbolConfiguration(scale: .medium)
+
+        let image = UIImage(systemName: "gearshape", withConfiguration: largeConfiguration)
+        $0.setImage(image, for: .normal)
+        $0.backgroundColor = UIColor(red: 90/255, green: 90/255, blue: 90/255, alpha: 0.2)
+        $0.layer.cornerRadius = EditSegmentViewController.buttonSize / 2
+        $0.tintColor = .label
+    }
+
     let onSwitch = UISwitch().then {
         $0.onTintColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.20)
         $0.tintColor = UIColor(red: 90/255, green: 90/255, blue: 90/255, alpha: 0.2)
@@ -268,7 +278,7 @@ extension EditSegmentViewController {
                 if let palettes = data.sectionModels[indexPath.section].model as? EditSegmentViewModel.PalettesSection {
                     cell.bind(text: palettes.sectionTitle)
                 } else if let effects = data.sectionModels[indexPath.section].model as? EditSegmentViewModel.EffectsSection {
-                    cell.bind(text: effects.sectionTitle)
+                    cell.bind(text: effects.sectionTitle, accessory: effectSettingsButton)
                 }
             } else if let cell = cell as? UICollectionViewCell, indexPath.section == 0 {
                 cell.do {
@@ -459,7 +469,7 @@ extension EditSegmentViewController {
             section.contentInsets = .init(top: insets, leading: insets, bottom: insets, trailing: insets)
             section.orthogonalScrollingBehavior = .continuous
 
-            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(24))
+            let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(28))
             let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
 
             if index == 0 {

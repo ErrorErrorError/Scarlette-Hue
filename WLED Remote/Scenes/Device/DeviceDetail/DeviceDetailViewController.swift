@@ -102,7 +102,6 @@ class DeviceDetailViewController: UIViewController {
     }
 
     lazy var scenesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: commonCompositionalLayout).then {
-        $0.register(PaletteCell.self, forCellWithReuseIdentifier: PaletteCell.identifier)
         $0.register(CollectionViewHeaderCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
         $0.alwaysBounceHorizontal = true
         $0.alwaysBounceVertical = false
@@ -303,7 +302,7 @@ extension DeviceDetailViewController {
 
 extension DeviceDetailViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-        if collectionView == segmentsCollectionView && collectionView.numberOfItems(inSection: 0) > 1 || collectionView == scenesCollectionView {
+        if collectionView == segmentsCollectionView && collectionView.numberOfItems(inSection: 0) > 1 {
             let context = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (action) -> UIMenu? in
                 let delete = UIAction(title: "Delete",
                                       image: UIImage(systemName: "trash"),

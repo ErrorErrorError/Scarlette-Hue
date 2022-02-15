@@ -107,13 +107,9 @@
 		13B3EEED278FA4C700C4AC6F /* ChromaColorPicker+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B3EEEC278FA4C700C4AC6F /* ChromaColorPicker+Rx.swift */; };
 		13B3EEEF27902E4E00C4AC6F /* CollectionViewHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B3EEEE27902E4E00C4AC6F /* CollectionViewHeaderCell.swift */; };
 		13B9D7132660B31D009BD4DD /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B9D7122660B31D009BD4DD /* GradientView.swift */; };
-		13B9D7152660EA66009BD4DD /* PaletteItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B9D7142660EA66009BD4DD /* PaletteItemViewModel.swift */; };
-		13B9D7172660EABE009BD4DD /* PaletteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B9D7162660EABE009BD4DD /* PaletteCell.swift */; };
 		13B9D7192660F63E009BD4DD /* LabelInset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B9D7182660F63E009BD4DD /* LabelInset.swift */; };
 		13BBEF36266302C400685C42 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BBEF35266302C400685C42 /* SettingsViewModel.swift */; };
 		13BF24BF278D5C7500AD74A9 /* Encodable+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BF24BE278D5C7500AD74A9 /* Encodable+JSON.swift */; };
-		13C1B79A2792156D002CE7C1 /* EffectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C1B7992792156D002CE7C1 /* EffectCell.swift */; };
-		13C1B79C2792158C002CE7C1 /* EffectItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C1B79B2792158C002CE7C1 /* EffectItemViewModel.swift */; };
 		13C8A368278ADC3500875776 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 13C8A367278ADC3500875776 /* RxDataSources */; };
 		13C8A36B278ADC8100875776 /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = 13C8A36A278ADC8100875776 /* RxBlocking */; };
 		13C8A36D278ADC8100875776 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 13C8A36C278ADC8100875776 /* RxCocoa */; };
@@ -258,16 +254,12 @@
 		13B3EEEC278FA4C700C4AC6F /* ChromaColorPicker+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChromaColorPicker+Rx.swift"; sourceTree = "<group>"; };
 		13B3EEEE27902E4E00C4AC6F /* CollectionViewHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewHeaderCell.swift; sourceTree = "<group>"; };
 		13B9D7122660B31D009BD4DD /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
-		13B9D7142660EA66009BD4DD /* PaletteItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteItemViewModel.swift; sourceTree = "<group>"; };
-		13B9D7162660EABE009BD4DD /* PaletteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteCell.swift; sourceTree = "<group>"; };
 		13B9D7182660F63E009BD4DD /* LabelInset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelInset.swift; sourceTree = "<group>"; };
 		13BBEF35266302C400685C42 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		13BD1BD0265F402A00F6C640 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13BD1BD3265F403F00F6C640 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13BD1BD4265F403F00F6C640 /* RxMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13BF24BE278D5C7500AD74A9 /* Encodable+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+JSON.swift"; sourceTree = "<group>"; };
-		13C1B7992792156D002CE7C1 /* EffectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectCell.swift; sourceTree = "<group>"; };
-		13C1B79B2792158C002CE7C1 /* EffectItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectItemViewModel.swift; sourceTree = "<group>"; };
 		13E33D0D27B9C92E0072E767 /* CommonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonCell.swift; sourceTree = "<group>"; };
 		13E930F0265867F500C1EEF6 /* Single+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Single+Ext.swift"; sourceTree = "<group>"; };
 		13E930F42658866D00C1EEF6 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
@@ -399,10 +391,6 @@
 				134925C727915746002B5A95 /* EditSegmentViewController.swift */,
 				134925C9279157AE002B5A95 /* EditSegmentNavigator.swift */,
 				134925CC279157FD002B5A95 /* EditSegmentViewModel.swift */,
-				13B9D7142660EA66009BD4DD /* PaletteItemViewModel.swift */,
-				13B9D7162660EABE009BD4DD /* PaletteCell.swift */,
-				13C1B7992792156D002CE7C1 /* EffectCell.swift */,
-				13C1B79B2792158C002CE7C1 /* EffectItemViewModel.swift */,
 				13E33D0D27B9C92E0072E767 /* CommonCell.swift */,
 			);
 			path = EditSegment;
@@ -883,7 +871,6 @@
 				138AAD63278F62A800CB4FC3 /* UIColor+Brightness.swift in Sources */,
 				13233CA0265726F2005B1270 /* Application.swift in Sources */,
 				13EA1B74278A83E900EE4DAC /* HeartbeatConnection.swift in Sources */,
-				13C1B79A2792156D002CE7C1 /* EffectCell.swift in Sources */,
 				136EE154265A360A0015C333 /* ActivityIndicator.swift in Sources */,
 				130C3ABF265795F000C7425D /* NetService+Rx.swift in Sources */,
 				13233CC026573426005B1270 /* Info.swift in Sources */,
@@ -921,7 +908,6 @@
 				134925CD279157FD002B5A95 /* EditSegmentViewModel.swift in Sources */,
 				13912EA52651A3D400BD5095 /* ManuallyAddDeviceViewController.swift in Sources */,
 				136841CE265CC51000C828BF /* Store.swift in Sources */,
-				13B9D7152660EA66009BD4DD /* PaletteItemViewModel.swift in Sources */,
 				138AAD61278F62A800CB4FC3 /* UIView+Utils.swift in Sources */,
 				1356002C2658363B00B16B59 /* ConfigureDeviceNavigator.swift in Sources */,
 				138AAD66278F62A900CB4FC3 /* ChromaColorHandle.swift in Sources */,
@@ -947,7 +933,6 @@
 				13233CA9265733F6005B1270 /* NSManagedObjectContext+Rx.swift in Sources */,
 				135EE151264731A00027909B /* AppDelegate.swift in Sources */,
 				136841D4265CDEF400C828BF /* Leds.swift in Sources */,
-				13B9D7172660EABE009BD4DD /* PaletteCell.swift in Sources */,
 				135EE153264731A00027909B /* SceneDelegate.swift in Sources */,
 				13233CB126573403005B1270 /* Persistable.swift in Sources */,
 				138AAD5E278F62A800CB4FC3 /* ColorWheelView.swift in Sources */,
@@ -958,7 +943,6 @@
 				13E930F1265867F500C1EEF6 /* Single+Ext.swift in Sources */,
 				138AAD5F278F62A800CB4FC3 /* ChromaControlStylable.swift in Sources */,
 				1329986F279177BC00FF8C6C /* SegmentItemViewModel.swift in Sources */,
-				13C1B79C2792158C002CE7C1 /* EffectItemViewModel.swift in Sources */,
 				13233CBD26573426005B1270 /* Device.swift in Sources */,
 				13233CAE26573400005B1270 /* WLEDDevice+CoreDataProperties.swift in Sources */,
 				13233CB52657340D005B1270 /* CoreDataStack.swift in Sources */,

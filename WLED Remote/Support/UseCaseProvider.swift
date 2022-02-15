@@ -9,16 +9,14 @@ import Foundation
 
 public final class UseCaseProvider {
     private let coreDataStack = CoreDataStack()
-    private let deviceRepository: Repository<Device>
     private let apiEndpoint: String
 
     public init() {
-        deviceRepository = Repository<Device>(context: coreDataStack.context)
         apiEndpoint = "http://%@:%d"
     }
 
-    public func makeDevicesRepository() -> DevicesUseCaseProtocol {
-        return DevicesUseCase(repository: deviceRepository)
+    public func makeDevicesRepository() -> DeviceRepositoryType {
+        return DeviceRepository(context: coreDataStack.context)
     }
 
     public func makeHeartbeatService() -> HeartbeatService {

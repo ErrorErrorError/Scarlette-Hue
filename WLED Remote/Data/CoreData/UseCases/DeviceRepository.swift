@@ -1,5 +1,5 @@
 //
-//  DevicesUseCase.swift
+//  DeviceGateway.swift
 //  WLED Remote
 //
 //  Created by Erik Bautista on 5/20/21.
@@ -7,12 +7,19 @@
 
 import Foundation
 import RxSwift
+import CoreData
 
-class DevicesUseCase<Repository>: DevicesUseCaseProtocol where Repository: AbstractRepository, Repository.T == Device {
-    private let repository: Repository
+public protocol DeviceRepositoryType {
+    func devices() -> Observable<[Device]>
+    func save(device: Device) -> Observable<Void>
+    func delete(device: Device) -> Observable<Void>
+}
 
-    init(repository: Repository) {
-        self.repository = repository
+class DeviceRepository: DeviceRepositoryType {
+    private let repository: Repository<Device>
+
+    init(context: NSManagedObjectContext) {
+        self.repository = Repository<Device>(context: context)
     }
 
     func devices() -> Observable<[Device]> {

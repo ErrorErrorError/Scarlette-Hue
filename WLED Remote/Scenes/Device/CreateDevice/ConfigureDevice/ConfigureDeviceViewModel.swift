@@ -11,7 +11,7 @@ import RxCocoa
 import Then
 
 struct ConfigureDeviceViewModel {
-    let devicesRepository: DevicesUseCaseProtocol
+    let devicesRepository: DeviceRepositoryType
     let navigator: ConfigureDeviceNavigator
     let device: Device
 }

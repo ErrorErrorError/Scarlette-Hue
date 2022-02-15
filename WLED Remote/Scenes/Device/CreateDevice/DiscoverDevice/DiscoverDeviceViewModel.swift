@@ -11,7 +11,7 @@ import RxCocoa
 
 struct DiscoverDeviceViewModel {
     let navigator: DiscoverDeviceNavigator
-    let devicesRepository: DevicesUseCaseProtocol
+    let devicesRepository: DeviceRepositoryType
     let bonjourService: NetServiceBrowser
     let infoAPIService: InfoAPI
 }

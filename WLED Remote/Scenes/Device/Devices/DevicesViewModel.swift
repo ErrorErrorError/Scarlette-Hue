@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 struct DevicesViewModel {
-    let devicesRepository: DevicesUseCaseProtocol
+    let devicesRepository: DeviceRepositoryType
     let heartbeatService: HeartbeatService
     let storeAPI: StoreAPI
     let navigator: DevicesNavigator

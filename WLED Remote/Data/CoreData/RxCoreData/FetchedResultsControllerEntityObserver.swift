@@ -20,8 +20,6 @@ final class FetchedResultsControllerEntityObserver<T: NSFetchRequestResult> : NS
 
     init(observer: Observer, fetchRequest: NSFetchRequest<T>, managedObjectContext context: NSManagedObjectContext, sectionNameKeyPath: String?, cacheName: String?) {
         self.observer = observer
-
-
         self.frc = NSFetchedResultsController(fetchRequest: fetchRequest,
                                               managedObjectContext: context,
                                               sectionNameKeyPath: sectionNameKeyPath,
@@ -54,9 +52,7 @@ final class FetchedResultsControllerEntityObserver<T: NSFetchRequestResult> : NS
 }
 
 extension FetchedResultsControllerEntityObserver : Disposable {
-
     public func dispose() {
         frc.delegate = nil
     }
-
 }

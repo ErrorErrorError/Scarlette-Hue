@@ -10,42 +10,54 @@ import RxSwift
 import RxCocoa
 
 struct DevicesViewModel {
-    let devicesRepository: DeviceRepositoryType
-    let heartbeatService: HeartbeatService
-    let storeAPI: StoreAPI
-    let navigator: DevicesNavigator
+    let navigator: DevicesNavigatorType
+    let useCase: DevicesUseCaseType
 }
 
 extension DevicesViewModel: ViewModel {
     struct Input {
         let loadTrigger: Driver<Void>
         let addDeviceTrigger: Driver<Void>
-        let selectedDevice: Driver<IndexPath>
+        let selectDevice: Driver<IndexPath>
         let editDevice: Driver<IndexPath>
         let deleteDevice: Driver<IndexPath>
     }
 
     struct Output {
-        @Relay var deviceList = [DeviceItemViewModel]()
+        @Relay var devices = [DeviceItemViewModel]()
     }
 
     func transform(_ input: Input, disposeBag: DisposeBag) -> Output {
-        var output = Output()
+        let output = Output()
+
+        // Fetch Devices
 
         input.loadTrigger
             .flatMapLatest {
-                devicesRepository.devices()
+                useCase.getDevices()
                     .asDriverOnErrorJustComplete()
             }
             .map {
                 $0.map { device in
-                    DeviceItemViewModel(device: device,
-                                        storeAPI: self.storeAPI,
-                                        heartbeatService: self.heartbeatService)
+                    DeviceItemViewModel(
+                        deviceStore: .init(device: device, connectionState: .connecting, store: nil)
+                    )
                 }
             }
-            .do(onNext: { output.deviceList = $0 })
-            .drive()
+            .drive(output.$devices)
+            .disposed(by: disposeBag)
+
+        // Start heartbeats
+
+        output.$devices
+            .map {
+                $0.map { vm in
+                    vm.deviceStore.device
+                }
+            }
+            .distinctUntilChanged()
+            .debug()
+            .subscribe(onNext: HeartbeatService.shared.sync)
             .disposed(by: disposeBag)
 
         // Add
@@ -56,28 +68,29 @@ extension DevicesViewModel: ViewModel {
 
         // Select
 
-        select(trigger: input.selectedDevice, items: output.$deviceList.asDriver())
-            .filter({ $0.storeSubject.value != nil })
-            .drive(onNext: { navigator.toDeviceDetail($0.device, $0.storeSubject.value!) })
+        select(trigger: input.selectDevice, items: output.$devices.asDriver())
+            .filter({ $0.deviceStore.store != nil })
+            .compactMap({ $0.deviceStore.store != nil ? ($0.deviceStore.device, $0.deviceStore.store!) : nil })
+            .drive(onNext: { navigator.toDeviceDetail($0, $1) })
             .disposed(by: disposeBag)
 
         // Edit
 
-        select(trigger: input.editDevice, items: output.$deviceList.asDriver())
-            .map { $0.device }
+        select(trigger: input.editDevice, items: output.$devices.asDriver())
+            .map { $0.deviceStore.device }
             .drive(onNext: { navigator.toEditDevice($0) })
             .disposed(by: disposeBag)
 
         // Delete
 
-        select(trigger: input.deleteDevice, items: output.$deviceList.asDriver())
-            .map { $0.device }
+        select(trigger: input.deleteDevice, items: output.$devices.asDriver())
+            .map { $0.deviceStore.device }
             .flatMapLatest { device -> Driver<Device> in
                 return navigator.confirmDeleteDevice(device)
                     .map { _ in device }
             }
             .flatMapLatest { device -> Driver<Device> in
-                return devicesRepository.delete(device: device)
+                return useCase.deleteDevice(device)
                     .map { _ in device }
                     .asDriverOnErrorJustComplete()
             }

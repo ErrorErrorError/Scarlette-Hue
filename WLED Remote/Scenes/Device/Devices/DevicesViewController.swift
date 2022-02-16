@@ -11,11 +11,11 @@ import RxCocoa
 import RxDataSources
 import Then
 
-class DevicesViewController: UICollectionViewController {
+class DevicesViewController: UICollectionViewController, Bindable {
     
     // MARK: - Properties
 
-    let viewModel: DevicesViewModel
+    var viewModel: DevicesViewModel!
     private var disposeBag = DisposeBag()
     private let deleteDeviceSubject = PublishSubject<IndexPath>()
     private let editDeviceSubject = PublishSubject<IndexPath>()
@@ -23,8 +23,7 @@ class DevicesViewController: UICollectionViewController {
 
     // MARK: Constructors
 
-    init(viewModel: DevicesViewModel) {
-        self.viewModel = viewModel
+    init() {
         let layout = UICollectionViewFlowLayout()
         super.init(collectionViewLayout: layout)
     }
@@ -41,12 +40,11 @@ class DevicesViewController: UICollectionViewController {
         setupNavigationBar()
         setupCollectionView()
         setupConstraints()
-        bindViewModel()
     }
 
     // MARK: Setups
 
-    private func bindViewModel() {
+    func bindViewModel() {
         let viewWillAppear = rx
             .sentMessage(#selector(UIViewController.viewWillAppear(_:)))
             .mapToVoid()
@@ -55,7 +53,7 @@ class DevicesViewController: UICollectionViewController {
         let input = DevicesViewModel.Input(
             loadTrigger: viewWillAppear,
             addDeviceTrigger: addDeviceSubject.asDriverOnErrorJustComplete(),
-            selectedDevice: collectionView.rx.itemSelected.asDriver(),
+            selectDevice: collectionView.rx.itemSelected.asDriver(),
             editDevice: editDeviceSubject.asDriverOnErrorJustComplete(),
             deleteDevice: deleteDeviceSubject.asDriverOnErrorJustComplete()
         )
@@ -70,7 +68,7 @@ class DevicesViewController: UICollectionViewController {
             return cell
         }
 
-        output.$deviceList
+        output.$devices
             .asDriver()
             .compactMap { [AnimatableSectionModel<String, DeviceItemViewModel>(model: "Devices", items: $0)] }
             .drive(collectionView.rx.items(dataSource: dataSource))
@@ -91,13 +89,10 @@ class DevicesViewController: UICollectionViewController {
         title = "Devices"
         navigationItem.largeTitleDisplayMode = .always
 
-        guard let navigationBar = self.navigationController?.navigationBar else { return }
-        navigationBar.prefersLargeTitles = true
-
         let plusConfig = UIImage.SymbolConfiguration.init(pointSize: 20, weight: .semibold)
         let plusSymbol = UIImage(systemName: "plus", withConfiguration: plusConfig)
-        let addButton = UIBarButtonItem(title: "", image: plusSymbol, primaryAction: UIAction(handler: { [weak self] _ in
-            self?.addDeviceSubject.onNext(())
+        let addButton = UIBarButtonItem(title: "", image: plusSymbol, primaryAction: UIAction(handler: { [unowned self] _ in
+            self.addDeviceSubject.onNext(())
         }), menu: nil)
 
         addButton.tintColor = .label

@@ -8,15 +8,15 @@
 import Foundation
 
 public final class UseCaseProvider {
-    private let coreDataStack = CoreDataStack()
+    private let coreDataStack = CoreDataStack.shared
     private let apiEndpoint: String
 
     public init() {
         apiEndpoint = "http://%@:%d"
     }
 
-    public func makeDevicesRepository() -> DeviceRepositoryType {
-        return DeviceRepository(context: coreDataStack.context)
+    public func makeDevicesRepository() -> DeviceGatewayType {
+        return DeviceGateway()
     }
 
     public func makeHeartbeatService() -> HeartbeatService {

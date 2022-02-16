@@ -9,17 +9,11 @@ import Foundation
 import RxSwift
 import CoreData
 
-public protocol DeviceRepositoryType {
-    func devices() -> Observable<[Device]>
-    func save(device: Device) -> Observable<Void>
-    func delete(device: Device) -> Observable<Void>
-}
-
-class DeviceRepository: DeviceRepositoryType {
+class DeviceRepository {
     private let repository: Repository<Device>
 
-    init(context: NSManagedObjectContext) {
-        self.repository = Repository<Device>(context: context)
+    init() {
+        self.repository = Repository<Device>(context: CoreDataStack.shared.context)
     }
 
     func devices() -> Observable<[Device]> {

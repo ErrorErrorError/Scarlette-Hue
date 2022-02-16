@@ -11,11 +11,13 @@ import RxCocoa
 import Then
 import Differentiator
 
+protocol DeviceItemUpdateState {
+    func updateOn(isOn: Bool, for device: Device)
+    func updateBrightness(brightness: Int, for device: Device)
+}
+
 struct DeviceItemViewModel {
-    let device: Device
-    let storeAPI: StoreAPI
-    let heartbeatService: HeartbeatService
-    let storeSubject = BehaviorRelay<Store?>(value: nil)
+    let deviceStore: DeviceStoreModel
 }
 
 extension DeviceItemViewModel: ViewModel {
@@ -25,66 +27,42 @@ extension DeviceItemViewModel: ViewModel {
     }
 
     struct Output {
-        @Relay var name = ""
+        @Relay var name: String
         @Relay var store: Store?
         @Relay var connection = HeartbeatConnection.ConnectionState.connecting
     }
 
     func transform(_ input: Input, disposeBag: DisposeBag) -> Output {
-        let output = Output(name: device.name)
-
-        let heartbeat = heartbeatService.getHeartbeat(device: device)
-
-        let updatedState = input.loadTrigger.flatMapLatest {
-            heartbeat.connection.asDriver()
-        }
-        .distinctUntilChanged()
-
-        // Connection State
-
-        updatedState
-            .asDriver()
-            .drive(output.$connection)
-            .disposed(by: disposeBag)
-
-        // Fetch Store on connection = .connected
-
-        updatedState
-            .flatMapLatest { state -> Driver<Store?> in
-                if state == .connected {
-                    return self.storeAPI.fetchStore(for: self.device)
-                        .map { $0 }
-                        .asDriverOnErrorJustComplete()
-                } else {
-                    return Driver.just(nil)
-                }
-            }
-            .asDriver(onErrorJustReturn: nil)
-            .drive(onNext: { storeSubject.accept($0) })
-            .disposed(by: disposeBag)
+        var output = Output(name: deviceStore.device.name, store: deviceStore.store, connection: deviceStore.connectionState)
 
         // Set store property to the view model so that we pass down to other view models
 
         input.on
-            .do(onNext: { newOn in
-                let updatedStore = storeSubject.value?.with {
-                    $0.state.on = newOn
-                }
-
-                storeSubject.accept(updatedStore)
+            .drive(onNext: {
+                output.store?.state.on = $0
             })
-            .map({ State(on: $0) })
-            .flatMapLatest({
-                self.storeAPI.updateState(device: self.device, state: $0)
-                    .asDriverOnErrorJustComplete()
-            })
-            .drive()
             .disposed(by: disposeBag)
 
-        storeSubject
-            .asDriver()
-            .drive(output.$store)
-            .disposed(by: disposeBag)
+//        input.on
+//            .do(onNext: { newOn in
+//                let updatedStore = storeSubject.value?.with {
+//                    $0.state.on = newOn
+//                }
+//
+//                storeSubject.accept(updatedStore)
+//            })
+//            .map({ State(on: $0) })
+//            .flatMapLatest({
+//                self.storeAPI.updateState(device: self.device, state: $0)
+//                    .asDriverOnErrorJustComplete()
+//            })
+//            .drive()
+//            .disposed(by: disposeBag)
+
+//        storeSubject
+//            .asDriver()
+//            .drive(output.$store)
+//            .disposed(by: disposeBag)
 
         return output
     }
@@ -92,13 +70,12 @@ extension DeviceItemViewModel: ViewModel {
 
 extension DeviceItemViewModel: IdentifiableType, Equatable {
     static func == (lhs: DeviceItemViewModel, rhs: DeviceItemViewModel) -> Bool {
-        lhs.device == rhs.device && lhs.storeSubject.value == rhs.storeSubject.value
-//        lhs.device == rhs.device
+        lhs.deviceStore == rhs.deviceStore
     }
 
     typealias Identity = UUID
 
     var identity: UUID {
-        return device.id
+        return deviceStore.device.id
     }
 }

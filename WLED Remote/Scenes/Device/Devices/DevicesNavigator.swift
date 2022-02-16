@@ -1,5 +1,5 @@
 //
-//  DevicesNavigator.swift
+//  DevicesNavigatorType.swift
 //  WLED Remote
 //
 //  Created by Erik Bautista on 5/20/21.
@@ -10,7 +10,7 @@ import ErrorErrorErrorUIKit
 import RxSwift
 import RxCocoa
 
-protocol DevicesNavigator {
+protocol DevicesNavigatorType {
     func toDiscoverDevice()
     func toDevices()
     func toDeviceDetail(_ device: Device, _ store: Store)
@@ -18,50 +18,43 @@ protocol DevicesNavigator {
     func toEditDevice(_ device: Device)
 }
 
-struct DefaultDevicesNavigator: DevicesNavigator {
-    unowned let services: UseCaseProvider
+struct DevicesNavigator: DevicesNavigatorType {
+    unowned let assembler: Assembler
     unowned let navigationController: UINavigationController
+//    unowned let services: UseCaseProvider
 
     func toDevices() {
-        let viewModel = DevicesViewModel(devicesRepository: services.makeDevicesRepository(),
-                                         heartbeatService: services.makeHeartbeatService(),
-                                         storeAPI: services.makeStoreAPI(),
-                                         navigator: self)
-        let viewController = DevicesViewController(viewModel: viewModel)
-        navigationController.pushViewController(viewController, animated: true)
+//        let viewModel = DevicesViewModel(devicesRepository: services.makeDevicesRepository(),
+//                                         heartbeatService: services.makeHeartbeatService(),
+//                                         storeAPI: services.makeStoreAPI(),
+//                                         navigator: self)
+//        let viewController = DevicesViewController(viewModel: viewModel)
+//        navigationController.pushViewController(viewController, animated: true)
     }
 
     func toDiscoverDevice() {
-        guard let topViewController = navigationController.topViewController else { return }
-        let navigator = DefaultDiscoverDeviceNavigator(services: services,
-                                                       navigationController: navigationController)
-        let viewModel = DiscoverDeviceViewModel(navigator: navigator,
-                                                devicesRepository: services.makeDevicesRepository(),
-                                                bonjourService: services.makeBonjourService(),
-                                                infoAPIService: services.makeInfoNetwork())
-
-        let viewController = DiscoverDeviceViewController(viewModel: viewModel)
+        let viewController: DiscoverDeviceViewController = assembler.resolve(navigationController: navigationController)
         let transitionDelegate = CardModalTransitioningDelegate()
         viewController.modalPresentationStyle = .custom
         viewController.transitioningDelegate = transitionDelegate
-        topViewController.present(viewController, animated: true)
+        navigationController.present(viewController, animated: true)
     }
 
     func toDeviceDetail(_ device: Device, _ store: Store) {
-        let navigator = DefaultDeviceDetailNavigator(services: services,
-                                                     navigationController: navigationController
-        )
-
-        let viewModel = DeviceDetailViewModel(navigator: navigator,
-                                              deviceRepository: services.makeDevicesRepository(),
-                                              storeAPI: services.makeStoreAPI(),
-                                              segmentAPI: services.makeSegmentAPI(),
-                                              device: device,
-                                              store: store
-        )
-
-        let viewController = DeviceDetailViewController(viewModel: viewModel)
-        navigationController.pushViewController(viewController, animated: true)
+//        let navigator = DefaultDeviceDetailNavigator(services: services,
+//                                                     navigationController: navigationController
+//        )
+//
+//        let viewModel = DeviceDetailViewModel(navigator: navigator,
+//                                              deviceRepository: services.makeDevicesRepository(),
+//                                              storeAPI: services.makeStoreAPI(),
+//                                              segmentAPI: services.makeSegmentAPI(),
+//                                              device: device,
+//                                              store: store
+//        )
+//
+//        let viewController = DeviceDetailViewController(viewModel: viewModel)
+//        navigationController.pushViewController(viewController, animated: true)
     }
     
     func toEditDevice(_ device: Device) {

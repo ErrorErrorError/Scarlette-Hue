@@ -9,15 +9,13 @@ import Foundation
 import RxSwift
 
 public class HeartbeatService {
-    private var connections: Set<HeartbeatConnection>
-
     public static var shared = HeartbeatService()
 
-    private init() {
-        connections = Set()
-    }
+    private var connections: Set<HeartbeatConnection> = .init()
 
-    public func getHeartbeat(device: Device) -> HeartbeatConnection {
+    private init() {  }
+
+    public func getHeartbeat(for device: Device) -> HeartbeatConnection {
         let conenction = connections.first { connection in
             connection.ip == device.ip && connection.port == device.port
         }
@@ -32,9 +30,26 @@ public class HeartbeatService {
         }
     }
 
-    public func removeHeartbeat(device: Device) {
-        let connection = connections.first(where: { $0.ip == device.ip && $0.port == device.port })
-        if let connection = connection {
+    public func sync(with devices: [Device]) {
+        let createNewConnections = devices.filter { device in
+            connections.first { con in
+                con.ip == device.ip && con.port == device.port
+            } == nil
+        }
+
+        for device in createNewConnections {
+            let connection = createConnection(for: device)
+            connections.insert(connection)
+            connection.start()
+        }
+
+        let deleteConnections = connections.filter { con in
+            devices.first { device in
+                con.ip == device.ip && con.port == device.port
+            } == nil
+        }
+
+        for connection in deleteConnections {
             connection.stop()
             connections.remove(connection)
         }

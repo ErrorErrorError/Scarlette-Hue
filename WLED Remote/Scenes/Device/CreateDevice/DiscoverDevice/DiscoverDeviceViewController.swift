@@ -12,7 +12,7 @@ import RxCocoa
 import RxDataSources
 import Then
 
-class DiscoverDeviceViewController: CardModalViewController<UIView> {
+class DiscoverDeviceViewController: CardModalViewController<UIView>, Bindable {
 
     // MARK: - Rx
 
@@ -20,7 +20,7 @@ class DiscoverDeviceViewController: CardModalViewController<UIView> {
 
     // MARK: - ViewModel
 
-    let viewModel: DiscoverDeviceViewModel
+    var viewModel: DiscoverDeviceViewModel!
 
     // MARK: - Views
 
@@ -37,18 +37,12 @@ class DiscoverDeviceViewController: CardModalViewController<UIView> {
 
     private let buttonHeight: CGFloat = 48
 
-    init(viewModel: DiscoverDeviceViewModel) {
-        self.viewModel = viewModel
+    init() {
         super.init(buttonView: .primary, contentView: UIView())
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        bindViewController()
     }
 
     override func setupViewsAndContraints() {
@@ -85,7 +79,7 @@ class DiscoverDeviceViewController: CardModalViewController<UIView> {
 }
 
 extension DiscoverDeviceViewController {
-    private func bindViewController() {
+    func bindViewModel() {
         let viewWillAppear = rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
             .mapToVoid()
             .asDriverOnErrorJustComplete()

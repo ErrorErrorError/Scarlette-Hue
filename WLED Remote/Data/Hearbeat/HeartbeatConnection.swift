@@ -9,6 +9,7 @@ import Foundation
 import RxSwift
 import Alamofire
 import RxRelay
+import RxCocoa
 
 public class HeartbeatConnection {
     public enum ConnectionState: String {
@@ -30,7 +31,7 @@ public class HeartbeatConnection {
     private var pinging = false
     private let connectionStateSubject = BehaviorRelay<ConnectionState>(value: .connecting)
     private var urlSessionTask: URLSessionTask?
-    private let serialQueue = DispatchQueue(label: "Heartbeat Connection", qos: .background)
+    private let serialQueue = DispatchQueue(label: "heartbeat-connection", qos: .background)
     private let pingInterval = 5.0
     private let timeoutInterval = 20.0
     private var timeoutTimer: Timer?
@@ -125,8 +126,8 @@ public class HeartbeatConnection {
 // RxSwift
 
 extension HeartbeatConnection {
-    public var connection: BehaviorRelay<ConnectionState> {
-        return connectionStateSubject
+    public var connection: Driver<ConnectionState> {
+        return connectionStateSubject.asDriver()
     }
 }
 

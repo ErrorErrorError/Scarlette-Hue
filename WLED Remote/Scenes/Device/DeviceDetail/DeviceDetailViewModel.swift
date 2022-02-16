@@ -12,7 +12,7 @@ import UIKit
 
 public struct DeviceDetailViewModel {
     let navigator: DeviceDetailNavigator
-    let deviceRepository: DeviceRepositoryType
+    let deviceRepository: DeviceGatewayType
     let storeAPI: StoreAPI
     let segmentAPI: SegmentAPI
     let device: Device

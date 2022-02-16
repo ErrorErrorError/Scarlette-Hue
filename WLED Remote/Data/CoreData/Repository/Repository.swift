@@ -48,5 +48,6 @@ final class Repository<T: CoreDataRepresentable>: AbstractRepository where T == 
         return entity.sync(in: context)
             .map({$0 as! NSManagedObject})
             .flatMapLatest(context.rx.delete)
+            .subscribe(on: scheduler)
     }
 }

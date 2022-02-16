@@ -9,10 +9,10 @@ import Foundation
 import RxSwift
 
 class SettingsViewModel: ViewModel {
-    let devicesRepository: DeviceRepositoryType
+    let devicesRepository: DeviceGatewayType
     let navigator: SettingsNavigator
 
-    init(devicesRepository: DeviceRepositoryType, navigator: SettingsNavigator) {
+    init(devicesRepository: DeviceGatewayType, navigator: SettingsNavigator) {
         self.devicesRepository = devicesRepository
         self.navigator = navigator
     }

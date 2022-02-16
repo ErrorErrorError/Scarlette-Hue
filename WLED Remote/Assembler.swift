@@ -7,7 +7,11 @@
 
 import Foundation
 
-protocol Assembler: AnyObject, AppAssembler {
+protocol Assembler: AnyObject,
+                    GatewaysAssembler,
+                    AppAssembler,
+                    DevicesAssembler,
+                    DiscoverDeviceAssembler{
     
 }
 

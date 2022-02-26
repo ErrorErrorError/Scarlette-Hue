@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import WLEDClient
 
 
 public enum SegmentSettingsDelegate {
@@ -15,10 +16,11 @@ public enum SegmentSettingsDelegate {
 }
 
 struct SegmentSettingsViewModel {
-    let navigator: SegmentSettingsNavigator
+    let navigator: SegmentSettingsNavigatorType
+    let useCase: SegmentSettingsUseCaseType
+    let delegate: PublishSubject<SegmentSettingsDelegate>
     let info: Info
     let segmentSettings: SegmentSettings
-    let delegate: PublishSubject<SegmentSettingsDelegate>
 }
 
 extension SegmentSettingsViewModel: ViewModel {

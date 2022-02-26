@@ -10,7 +10,7 @@ import ErrorErrorErrorUIKit
 import RxSwift
 import RxDataSources
 
-class SegmentSettingsViewController: CardModalViewController<UITableView> {
+class SegmentSettingsViewController: CardModalViewController<UITableView>, Bindable {
 
     // MARK: - Rx
 
@@ -18,7 +18,7 @@ class SegmentSettingsViewController: CardModalViewController<UITableView> {
 
     // MARK: - Properties
 
-    private let viewModel: SegmentSettingsViewModel
+    var viewModel: SegmentSettingsViewModel!
 
     // MARK: - Views
 
@@ -50,8 +50,7 @@ class SegmentSettingsViewController: CardModalViewController<UITableView> {
 
     private let mirrorSwitch = UISwitch()
 
-    init(viewModel: SegmentSettingsViewModel) {
-        self.viewModel = viewModel
+    init() {
         let tableView = UITableView(frame: .zero, style: .plain).then {
             $0.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
             $0.allowsSelection = false
@@ -65,11 +64,6 @@ class SegmentSettingsViewController: CardModalViewController<UITableView> {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        bindViewModel()
     }
 
     var tableViewHeightConstraint: NSLayoutConstraint?
@@ -101,8 +95,10 @@ class SegmentSettingsViewController: CardModalViewController<UITableView> {
         tableViewHeightConstraint = contentView.heightAnchor.constraint(equalToConstant: 0)
         tableViewHeightConstraint?.isActive = true
     }
+}
 
-    private func bindViewModel() {
+extension SegmentSettingsViewController {
+    func bindViewModel() {
         let viewWillAppear = rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
             .mapToVoid()
             .asDriverOnErrorJustComplete()
@@ -159,7 +155,7 @@ class SegmentSettingsViewController: CardModalViewController<UITableView> {
 }
 
 extension SegmentSettingsViewController: UITableViewDataSource {
-    enum Sections: String, CaseIterable {
+    private enum Sections: String, CaseIterable {
         case start = "Start"
         case stop = "Stop"
         case grouping = "Grouping"
@@ -209,27 +205,22 @@ extension SegmentSettingsViewController: UITableViewDataSource {
         }
 
         cell.backgroundColor = .clear
-//        cell.backgroundColor = .secondarySystemBackground
         return cell
     }
 }
 
 extension SegmentSettingsViewController: UITableViewDelegate {
-    
+
 }
 
 extension SegmentSettingsViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        if startLEDsTextField.isFirstResponder {
-//            startLEDsTextField.resignFirstResponder()
-//        }
-//
-//        if stopLEDsTextField.isFirstResponder {
-//            stopLEDsTextField.resignFirstResponder()
-//        }
-//
-//        if
-        textField.resignFirstResponder()
+        if textField == startLEDsTextField {
+            textField.resignFirstResponder()
+            stopLEDsTextField.becomeFirstResponder()
+        } else if textField == stopLEDsTextField {
+            textField.resignFirstResponder()
+        }
         return true
     }
 }

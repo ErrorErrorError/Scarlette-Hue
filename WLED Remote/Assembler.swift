@@ -11,7 +11,13 @@ protocol Assembler: AnyObject,
                     GatewaysAssembler,
                     AppAssembler,
                     DevicesAssembler,
-                    DiscoverDeviceAssembler{
+                    DiscoverDeviceAssembler,
+                    ConfigureDeviceAssembler,
+                    DeviceDetailAssembler,
+                    AddSegmentAssembler,
+                    EditSegmentAssembler,
+                    SegmentSettingsAssembler,
+                    EffectSettingsAssembler {
     
 }
 

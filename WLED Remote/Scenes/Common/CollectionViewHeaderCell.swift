@@ -25,7 +25,7 @@ class CollectionViewHeaderCell: UICollectionReusableView {
         NSLayoutConstraint.activate([
             label.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
             label.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-            label.bottomAnchor.constraint(equalTo: bottomAnchor),
+            label.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
     }
 

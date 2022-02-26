@@ -6,13 +6,21 @@
 //
 
 import RxSwift
+import WLEDClient
 
 protocol DiscoverDeviceUseCaseType {
     func getDevices() -> Observable<[Device]>
+    func startScan() -> Void
+    func stopScan() -> Void
+    func getScannedDevices() -> Observable<ScannedDevice>
 }
 
 struct DiscoverDeviceUseCase: DiscoverDeviceUseCaseType,
-                              FetchingDevices {
+                              FetchingDevices,
+                              StartScanningDevices,
+                              StopScanningDevices,
+                              FetchingScannedDevices {
     var deviceGatewayType: DeviceGatewayType
+    var bonjourGatewayType: BonjourGatewayType
 }
 

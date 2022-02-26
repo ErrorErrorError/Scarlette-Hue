@@ -40,8 +40,7 @@ extension DevicesAssembler where Self: DefaultAssembler {
     
     func resolve() -> DevicesUseCaseType {
         return DevicesUseCase(
-            deviceGatewayType: resolve(),
-            storeGatewayType: resolve()
+            deviceGatewayType: resolve()
         )
     }
 }

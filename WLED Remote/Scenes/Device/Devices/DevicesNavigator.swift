@@ -12,8 +12,7 @@ import RxCocoa
 
 protocol DevicesNavigatorType {
     func toDiscoverDevice()
-    func toDevices()
-    func toDeviceDetail(_ device: Device, _ store: Store)
+    func toDeviceDetail(_ deviceStore: DeviceStore)
     func confirmDeleteDevice(_ device: Device) -> Driver<Void>
     func toEditDevice(_ device: Device)
 }
@@ -21,16 +20,6 @@ protocol DevicesNavigatorType {
 struct DevicesNavigator: DevicesNavigatorType {
     unowned let assembler: Assembler
     unowned let navigationController: UINavigationController
-//    unowned let services: UseCaseProvider
-
-    func toDevices() {
-//        let viewModel = DevicesViewModel(devicesRepository: services.makeDevicesRepository(),
-//                                         heartbeatService: services.makeHeartbeatService(),
-//                                         storeAPI: services.makeStoreAPI(),
-//                                         navigator: self)
-//        let viewController = DevicesViewController(viewModel: viewModel)
-//        navigationController.pushViewController(viewController, animated: true)
-    }
 
     func toDiscoverDevice() {
         let viewController: DiscoverDeviceViewController = assembler.resolve(navigationController: navigationController)
@@ -40,23 +29,11 @@ struct DevicesNavigator: DevicesNavigatorType {
         navigationController.present(viewController, animated: true)
     }
 
-    func toDeviceDetail(_ device: Device, _ store: Store) {
-//        let navigator = DefaultDeviceDetailNavigator(services: services,
-//                                                     navigationController: navigationController
-//        )
-//
-//        let viewModel = DeviceDetailViewModel(navigator: navigator,
-//                                              deviceRepository: services.makeDevicesRepository(),
-//                                              storeAPI: services.makeStoreAPI(),
-//                                              segmentAPI: services.makeSegmentAPI(),
-//                                              device: device,
-//                                              store: store
-//        )
-//
-//        let viewController = DeviceDetailViewController(viewModel: viewModel)
-//        navigationController.pushViewController(viewController, animated: true)
+    func toDeviceDetail(_ deviceStore: DeviceStore) {
+        let viewController: DeviceDetailViewController = assembler.resolve(navigationController: navigationController, deviceStore: deviceStore)
+        navigationController.pushViewController(viewController, animated: true)
     }
-    
+
     func toEditDevice(_ device: Device) {
         // TODO: Add option to edit device name, ect..
     }

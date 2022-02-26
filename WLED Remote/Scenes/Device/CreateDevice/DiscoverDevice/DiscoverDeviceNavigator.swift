@@ -14,34 +14,24 @@ public protocol DiscoverDeviceNavigatorType {
     func toManuallyAddDevice()
 }
 
-final class DiscoverDeviceNavigator: DiscoverDeviceNavigatorType {
-    private let assembler: Assembler
-    private let navigationController: UINavigationController
-
-    init(assembler: Assembler, navigationController: UINavigationController) {
-        self.assembler = assembler
-        self.navigationController = navigationController
-    }
+struct DiscoverDeviceNavigator: DiscoverDeviceNavigatorType {
+    unowned let assembler: Assembler
+    unowned let navigationController: UINavigationController
 
     func toDevices() {
         navigationController.dismiss(animated: true)
     }
 
     func toConfigureDevice(_ device: Device) {
-//        if let presentingViewController = navigationController.topViewController?.presentedViewController {
-//            let navigator = ConfigureDeviceNavigator(navigationController: navigationController)
-//            let viewModel = ConfigureDeviceViewModel(devicesRepository: services.makeDevicesRepository(),
-//                                                    navigator: navigator,
-//                                                    device: device)
-//            let viewController = ConfigureDeviceViewController(viewModel: viewModel)
-//
-//            presentingViewController.dismiss(animated: true) { [weak self] () in
-//                let transitionDelegate = CardModalTransitioningDelegate()
-//                viewController.modalTransitionStyle = .crossDissolve
-//                viewController.modalPresentationStyle = .custom
-//                viewController.transitioningDelegate = transitionDelegate
-//                self?.navigationController.present(viewController, animated: true)
-//            }
+        if let presentingViewController = navigationController.topViewController?.presentedViewController {
+            let viewController: ConfigureDeviceViewController = assembler.resolve(navigationController: navigationController, device)
+            presentingViewController.dismiss(animated: true) {
+                let transitionDelegate = CardModalTransitioningDelegate()
+                viewController.modalTransitionStyle = .crossDissolve
+                viewController.modalPresentationStyle = .custom
+                viewController.transitioningDelegate = transitionDelegate
+                navigationController.present(viewController, animated: true)
+            }
 
             // TODO: Find a way to replace a view controller without reusing the parent view controller
 
@@ -52,7 +42,7 @@ final class DiscoverDeviceNavigator: DiscoverDeviceNavigatorType {
 //                presentingViewController.addChild(viewController)
 //                viewController.didMove(toParent: presentingViewController)
 //            })
-//        }
+        }
     }
 
     func toManuallyAddDevice() {

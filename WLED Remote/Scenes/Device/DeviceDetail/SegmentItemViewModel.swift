@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import Then
 import Differentiator
+import WLEDClient
 
 struct SegmentItemViewModel {
     let segment: Segment

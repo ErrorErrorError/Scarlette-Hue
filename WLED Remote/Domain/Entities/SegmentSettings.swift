@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import WLEDClient
 
 public struct SegmentSettings {
     var start: Int?  // Only changeable in 0.8.4^

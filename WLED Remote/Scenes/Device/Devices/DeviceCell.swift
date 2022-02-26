@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import WLEDClient
 
 class DeviceCell: UICollectionViewCell {
     static var identifier = "device-cell"
@@ -36,11 +37,6 @@ class DeviceCell: UICollectionViewCell {
         $0.isOn = false
         $0.isEnabled = false
     }
-
-//    let brightnessSlider = BrightnessSlider().then {
-//        $0.heightAnchor.constraint(equalToConstant: 30).isActive = true
-//        $0.isHidden = true
-//    }
 
     let animatableStackView = UIStackView().then {
         $0.translatesAutoresizingMaskIntoConstraints = false

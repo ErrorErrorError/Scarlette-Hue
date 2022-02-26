@@ -32,10 +32,12 @@ final class CoreDataStack {
         }
         let storeUrl = url.appendingPathComponent("Model.sqlite")
         do {
-            try storeCoordinator.addPersistentStore(ofType: NSSQLiteStoreType,
-                                                    configurationName: nil,
-                                                    at: storeUrl,
-                                                    options: nil)
+            try storeCoordinator.addPersistentStore(
+                ofType: NSSQLiteStoreType,
+                configurationName: nil,
+                at: storeUrl,
+                options: nil
+            )
         } catch {
             fatalError("Error migrating store: \(error)")
         }

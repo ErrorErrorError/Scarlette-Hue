@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WLEDClient
 
 class ColorGradientAnimation {
     class func backgroundGradient(from state: State?) -> [UIColor] {
@@ -41,6 +42,8 @@ class ColorGradientAnimation {
 
         if state?.on == true, let first = nextBackgroundGradient.first {
             textColor = first.isLight ? .black : .white
+        } else {
+            textColor = .label
         }
 
         return textColor

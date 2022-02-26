@@ -11,7 +11,7 @@ import RxCocoa
 import RxDataSources
 import Then
 
-class EditSegmentViewController: UIViewController {
+class EditSegmentViewController: UIViewController, Bindable {
 
     private enum CollectionViewStates {
         case colorPicker
@@ -26,7 +26,7 @@ class EditSegmentViewController: UIViewController {
 
     // MARK: View Model
 
-    let viewModel: EditSegmentViewModel
+    var viewModel: EditSegmentViewModel!
 
     // MARK: - Views
 
@@ -43,14 +43,13 @@ class EditSegmentViewController: UIViewController {
 
     let exitButton = UIButton(type: .custom).then {
         let configuration = UIImage.SymbolConfiguration.init(pointSize: 13, weight: .bold)
-        
         let image = UIImage(systemName: "xmark", withConfiguration: configuration)
         $0.setImage(image, for: .normal)
         $0.backgroundColor = UIColor(red: 90/255, green: 90/255, blue: 90/255, alpha: 0.2)
         $0.layer.cornerRadius = EditSegmentViewController.buttonSize / 2
     }
 
-    let settingsButton = UIButton(type: .custom).then {
+    let segmentSettingsButton = UIButton(type: .custom).then {
         let largeConfiguration = UIImage.SymbolConfiguration(scale: .large)
         let image = UIImage(systemName: "ellipsis", withConfiguration: largeConfiguration)
         $0.setImage(image, for: .normal)
@@ -60,7 +59,6 @@ class EditSegmentViewController: UIViewController {
 
     let effectSettingsButton = UIButton(type: .custom).then {
         let largeConfiguration = UIImage.SymbolConfiguration(scale: .medium)
-
         let image = UIImage(systemName: "gearshape", withConfiguration: largeConfiguration)
         $0.setImage(image, for: .normal)
         $0.backgroundColor = UIColor(red: 90/255, green: 90/255, blue: 90/255, alpha: 0.2)
@@ -119,7 +117,7 @@ class EditSegmentViewController: UIViewController {
     }
 
     lazy var containerCollectionView = UICollectionView(frame: .zero,
-                                                     collectionViewLayout: generateCollectionViewLayout()).then {
+                                                        collectionViewLayout: generateCollectionViewLayout()).then {
         $0.register(CommonCell.self, forCellWithReuseIdentifier: CommonCell.identifier)
         $0.register(UICollectionViewCell.self, forSupplementaryViewOfKind: "color-picker-header", withReuseIdentifier: "header")
         $0.register(CollectionViewHeaderCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
@@ -136,8 +134,7 @@ class EditSegmentViewController: UIViewController {
 
     static let buttonSize: CGFloat = 32
 
-    init(viewModel: EditSegmentViewModel) {
-        self.viewModel = viewModel
+    init() {
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -153,7 +150,13 @@ extension EditSegmentViewController {
         super.viewDidLoad()
         setupNavigationBar()
         setupViewsAndConstraints()
-        bindViewController()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        for index in containerCollectionView.indexPathsForSelectedItems ?? [] {
+            containerCollectionView.selectItem(at: index, animated: true, scrollPosition: .centeredHorizontally)
+        }
     }
 }
 
@@ -167,7 +170,7 @@ extension EditSegmentViewController {
             $0.customView?.widthAnchor.constraint(equalToConstant: onSwitch.frame.height).isActive = true
         }
 
-        let moreBarButton = UIBarButtonItem(customView: settingsButton).then {
+        let moreBarButton = UIBarButtonItem(customView: segmentSettingsButton).then {
             $0.customView?.translatesAutoresizingMaskIntoConstraints = false
             $0.customView?.heightAnchor.constraint(equalToConstant: onSwitch.frame.height).isActive = true
             $0.customView?.widthAnchor.constraint(equalToConstant: onSwitch.frame.height).isActive = true
@@ -242,8 +245,10 @@ extension EditSegmentViewController: ChromaColorPickerDelegate {
     }
 }
 
+// MARK: - View Model
+
 extension EditSegmentViewController {
-    private func bindViewController() {
+    func bindViewModel() {
         let colorsChanged = colorPicker.rx.handleDidChange
             .asDriver()
             .map {
@@ -252,14 +257,16 @@ extension EditSegmentViewController {
                  third: self.colorHandlerTertiary.color.intArray)
             }
 
-        let input = EditSegmentViewModel.Input(loadTrigger: Driver.just(()),
-                                               exitTrigger: exitButton.rx.tap.asDriver(),
-                                               settingsTrigger: settingsButton.rx.tap.asDriver(),
-                                               on: onSwitch.rx.value.changed.asDriver(),
-                                               brightness: brightnessSlider.rx.value.changed.asDriver(),
-                                               colors: colorsChanged,
-                                               selectedPalette: containerCollectionView.rx.itemSelected.asDriver(),
-                                               selectedEffect: containerCollectionView.rx.itemSelected.asDriver()
+        let input = EditSegmentViewModel.Input(
+            loadTrigger: Driver.just(()),
+            exitTrigger: exitButton.rx.tap.asDriver(),
+            segmentSettingsTrigger: segmentSettingsButton.rx.tap.asDriver(),
+            effectSettingsTrigger: effectSettingsButton.rx.tap.asDriver(),
+            on: onSwitch.rx.value.changed.asDriver(),
+            brightness: brightnessSlider.rx.value.changed.asDriver(),
+            colors: colorsChanged,
+            selectedPalette: containerCollectionView.rx.itemSelected.asDriver(),
+            selectedEffect: containerCollectionView.rx.itemSelected.asDriver()
         )
 
         let output = viewModel.transform(input, disposeBag: disposeBag)
@@ -321,7 +328,7 @@ extension EditSegmentViewController {
 
         output.$name
             .asDriver()
-            .drive(rx.title)
+            .drive(navigationItem.rx.title)
             .disposed(by: disposeBag)
 
         output.$on
@@ -439,14 +446,19 @@ extension EditSegmentViewController {
 
             // Animate colors on changed
 
+            let dictAppearance = [NSAttributedString.Key.foregroundColor: textColor]
+
             UIView.animate(withDuration: 0.2) {
-                vc.setNeedsStatusBarAppearanceUpdate()
-                vc.navigationItem.standardAppearance?.titleTextAttributes = [.foregroundColor: textColor]
-                vc.navigationItem.scrollEdgeAppearance?.largeTitleTextAttributes = [.foregroundColor: textColor]
-                vc.navigationItem.compactAppearance?.titleTextAttributes = [.foregroundColor: textColor]
+                vc.navigationItem.standardAppearance?.titleTextAttributes = dictAppearance
+                vc.navigationItem.scrollEdgeAppearance?.titleTextAttributes = dictAppearance
+                vc.navigationItem.compactAppearance?.titleTextAttributes = dictAppearance
+                if #available(iOS 15.0, *) {
+                    vc.navigationItem.compactScrollEdgeAppearance?.titleTextAttributes = dictAppearance
+                }
                 vc.navigationController?.navigationBar.tintColor = textColor
-                vc.settingsButton.tintColor = textColor
+                vc.segmentSettingsButton.tintColor = textColor
                 vc.exitButton.tintColor = textColor
+                vc.setNeedsStatusBarAppearanceUpdate()
             }
         }
     }

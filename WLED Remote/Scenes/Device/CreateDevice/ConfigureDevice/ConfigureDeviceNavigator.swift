@@ -8,16 +8,13 @@
 import Foundation
 import UIKit
 
-protocol AddDeviceNavigatorProtocol {
+protocol ConfigureDeviceNavigatorType {
     func toDevices()
 }
 
-class ConfigureDeviceNavigator: AddDeviceNavigatorProtocol {
-    private let navigationController: UINavigationController
-
-    init(navigationController: UINavigationController) {
-        self.navigationController = navigationController
-    }
+struct ConfigureDeviceNavigator: ConfigureDeviceNavigatorType {
+    unowned let assembler: Assembler
+    unowned let navigationController: UINavigationController
 
     func toDevices() {
         navigationController.dismiss(animated: true)

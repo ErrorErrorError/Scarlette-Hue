@@ -10,14 +10,14 @@ import ErrorErrorErrorUIKit
 import RxSwift
 import Then
 
-class ConfigureDeviceViewController: CardModalViewController<UIView> {
+class ConfigureDeviceViewController: CardModalViewController<UIView>, Bindable {
     // MARK: - Rx
 
     private let disposeBag = DisposeBag()
 
     // MARK: - Properties
 
-    let viewModel: ConfigureDeviceViewModel
+    var viewModel: ConfigureDeviceViewModel!
 
     // MARK: - Views
 
@@ -35,8 +35,7 @@ class ConfigureDeviceViewController: CardModalViewController<UIView> {
 
     // MARK: - Contructor
 
-    init(viewModel: ConfigureDeviceViewModel) {
-        self.viewModel = viewModel
+    init() {
         super.init(buttonView: .primary, contentView: UIView())
     }
 
@@ -47,7 +46,31 @@ class ConfigureDeviceViewController: CardModalViewController<UIView> {
     override func viewDidLoad() {
         super.viewDidLoad()
         setListeners()
-        bindViewController()
+    }
+
+    func bindViewModel() {
+        let viewWillAppear = rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
+            .mapToVoid()
+            .asDriverOnErrorJustComplete()
+
+        let input = ConfigureDeviceViewModel.Input(
+            loadTrigger: viewWillAppear,
+            saveTrigger: primaryButton.rx.tap.asDriver(),
+            exitTrigger: exitButton.rx.tap.asDriver(),
+            name: nameTextField.rx.text.orEmpty.changed.asDriver()
+        )
+
+        let output = viewModel.transform(input, disposeBag: disposeBag)
+
+        output.$canSave
+            .asDriver()
+            .drive(primaryButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+
+        output.$name
+            .asDriver()
+            .drive(nameTextField.rx.text)
+            .disposed(by: disposeBag)
     }
 
     override func setupViewsAndContraints() {
@@ -84,31 +107,6 @@ class ConfigureDeviceViewController: CardModalViewController<UIView> {
         // Hide keyboard on clicked outside
         let tapGestureReconizer = UITapGestureRecognizer(target: self, action: #selector(handleTextFieldResponder))
         self.view.addGestureRecognizer(tapGestureReconizer)
-    }
-
-    private func bindViewController() {
-        let viewWillAppear = rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
-            .mapToVoid()
-            .asDriverOnErrorJustComplete()
-
-        let input = ConfigureDeviceViewModel.Input(
-            loadTrigger: viewWillAppear,
-            saveTrigger: primaryButton.rx.tap.asDriver(),
-            exitTrigger: exitButton.rx.tap.asDriver(),
-            name: nameTextField.rx.text.orEmpty.changed.asDriver()
-        )
-
-        let output = viewModel.transform(input, disposeBag: disposeBag)
-
-        output.$canSave
-            .asDriver()
-            .drive(primaryButton.rx.isEnabled)
-            .disposed(by: disposeBag)
-
-        output.$name
-            .asDriver()
-            .drive(nameTextField.rx.text)
-            .disposed(by: disposeBag)
     }
 }
 

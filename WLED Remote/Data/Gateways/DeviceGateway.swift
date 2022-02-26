@@ -13,6 +13,3 @@ public protocol DeviceGatewayType {
     func save(device: Device) -> Observable<Void>
     func delete(device: Device) -> Observable<Void>
 }
-
-class DeviceGateway: DeviceRepository, DeviceGatewayType {
-}

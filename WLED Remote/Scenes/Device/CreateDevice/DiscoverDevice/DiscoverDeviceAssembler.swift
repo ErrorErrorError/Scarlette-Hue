@@ -40,7 +40,8 @@ extension DiscoverDeviceAssembler where Self: DefaultAssembler {
 
     func resolve() -> DiscoverDeviceUseCaseType {
         return DiscoverDeviceUseCase(
-            deviceGatewayType: resolve()
+            deviceGatewayType: resolve(),
+            bonjourGatewayType: resolve()
         )
     }
 }

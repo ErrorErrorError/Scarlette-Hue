@@ -5,15 +5,17 @@
 //  Created by Erik Bautista on 1/15/22.
 //
 
+import UIKit
 import RxSwift
 import RxCocoa
-import UIKit
+import WLEDClient
 
 struct AddSegmentViewModel {
-    let navigator: AddSegmentNavigator
-    let device: Device
-    let store: Store
+    let navigator: AddSegmentNavigatorType
+    let useCase: AddSegmentUseCaseType
     let delegate: PublishSubject<EditSegmentDelegate>
+//    let deviceStore: DeviceStore
+    let store: Store
 }
 
 extension AddSegmentViewModel: ViewModel {
@@ -26,8 +28,8 @@ extension AddSegmentViewModel: ViewModel {
     }
 
     struct Output {
-        @Relay var start: String
-        @Relay var stop: String
+        @Relay var start: String = ""
+        @Relay var stop: String = ""
         @Relay var isValid = false
     }
 
@@ -76,30 +78,32 @@ extension AddSegmentViewModel: ViewModel {
             .filter { $0 }
             .withLatestFrom(Driver.combineLatest(start, stop))
             .do(onNext: { start, stop in
-                let usedIds = store.state.segments.compactMap { $0.id }
+                let usedIds = store.state.segments?.compactMap { $0.id } ?? []
                 let maxSegs = store.info.leds?.maxseg ?? 0
                 let idsRange = (0..<maxSegs)
 
                 let unusedIds = idsRange.filter { !usedIds.contains($0) }
                 if let nextUnused = unusedIds.first {
-                    let segment = Segment(id: nextUnused,
-                                          start: Int(start),
-                                          stop: Int(stop),
-                                          len: stop - start,
-                                          group: 1,
-                                          spacing: 0,
-                                          on: true,
-                                          brightness: 255,
-                                          colors: [UIColor.red.intArray,
-                                                   UIColor.black.intArray,
-                                                   UIColor.black.intArray],
-                                          effect: 0,
-                                          speed: 128,
-                                          intensity: 128,
-                                          palette: 0,
-                                          selected: false,
-                                          reverse: false,
-                                          mirror: false)
+                    let segment = Segment(
+                        id: nextUnused,
+                        start: Int(start),
+                        stop: Int(stop),
+                        len: stop - start,
+                        group: 1,
+                        spacing: 0,
+                        on: true,
+                        brightness: 255,
+                        colors: [UIColor.red.intArray,
+                                 UIColor.black.intArray,
+                                 UIColor.black.intArray],
+                        effect: 0,
+                        speed: 128,
+                        intensity: 128,
+                        palette: 0,
+                        selected: false,
+                        reverse: false,
+                        mirror: false
+                    )
 
                     delegate.onNext(.addSegment(segment))
                 }

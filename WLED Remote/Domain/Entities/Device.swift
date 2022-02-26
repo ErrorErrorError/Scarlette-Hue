@@ -8,7 +8,7 @@
 import Foundation
 import Then
 
-// This is the domain of WLEDDevice core data class
+// This is the domain of CDDevice core data class
 
 public struct Device {
     public var id = UUID()
@@ -28,7 +28,6 @@ public struct Device {
         self.port = port
         self.created = created
     }
-    
 }
 
 extension Device: Codable, Hashable, Then {}

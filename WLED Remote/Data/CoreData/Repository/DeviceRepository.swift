@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import CoreData
 
-class DeviceRepository {
+class DeviceRepository: DeviceGatewayType {
     private let repository: Repository<Device>
 
     init() {

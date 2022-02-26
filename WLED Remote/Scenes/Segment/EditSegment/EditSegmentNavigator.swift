@@ -8,14 +8,16 @@
 import UIKit
 import ErrorErrorErrorUIKit
 import RxSwift
+import WLEDClient
 
-protocol EditSegmentNavigator {
+protocol EditSegmentNavigatorType {
     func toDeviceDetail()
     func toSegmentSettings(delegate: PublishSubject<SegmentSettingsDelegate>, info: Info, settings: SegmentSettings)
+    func toEffectSettings(delegate: PublishSubject<EffectSettingsDelegate>, settings: EffectSettings)
 }
 
-struct DefaultEditSegmentNavigator: EditSegmentNavigator {
-    unowned let services: UseCaseProvider
+struct EditSegmentNavigator: EditSegmentNavigatorType {
+    unowned let assembler: Assembler
     unowned let navigationController: UINavigationController
 
     func toDeviceDetail() {
@@ -24,15 +26,28 @@ struct DefaultEditSegmentNavigator: EditSegmentNavigator {
 
     func toSegmentSettings(delegate: PublishSubject<SegmentSettingsDelegate>, info: Info, settings: SegmentSettings) {
         if let topViewController = navigationController.topViewController?.presentedViewController {
-            let navigator = DefaultSegmentSettingsNavigator(services: services,
-                                                            viewController: topViewController)
+            let viewController: SegmentSettingsViewController = assembler.resolve(
+                viewController: topViewController,
+                delegate: delegate,
+                segmentSettings: settings,
+                info: info
+            )
+            let cardModalTransitionDelegate = CardModalTransitioningDelegate()
+            viewController.transitioningDelegate = cardModalTransitionDelegate
+            viewController.modalPresentationStyle = .custom
 
-            let viewModel = SegmentSettingsViewModel(navigator: navigator,
-                                                     info: info,
-                                                     segmentSettings: settings,
-                                                     delegate: delegate)
+            topViewController.present(viewController, animated: true)
+        }
+    }
 
-            let viewController = SegmentSettingsViewController(viewModel: viewModel)
+    func toEffectSettings(delegate: PublishSubject<EffectSettingsDelegate>, settings: EffectSettings) {
+        if let topViewController = navigationController.topViewController?.presentedViewController {
+            let viewController: EffectSettingsViewController = assembler.resolve(
+                viewController: topViewController,
+                delegate: delegate,
+                effectSettings: settings
+            )
+
             let cardModalTransitionDelegate = CardModalTransitioningDelegate()
             viewController.transitioningDelegate = cardModalTransitionDelegate
             viewController.modalPresentationStyle = .custom

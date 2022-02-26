@@ -6,19 +6,17 @@
 //
 
 import RxSwift
+import WLEDClient
 
 protocol DevicesUseCaseType {
     func getDevices() -> Observable<[Device]>
     func updateDevice(device: Device) -> Observable<Void>
     func deleteDevice(_ device: Device) -> Observable<Void>
-    func getStore(for device: Device) -> Observable<Store>
 }
 
 struct DevicesUseCase: DevicesUseCaseType,
                        FetchingDevices,
                        UpdatingDevice,
-                       DeletingDevice,
-                       FetchingStore {
+                       DeletingDevice {
     var deviceGatewayType: DeviceGatewayType
-    var storeGatewayType: StoreGatewayType
 }

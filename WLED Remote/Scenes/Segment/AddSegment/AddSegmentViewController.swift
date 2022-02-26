@@ -9,7 +9,7 @@ import UIKit
 import ErrorErrorErrorUIKit
 import RxSwift
 
-class AddSegmentViewController: CardModalViewController<UIView> {
+class AddSegmentViewController: CardModalViewController<UIView>, Bindable {
 
     // MARK: - Rx
 
@@ -17,7 +17,7 @@ class AddSegmentViewController: CardModalViewController<UIView> {
 
     // MARK: - Properties
 
-    private let viewModel: AddSegmentViewModel
+    var viewModel: AddSegmentViewModel!
 
     // MARK: - Views
 
@@ -49,8 +49,7 @@ class AddSegmentViewController: CardModalViewController<UIView> {
         $0.backgroundColor = .secondarySystemBackground
     }
 
-    init(viewModel: AddSegmentViewModel) {
-        self.viewModel = viewModel
+    init() {
         super.init(buttonView: .primary, contentView: UIView())
     }
 
@@ -60,7 +59,6 @@ class AddSegmentViewController: CardModalViewController<UIView> {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindViewModel()
     }
 
     override func setupViewsAndContraints() {
@@ -107,7 +105,7 @@ class AddSegmentViewController: CardModalViewController<UIView> {
         }
     }
 
-    private func bindViewModel() {
+    func bindViewModel() {
         let viewWillAppear = rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
             .mapToVoid()
             .asDriverOnErrorJustComplete()

@@ -12,8 +12,6 @@ import RxCocoa
 struct DiscoverDeviceViewModel {
     let navigator: DiscoverDeviceNavigatorType
     let useCase: DiscoverDeviceUseCaseType
-//    let bonjourService: NetServiceBrowser
-//    let infoAPIService: InfoAPI
 }
 
 extension DiscoverDeviceViewModel: ViewModel {
@@ -29,56 +27,47 @@ extension DiscoverDeviceViewModel: ViewModel {
     }
 
     func transform(_ input: Input, disposeBag: DisposeBag) -> Output {
-        let output = Output()
+        var output = Output()
 
         let devices = useCase.getDevices()
             .asDriverOnErrorJustComplete()
 
-//        let serviceAdded = bonjourService.rx.serviceAdded
-//            .filter({ $0.firstIPv4Address != nil })
-//            .asDriverOnErrorJustComplete()
-//
-//        serviceAdded
-//            .withLatestFrom(devices) { service, devices in
-//                devices.contains(where: { $0.ip == service.firstIPv4Address! }) ? nil : service
+        useCase.getScannedDevices()
+            .withLatestFrom(devices) { scannedDevice, devices in
+                devices.contains(where: { $0.ip == scannedDevice.ip }) ? nil : scannedDevice
+            }
+            .compactMap { $0 }
+//            .flatMapLatest { scanned in
+//                useCase.validate(scanned)
+//                    .map { nil ?? $0 }  // Mapped to accept nil
+//                    .catchAndReturn(nil)
+//                    .compactMap { $0 }
+//                    .map { _ in scanned }
 //            }
-//            .compactMap({ $0 })
-//            .flatMapLatest({ service in
-//                // If it is unable to fetch info, handle error by returning nil
-//                // since we are on Driver.
-//                infoAPIService.validateNetwork(ip: service.firstIPv4Address!, port: service.port)
-//                    .map({ nil ?? $0 }) // Mapped to accept nil
-//                    .asDriver(onErrorRecover: { _ in Driver.just(nil) })
-//                    .map({ $0 != nil ? service : nil })
-//            })
-//            .compactMap({ $0 })
-//            .map({ Device(name: $0.name, ip: $0.firstIPv4Address!, port: $0.port) })
-//            .map({ DeviceInfoItemViewModel(with: $0) })
-//            .do(onNext: {
-//                var newArray = output.devices
-//                newArray.append($0)
-//                output.$devices.accept(newArray)
-//            })
-//            .drive()
-//            .disposed(by: disposeBag)
-//
+            .map { DeviceInfoItemViewModel(with: .init(name: $0.name, ip: $0.ip, port: $0.port)) }
+            .asDriverOnErrorJustComplete()
+            .drive {
+                output.devices.append($0)
+            }
+            .disposed(by: disposeBag)
+
         input.scanDevicesTrigger
             .do(onNext: {
-//                bonjourService.searchForServices(ofType: "_http._tcp", inDomain: "")
+                useCase.startScan()
             })
             .drive()
             .disposed(by: disposeBag)
 
         input.manualDeviceTrigger
             .drive(onNext: {
-//                bonjourService.stop()
+                useCase.stopScan()
                 navigator.toManuallyAddDevice()
             })
             .disposed(by: disposeBag)
 
         input.dismissTrigger
             .drive(onNext: {
-//                bonjourService.stop()
+                useCase.stopScan()
                 navigator.toDevices()
             })
             .disposed(by: disposeBag)
@@ -86,7 +75,7 @@ extension DiscoverDeviceViewModel: ViewModel {
         select(trigger: input.selectedDevice, items: output.$devices.asDriver())
             .map({ $0.device })
             .drive {
-//                bonjourService.stop()
+                useCase.stopScan()
                 navigator.toConfigureDevice($0)
             }
             .disposed(by: disposeBag)

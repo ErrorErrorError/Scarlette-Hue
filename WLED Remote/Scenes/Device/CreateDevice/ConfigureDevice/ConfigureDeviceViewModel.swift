@@ -11,8 +11,8 @@ import RxCocoa
 import Then
 
 struct ConfigureDeviceViewModel {
-    let devicesRepository: DeviceGatewayType
-    let navigator: ConfigureDeviceNavigator
+    let navigator: ConfigureDeviceNavigatorType
+    let useCase: ConfigureDeviceUseCaseType
     let device: Device
 }
 
@@ -37,10 +37,11 @@ extension ConfigureDeviceViewModel: ViewModel {
             input.loadTrigger.map { device.name }
         )
 
-        let nameValidation = Driver.combineLatest(name, devicesRepository.devices().asDriverOnErrorJustComplete())
-            .map({ name, devices in
+        let devices = useCase.getDevices().asDriverOnErrorJustComplete()
+        let nameValidation = Driver.combineLatest(name, devices)
+            .map { name, devices in
                 !name.isEmpty && !devices.contains(where: { $0.name == name })
-            })
+            }
             .do(onNext: {
                 output.canSave = $0
             })
@@ -54,7 +55,7 @@ extension ConfigureDeviceViewModel: ViewModel {
                     $0.name = name
                 }
 
-                return devicesRepository.save(device: device)
+                return useCase.updateDevice(device: device)
                     .asDriverOnErrorJustComplete()
             })
             .do(onNext: navigator.toDevices)

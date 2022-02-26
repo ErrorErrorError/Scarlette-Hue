@@ -9,6 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 import UIKit
+import WLEDClient
 
 public enum EditSegmentDelegate {
     case updatedSegment(Segment)
@@ -17,10 +18,10 @@ public enum EditSegmentDelegate {
 }
 
 public struct EditSegmentViewModel {
-    let navigator: EditSegmentNavigator
-    let segmentAPI: SegmentAPI
+    let navigator: EditSegmentNavigatorType
+    let useCase: EditSegmentUseCaseType
     let device: Device
-    var segment: Segment
+    let segment: Segment
     var store: Store
     let delegate: PublishSubject<EditSegmentDelegate>
 }
@@ -41,7 +42,8 @@ extension EditSegmentViewModel: ViewModel {
     struct Input {
         let loadTrigger: Driver<Void>
         let exitTrigger: Driver<Void>
-        let settingsTrigger: Driver<Void>
+        let segmentSettingsTrigger: Driver<Void>
+        let effectSettingsTrigger: Driver<Void>
         let on: Driver<Bool>
         let brightness: Driver<Float>
         let colors: Driver<(first: [Int], second: [Int], third: [Int])>
@@ -50,7 +52,8 @@ extension EditSegmentViewModel: ViewModel {
     }
 
     struct Output {
-        @Relay var name = ""
+        @Relay var name: String
+        @Relay var deviceName: String
         @Relay var on = false
         @Relay var brightness: Float = 0.0
         @Relay var colors: (first: [Int], second: [Int], third: [Int])
@@ -58,19 +61,18 @@ extension EditSegmentViewModel: ViewModel {
         @Relay var effects: EffectsSection
         @Relay var selectedPalette = IndexPath(row: 0, section: 0)
         @Relay var selectedEffect = IndexPath(row: 0, section: 1)
-        @Relay var settings: SegmentSettings
     }
 
     func transform(_ input: Input, disposeBag: DisposeBag) -> Output {
-        var output = Output(name: "Segment \(segment.id )",
+        var output = Output(name: "Segment \(segment.id)",
+                            deviceName: device.name,
                             on: segment.on ?? false,
                             brightness: Float(segment.brightness ?? 1),
                             colors: segment.colorsTuple,
                             palettes: PalettesSection(items: store.palettes),
                             effects: EffectsSection(items: store.effects),
                             selectedPalette: IndexPath(row: segment.palette ?? -1, section: 0),
-                            selectedEffect: IndexPath(row: segment.effect ?? -1, section: 1),
-                            settings: .init(from: segment)
+                            selectedEffect: IndexPath(row: segment.effect ?? -1, section: 1)
         )
 
         let updatedOn = Driver.merge(
@@ -107,19 +109,29 @@ extension EditSegmentViewModel: ViewModel {
         .filter({ $0.section == 1 })
         .do(onNext: { output.selectedEffect = $0 } )
 
-
         let segmentSettingsDelegate = PublishSubject<SegmentSettingsDelegate>()
 
-        let updatedSegmentSettings = Driver.merge(
+            let updatedSegmentSettings = Driver.merge(
             segmentSettingsDelegate.asDriverOnErrorJustComplete().map({ t in
                 switch t {
                 case .updatedSettings(let settings):
                     return settings
                 }
             }),
-            input.loadTrigger.map { output.settings }
+            input.loadTrigger.map { SegmentSettings(from: segment) }
         )
-        .do(onNext: { output.settings = $0 })
+
+        let effectSettingsDelegate = PublishSubject<EffectSettingsDelegate>()
+
+        let updatedEffectSettings = Driver.merge(
+            effectSettingsDelegate.asDriverOnErrorJustComplete().map({ t in
+                switch t {
+                case .updatedEffect(let effect):
+                    return effect
+                }
+            }),
+            input.loadTrigger.map { EffectSettings(from: segment) }
+        )
 
         // Update state with values
 
@@ -132,10 +144,11 @@ extension EditSegmentViewModel: ViewModel {
             updatedColors,
             updatedSelectedPalette,
             updatedSelectedEffect,
-            updatedSegmentSettings
+            updatedSegmentSettings,
+            updatedEffectSettings
         )
         .skip(1)
-        .map { (id, on, brightness, colors, palette, effect, settings) in
+        .map { (id, on, brightness, colors, palette, effect, settings, effectSettings) in
             Segment(
                 id: id,
                 start: settings.start,
@@ -147,6 +160,8 @@ extension EditSegmentViewModel: ViewModel {
                 brightness: Int(brightness),
                 colors: [colors.first, colors.second, colors.third],
                 effect: effect.row,
+                speed: effectSettings.speed,
+                intensity: effectSettings.intensity,
                 palette: palette.row,
                 reverse: settings.reverse,
                 mirror: settings.mirror
@@ -163,15 +178,25 @@ extension EditSegmentViewModel: ViewModel {
             .drive()
             .disposed(by: disposeBag)
 
-        input.settingsTrigger
-            .do(onNext: {
-                navigator.toSegmentSettings(
-                    delegate: segmentSettingsDelegate,
-                    info: store.info,
-                    settings: output.settings
+        input.segmentSettingsTrigger
+            .withLatestFrom(updatedSegmentSettings)
+                .drive(onNext: {
+                    navigator.toSegmentSettings(
+                        delegate: segmentSettingsDelegate,
+                        info: store.info,
+                        settings: $0
+                    )
+                })
+            .disposed(by: disposeBag)
+
+        input.effectSettingsTrigger
+            .withLatestFrom(updatedEffectSettings)
+            .drive(onNext: {
+                navigator.toEffectSettings(
+                    delegate: effectSettingsDelegate,
+                    settings: $0
                 )
             })
-            .drive()
             .disposed(by: disposeBag)
 
         return output
